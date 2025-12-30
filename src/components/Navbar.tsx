@@ -70,7 +70,7 @@ const Navbar = () => {
               className="border-primary/50 hover:border-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
               asChild
             >
-              <a href="/Hareesh_Ragavendra_Resume.pdf" download>
+              <a href="./Hareesh_Ragavendra_Resume.pdf" download>
                 <Download className="w-4 h-4 mr-2" />
                 Resume
               </a>
@@ -115,7 +115,7 @@ const Navbar = () => {
                   className="w-full border-primary/50 hover:border-primary hover:bg-primary hover:text-primary-foreground transition-all"
                   asChild
                 >
-                  <a href="/Hareesh_Ragavendra_Resume.pdf" download>
+                  <a href="./Hareesh_Ragavendra_Resume.pdf" download>
                     <Download className="w-4 h-4 mr-2" />
                     Resume
                   </a>
