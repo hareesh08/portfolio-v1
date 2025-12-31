@@ -9,18 +9,20 @@ import Footer from "@/components/Footer";
 import BootingScreen from "@/components/BootingScreen";
 import IntroScreen from "@/components/IntroScreen";
 
-type ScreenPhase = "intro" | "booting" | "main";
+type ScreenPhase = "checking" | "intro" | "booting" | "main";
 
 const Index = () => {
-  const [phase, setPhase] = useState<ScreenPhase>("intro");
-  const [isFirstVisit, setIsFirstVisit] = useState(true);
+  const [phase, setPhase] = useState<ScreenPhase>("checking");
 
   // Check if first visit using localStorage
   useEffect(() => {
     const hasVisited = localStorage.getItem("portfolio_visited");
     if (hasVisited) {
-      setIsFirstVisit(false);
-      setPhase("booting"); // Skip intro for returning visitors
+      // Returning visitor - skip intro, go to boot screen
+      setPhase("booting");
+    } else {
+      // First time visitor - show intro
+      setPhase("intro");
     }
   }, []);
 
@@ -33,10 +35,15 @@ const Index = () => {
     setPhase("main");
   };
 
+  // Show nothing while checking localStorage
+  if (phase === "checking") {
+    return <div className="fixed inset-0 bg-black" />;
+  }
+
   return (
     <>
       {/* Intro Screen - only on first visit */}
-      {phase === "intro" && isFirstVisit && (
+      {phase === "intro" && (
         <IntroScreen onComplete={handleIntroComplete} />
       )}
 
