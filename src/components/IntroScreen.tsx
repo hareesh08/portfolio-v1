@@ -14,15 +14,12 @@ const getPersonalizedQuotes = (name: string) => [
   `${name}, your mind holds more connections than stars in the Milky Way.`,
 ];
 
-const cosmicFacts = [
+const fallbackFacts = [
   "There are more stars in the universe than grains of sand on Earth.",
   "The Milky Way is on a collision course with Andromeda in 4 billion years.",
   "A day on Venus is longer than its year.",
   "Neutron stars can spin 600 times per second.",
   "The observable universe is 93 billion light-years in diameter.",
-  "You are literally made of star matter - we are all cosmic beings.",
-  "Light from the sun takes 8 minutes to reach Earth.",
-  "There are more possible chess games than atoms in the observable universe.",
 ];
 
 const getGreeting = () => {
@@ -61,7 +58,24 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
       delay: Math.random() * 3,
     }));
     setStars(generatedStars);
-    setCosmicFact(cosmicFacts[Math.floor(Math.random() * cosmicFacts.length)]);
+
+    // Fetch random fact from API
+    const fetchFact = async () => {
+      try {
+        const res = await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random?language=en");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.text && data.text.length < 200) {
+            setCosmicFact(data.text);
+            return;
+          }
+        }
+        setCosmicFact(fallbackFacts[Math.floor(Math.random() * fallbackFacts.length)]);
+      } catch {
+        setCosmicFact(fallbackFacts[Math.floor(Math.random() * fallbackFacts.length)]);
+      }
+    };
+    fetchFact();
   }, []);
 
   useEffect(() => {
