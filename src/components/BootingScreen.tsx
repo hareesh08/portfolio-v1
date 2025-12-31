@@ -56,29 +56,15 @@ const BootingScreen = ({ onComplete }: BootingScreenProps) => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
     >
-      {/* Cyber grid background */}
+      {/* Cyber grid background - static for performance */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(45,212,191,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(45,212,191,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-primary/10"
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-primary/10 opacity-75" />
       </div>
 
-      {/* Glowing orbs - optimized with reduced complexity */}
-      <motion.div
-        className="absolute top-1/3 left-1/3 w-64 h-64 rounded-full bg-primary/10 blur-[100px]"
-        animate={{ scale: [1, 1.2, 1] }}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-        style={{ willChange: "transform" }}
-      />
-      <motion.div
-        className="absolute bottom-1/3 right-1/3 w-48 h-48 rounded-full bg-accent/10 blur-[80px]"
-        animate={{ scale: [1.1, 1, 1.1] }}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-        style={{ willChange: "transform" }}
-      />
+      {/* Static glowing orbs - removed animations for performance */}
+      <div className="absolute top-1/3 left-1/3 w-64 h-64 rounded-full bg-primary/10 blur-[100px]" />
+      <div className="absolute bottom-1/3 right-1/3 w-48 h-48 rounded-full bg-accent/10 blur-[80px]" />
 
       <div className="relative z-10 w-full max-w-md px-6">
         <AnimatePresence mode="wait">
@@ -96,18 +82,7 @@ const BootingScreen = ({ onComplete }: BootingScreenProps) => {
                 {/* Header with glow */}
                 <div className="relative px-5 py-4 border-b border-primary/10 bg-gradient-to-r from-primary/5 via-transparent to-accent/5">
                   <div className="flex items-center gap-3">
-                    <motion.div
-                      className="w-3 h-3 rounded-full bg-primary"
-                      animate={{ 
-                        boxShadow: [
-                          "0 0 10px hsl(var(--primary))", 
-                          "0 0 20px hsl(var(--primary))", 
-                          "0 0 10px hsl(var(--primary))"
-                        ] 
-                      }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                      style={{ willChange: "box-shadow" }}
-                    />
+                    <div className="w-3 h-3 rounded-full bg-primary animate-pulse" />
                     <span className="font-mono text-sm text-primary font-medium">portfolio.init</span>
                   </div>
                 </div>
@@ -181,13 +156,8 @@ const BootingScreen = ({ onComplete }: BootingScreenProps) => {
                 </div>
               </div>
 
-              {/* Decorative rings */}
-              <motion.div
-                className="absolute -top-10 -right-10 w-24 h-24 border-2 border-primary/20 rounded-full"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-                style={{ willChange: "transform" }}
-              />
+              {/* Decorative rings - static for performance */}
+              <div className="absolute -top-10 -right-10 w-24 h-24 border-2 border-primary/20 rounded-full" />
             </motion.div>
           ) : (
             <motion.div

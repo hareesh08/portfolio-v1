@@ -77,12 +77,11 @@ const Skills = () => {
             viewport={{ once: true, margin: "-100px" }}
             className="grid md:grid-cols-2 gap-6"
           >
-            {skillCategories.map((category, idx) => (
+            {skillCategories.map((category) => (
               <motion.div
                 key={category.title}
                 variants={itemVariants}
-                className="group relative p-6 rounded-xl bg-gradient-card border border-border hover:border-primary/50 transition-all duration-300 overflow-hidden"
-                whileHover={{ scale: 1.02, y: -5 }}
+                className="group relative p-6 rounded-xl bg-gradient-card border border-border hover:border-primary/50 hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300 overflow-hidden"
               >
                 {/* Background gradient on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -93,36 +92,23 @@ const Skills = () => {
                 }} />
 
                 <div className="relative flex items-start gap-4">
-                  <motion.div 
-                    className={`p-3 rounded-lg bg-gradient-to-br ${category.color} bg-opacity-15 border border-${category.color.split('-')[1]}-500/20 group-hover:bg-opacity-25 transition-all duration-300 flex-shrink-0`}
-                    whileHover={{ 
-                      scale: 1.1,
-                      rotate: 5
-                    }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  <div 
+                    className={`p-3 rounded-lg bg-gradient-to-br ${category.color} bg-opacity-15 border border-${category.color.split('-')[1]}-500/20 group-hover:bg-opacity-25 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 flex-shrink-0`}
                   >
                     <category.icon className="w-6 h-6 text-foreground group-hover:text-primary transition-colors" />
-                  </motion.div>
+                  </div>
                   <div className="flex-1">
                     <h3 className="text-lg font-semibold mb-4 group-hover:text-primary transition-colors duration-300">
                       {category.title}
                     </h3>
                     <div className="flex flex-wrap gap-2">
-                      {category.skills.map((skill, skillIdx) => (
-                        <motion.span
+                      {category.skills.map((skill) => (
+                        <span
                           key={skill}
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          whileInView={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: skillIdx * 0.03 }}
-                          whileHover={{ 
-                            scale: 1.08,
-                            y: -2,
-                            boxShadow: '0 4px 12px rgba(174, 194, 248, 0.3)'
-                          }}
-                          className="px-3 py-1.5 text-sm font-semibold bg-secondary/60 text-muted-foreground rounded-md border border-border hover:border-primary/40 hover:text-primary hover:bg-secondary/80 transition-all duration-200 cursor-default"
+                          className="px-3 py-1.5 text-sm font-semibold bg-secondary/60 text-muted-foreground rounded-md border border-border hover:border-primary/40 hover:text-primary hover:bg-secondary/80 hover:scale-105 hover:-translate-y-0.5 transition-all duration-200 cursor-default"
                         >
                           {skill}
-                        </motion.span>
+                        </span>
                       ))}
                     </div>
                   </div>
