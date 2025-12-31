@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Download, Lock, Eye, EyeOff } from "lucide-react";
-import { Button } from "./ui/button";
-import { motion } from "framer-motion";
 import { useAuth } from "@/context/AuthContext";
 
 const navLinks = [
-  { href: "#skills", label: "Skills" },
-  { href: "#projects", label: "Projects" },
-  { href: "#experience", label: "Experience" },
-  { href: "#contact", label: "Contact" },
+  { href: "#skills", label: "./skills" },
+  { href: "#projects", label: "./projects" },
+  { href: "#experience", label: "./experience" },
+  { href: "#contact", label: "./contact" },
 ];
 
 const Navbar = () => {
@@ -41,7 +39,6 @@ const Navbar = () => {
     e.preventDefault();
     if (checkPassword(password)) {
       setShowPasswordModal(false);
-      // Trigger download after auth
       window.open("./Hareesh_Ragavendra_Resume.pdf", "_blank");
     } else {
       setError(true);
@@ -51,185 +48,159 @@ const Navbar = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-background/80 backdrop-blur-lg border-b border-border" : "bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-mono ${
+        isScrolled ? "bg-[#0a0a0a]/95 backdrop-blur border-b border-[#00ff00]/20" : "bg-transparent"
       }`}
     >
-      <nav className="container px-6 py-4">
+      <nav className="container px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <motion.a 
-            href="#" 
-            className="flex items-center gap-2 group"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-          >
-            <span className="text-xl font-bold text-gradient group-hover:opacity-80 transition-opacity">Hareesh</span>
-            <span className="hidden sm:inline text-muted-foreground font-mono text-sm group-hover:text-foreground transition-colors">/ developer</span>
-          </motion.a>
+          <a href="#" className="flex items-center gap-2 group">
+            <span className="terminal-cyan">❯</span>
+            <span className="terminal-text group-hover:glow-primary transition-all">hareesh</span>
+            <span className="terminal-dim">@portfolio</span>
+            <span className="terminal-text cursor-blink">_</span>
+          </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link, idx) => (
-              <motion.a
+          <div className="hidden md:flex items-center gap-6">
+            {navLinks.map((link) => (
+              <a
                 key={link.href}
                 href={link.href}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors relative group"
-                whileHover={{ y: -2 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                className="terminal-dim hover:terminal-text transition-colors text-sm"
               >
                 {link.label}
-                <motion.span 
-                  className="absolute -bottom-1 left-0 h-0.5 bg-primary" 
-                  initial={{ width: 0 }}
-                  whileHover={{ width: "100%" }}
-                  transition={{ duration: 0.3 }}
-                />
-              </motion.a>
+              </a>
             ))}
           </div>
 
           {/* Resume Button */}
-          <motion.div className="hidden md:block" whileHover={{ scale: 1.05 }}>
-            <Button
-              variant="outline"
-              size="sm"
-              className="border-primary/50 hover:border-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-              asChild
+          <div className="hidden md:block">
+            <a
+              href="./Hareesh_Ragavendra_Resume.pdf"
+              download={isAuthorized}
+              onClick={handleResumeClick}
+              className="flex items-center gap-2 px-3 py-1.5 border border-[#00ff00]/50 terminal-text hover:bg-[#00ff00] hover:text-[#0a0a0a] transition-all text-sm"
             >
-              <a 
-                href="./Hareesh_Ragavendra_Resume.pdf" 
-                download={isAuthorized}
-                onClick={handleResumeClick}
-              >
-                {isAuthorized ? <Download className="w-4 h-4 mr-2" /> : <Lock className="w-4 h-4 mr-2" />}
-                Resume
-              </a>
-            </Button>
-          </motion.div>
+              {isAuthorized ? <Download className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
+              <span>resume.pdf</span>
+            </a>
+          </div>
 
           {/* Mobile Menu Button */}
-          <motion.button
+          <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
+            className="md:hidden terminal-text p-2"
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </motion.button>
+          </button>
         </div>
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <motion.div 
-            className="md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-lg border-b border-border"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            <div className="container px-6 py-4 space-y-4">
+          <div className="md:hidden absolute top-full left-0 right-0 bg-[#0a0a0a]/98 border-b border-[#00ff00]/20">
+            <div className="container px-4 py-4 space-y-3">
               {navLinks.map((link) => (
-                <motion.a
+                <a
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="block py-2 text-muted-foreground hover:text-primary transition-colors"
-                  whileHover={{ x: 5 }}
+                  className="block terminal-dim hover:terminal-text transition-colors py-2"
                 >
+                  <span className="terminal-cyan mr-2">❯</span>
                   {link.label}
-                </motion.a>
+                </a>
               ))}
-              <motion.div whileHover={{ scale: 1.05 }}>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="w-full border-primary/50 hover:border-primary hover:bg-primary hover:text-primary-foreground transition-all"
-                  asChild
-                >
-                  <a 
-                    href="./Hareesh_Ragavendra_Resume.pdf" 
-                    download={isAuthorized}
-                    onClick={handleResumeClick}
-                  >
-                    {isAuthorized ? <Download className="w-4 h-4 mr-2" /> : <Lock className="w-4 h-4 mr-2" />}
-                    Resume
-                  </a>
-                </Button>
-              </motion.div>
+              <a
+                href="./Hareesh_Ragavendra_Resume.pdf"
+                download={isAuthorized}
+                onClick={handleResumeClick}
+                className="flex items-center gap-2 px-3 py-2 border border-[#00ff00]/50 terminal-text hover:bg-[#00ff00] hover:text-[#0a0a0a] transition-all text-sm w-full justify-center mt-4"
+              >
+                {isAuthorized ? <Download className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
+                <span>resume.pdf</span>
+              </a>
             </div>
-          </motion.div>
+          </div>
         )}
       </nav>
 
-      {/* Password Modal for Resume */}
+      {/* Password Modal */}
       {showPasswordModal && (
-        <div 
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm"
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80"
           onClick={() => setShowPasswordModal(false)}
         >
-          <div 
-            className="relative w-full max-w-sm mx-4 p-6 rounded-2xl bg-card border border-border shadow-2xl animate-scale-in"
+          <div
+            className="relative w-full max-w-sm mx-4 rounded border border-[#00ff00]/30 bg-[#0a0a0a] shadow-[0_0_50px_rgba(0,255,0,0.2)] overflow-hidden font-mono"
             onClick={(e) => e.stopPropagation()}
           >
-            <button
-              onClick={() => setShowPasswordModal(false)}
-              className="absolute top-4 right-4 p-1 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
-            >
-              <X className="w-4 h-4" />
-            </button>
-
-            <div className="text-center mb-6">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 border border-primary/20 mb-4">
-                <Lock className="w-5 h-5 text-primary" />
+            {/* Modal Header */}
+            <div className="flex items-center gap-2 px-4 py-2 bg-[#111] border-b border-[#00ff00]/20">
+              <div className="flex gap-2">
+                <div className="w-2 h-2 rounded-full bg-[#ff5f56]" />
+                <div className="w-2 h-2 rounded-full bg-[#ffbd2e]" />
+                <div className="w-2 h-2 rounded-full bg-[#27ca40]" />
               </div>
-              <h3 className="text-lg font-semibold">Download Resume</h3>
-              <p className="text-sm text-muted-foreground mt-1">
-                Enter password to access resume
-              </p>
+              <span className="ml-2 text-[#606060] text-xs">auth.sh</span>
             </div>
 
-            <form onSubmit={handlePasswordSubmit}>
-              <div className="relative mb-4">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                    setError(false);
-                  }}
-                  placeholder="Enter password"
-                  autoFocus
-                  className={`w-full px-4 py-3 pr-10 rounded-xl bg-secondary/50 border ${
-                    error ? "border-red-500" : "border-border"
-                  } text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors`}
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                </button>
+            <div className="p-6">
+              <div className="mb-4">
+                <span className="terminal-cyan text-sm">❯</span>
+                <span className="terminal-text text-sm ml-2">$ sudo download resume.pdf</span>
+              </div>
+              
+              <div className="terminal-dim text-xs mb-4">
+                [sudo] password required for download:
               </div>
 
-              {error && (
-                <p className="text-red-500 text-sm mb-4 text-center">
-                  Incorrect password. Please try again.
-                </p>
-              )}
+              <form onSubmit={handlePasswordSubmit}>
+                <div className="relative mb-4">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      setError(false);
+                    }}
+                    placeholder="Enter password..."
+                    autoFocus
+                    className="w-full px-3 py-2 bg-[#111] border border-[#00ff00]/30 terminal-text text-sm outline-none focus:border-[#00ff00] transition-colors"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 terminal-dim hover:terminal-text transition-colors"
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
 
-              <button
-                type="submit"
-                className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
-              >
-                <Download className="w-4 h-4" />
-                Download Resume
-              </button>
-            </form>
+                {error && (
+                  <div className="terminal-red text-xs mb-4">
+                    Error: Authentication failed. Incorrect password.
+                  </div>
+                )}
 
-            <p className="text-xs text-muted-foreground/60 text-center mt-4">
-              Contact me for access credentials
-            </p>
+                <div className="flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setShowPasswordModal(false)}
+                    className="flex-1 py-2 border border-[#606060] terminal-dim hover:terminal-white transition-colors text-sm"
+                  >
+                    cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-1 py-2 border border-[#00ff00] terminal-text hover:bg-[#00ff00] hover:text-[#0a0a0a] transition-all text-sm"
+                  >
+                    authenticate
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       )}

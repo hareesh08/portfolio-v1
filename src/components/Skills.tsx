@@ -1,161 +1,138 @@
-import { Code2, Database, Shield, Wrench, Sparkles } from "lucide-react";
-import { motion, Variants } from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
 
 const skillCategories = [
   {
-    icon: Code2,
-    title: "Programming Languages",
-    description: "Core languages I work with daily",
+    name: "languages",
     skills: ["Kotlin", "Java", "Python", "C#"],
-    gradient: "from-cyan-500/20 to-blue-500/20",
-    iconBg: "bg-cyan-500/10",
-    iconColor: "text-cyan-400",
+    color: "terminal-cyan",
   },
   {
-    icon: Wrench,
-    title: "Android Development",
-    description: "Modern Android architecture & tools",
+    name: "android",
     skills: ["Jetpack Compose", "Android NDK", "REST APIs", "MVVM", "Retrofit", "OkHttp", "Unit Testing"],
-    gradient: "from-green-500/20 to-emerald-500/20",
-    iconBg: "bg-green-500/10",
-    iconColor: "text-green-400",
+    color: "terminal-text",
   },
   {
-    icon: Database,
-    title: "Database & Backend",
-    description: "Server-side technologies",
+    name: "backend",
     skills: ["SQL", "PostgreSQL", "Django REST Framework", "Git", "cPanel", "WordPress"],
-    gradient: "from-purple-500/20 to-pink-500/20",
-    iconBg: "bg-purple-500/10",
-    iconColor: "text-purple-400",
+    color: "terminal-yellow",
   },
   {
-    icon: Shield,
-    title: "Security & Testing",
-    description: "Security analysis & QA",
+    name: "security",
     skills: ["Penetration Testing", "Web Testing", "Reverse Engineering", "Burp Suite", "Debugging"],
-    gradient: "from-orange-500/20 to-red-500/20",
-    iconBg: "bg-orange-500/10",
-    iconColor: "text-orange-400",
+    color: "terminal-magenta",
   },
 ];
 
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] },
-  },
-};
-
 const Skills = () => {
+  const [activeTab, setActiveTab] = useState("languages");
+
   return (
-    <section id="skills" className="py-24 bg-background relative overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px]" />
-      <div className="absolute top-1/4 -left-32 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 -right-32 w-64 h-64 bg-accent/5 rounded-full blur-3xl" />
+    <section id="skills" className="py-24 bg-[#0a0a0a] relative overflow-hidden">
+      {/* Scanlines */}
+      <div className="absolute inset-0 scanlines opacity-20 z-0" />
       
-      <div className="container px-6 relative z-10">
-        <div className="max-w-6xl mx-auto">
-          {/* Section header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-16"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
-              <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-primary text-sm font-medium tracking-wide">Technical Skills</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-              My <span className="text-primary">Expertise</span>
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto text-base md:text-lg">
-              Technologies and tools I use to bring ideas to life
-            </p>
-          </motion.div>
-
-          {/* Skills grid */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className="grid md:grid-cols-2 gap-5"
-          >
-            {skillCategories.map((category, idx) => (
-              <motion.div
-                key={category.title}
-                variants={itemVariants}
-                className="group relative"
-              >
-                <div className={`absolute inset-0 bg-gradient-to-br ${category.gradient} rounded-2xl blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-500`} />
-                
-                <div className="relative p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/50 hover:border-primary/30 transition-all duration-300 h-full">
-                  {/* Header */}
-                  <div className="flex items-start gap-4 mb-5">
-                    <div className={`p-3 rounded-xl ${category.iconBg} border border-white/5`}>
-                      <category.icon className={`w-6 h-6 ${category.iconColor}`} />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
-                        {category.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground/70">{category.description}</p>
-                    </div>
-                    <span className="text-xs font-mono text-muted-foreground/50">0{idx + 1}</span>
-                  </div>
-
-                  {/* Skills tags */}
-                  <div className="flex flex-wrap gap-2">
-                    {category.skills.map((skill, skillIdx) => (
-                      <span
-                        key={skill}
-                        className="px-3 py-1.5 text-sm bg-white/5 text-muted-foreground rounded-lg border border-white/5 hover:border-primary/30 hover:text-primary hover:bg-primary/5 transition-all duration-200 cursor-default"
-                        style={{ animationDelay: `${skillIdx * 50}ms` }}
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* Stats row */}
+      <div className="container px-4 relative z-10">
+        <div className="max-w-4xl mx-auto">
+          {/* Terminal Window */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4"
+            transition={{ duration: 0.5 }}
+            className="rounded-lg border border-[#00ff00]/30 bg-[#0a0a0a] shadow-[0_0_50px_rgba(0,255,0,0.1)] overflow-hidden"
           >
-            {[
-              { label: "Languages", value: "4+" },
-              { label: "Frameworks", value: "8+" },
-              { label: "Tools", value: "15+" },
-              { label: "Years Coding", value: "3+" },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center p-4 rounded-xl bg-card/30 border border-border/30">
-                <p className="text-2xl md:text-3xl font-bold text-primary">{stat.value}</p>
-                <p className="text-sm text-muted-foreground">{stat.label}</p>
+            {/* Terminal Header */}
+            <div className="flex items-center gap-2 px-4 py-3 bg-[#111] border-b border-[#00ff00]/20">
+              <div className="flex gap-2">
+                <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+                <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+                <div className="w-3 h-3 rounded-full bg-[#27ca40]" />
               </div>
-            ))}
+              <span className="ml-4 text-[#606060] text-sm font-mono">skills.sh</span>
+            </div>
+
+            {/* Terminal Body */}
+            <div className="p-6 font-mono text-sm md:text-base">
+              {/* Command */}
+              <div className="mb-6">
+                <span className="terminal-cyan">❯</span>
+                <span className="terminal-text ml-2">$ cat skills.json | jq '.categories'</span>
+              </div>
+
+              {/* Tree structure */}
+              <div className="mb-8">
+                <div className="terminal-text mb-2">skills/</div>
+                {skillCategories.map((cat, idx) => (
+                  <div key={cat.name} className="ml-4">
+                    <button
+                      onClick={() => setActiveTab(cat.name)}
+                      className={`flex items-center gap-2 hover:terminal-text transition-colors ${
+                        activeTab === cat.name ? cat.color : "terminal-dim"
+                      }`}
+                    >
+                      <span>{idx === skillCategories.length - 1 ? "└──" : "├──"}</span>
+                      <span className="hover:underline">{cat.name}/</span>
+                      <span className="text-xs terminal-dim">({cat.skills.length} items)</span>
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              {/* Active category display */}
+              <div className="border-t border-[#00ff00]/20 pt-6">
+                <div className="mb-4">
+                  <span className="terminal-cyan">❯</span>
+                  <span className="terminal-text ml-2">$ ls -la ./skills/{activeTab}/</span>
+                </div>
+
+                <div className="bg-[#111] rounded p-4 border border-[#00ff00]/10">
+                  <div className="terminal-dim text-xs mb-3">
+                    total {skillCategories.find(c => c.name === activeTab)?.skills.length}
+                  </div>
+                  
+                  {skillCategories
+                    .find(c => c.name === activeTab)
+                    ?.skills.map((skill, idx) => (
+                      <motion.div
+                        key={skill}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: idx * 0.05 }}
+                        className="flex items-center gap-4 py-1 hover:bg-[#1a1a1a] px-2 -mx-2 rounded transition-colors"
+                      >
+                        <span className="terminal-dim text-xs w-20">-rwxr-xr-x</span>
+                        <span className="terminal-dim text-xs w-16">hareesh</span>
+                        <span className={skillCategories.find(c => c.name === activeTab)?.color}>
+                          {skill}
+                        </span>
+                      </motion.div>
+                    ))}
+                </div>
+              </div>
+
+              {/* Stats */}
+              <div className="mt-8 pt-6 border-t border-[#00ff00]/20">
+                <div className="mb-4">
+                  <span className="terminal-cyan">❯</span>
+                  <span className="terminal-text ml-2">$ neofetch --stats</span>
+                </div>
+                
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {[
+                    { label: "Languages", value: "4+", icon: "λ" },
+                    { label: "Frameworks", value: "8+", icon: "⚙" },
+                    { label: "Tools", value: "15+", icon: "🔧" },
+                    { label: "Years", value: "3+", icon: "⏱" },
+                  ].map((stat) => (
+                    <div key={stat.label} className="bg-[#111] border border-[#00ff00]/10 rounded p-4 text-center">
+                      <div className="terminal-text text-2xl mb-1">{stat.value}</div>
+                      <div className="terminal-dim text-xs">{stat.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>

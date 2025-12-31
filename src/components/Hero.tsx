@@ -1,170 +1,174 @@
-import { Github, Linkedin, Mail, MapPin, ExternalLink } from "lucide-react";
-import { Button } from "./ui/button";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { Github, Linkedin, Mail } from "lucide-react";
 import ProtectedData from "./ProtectedData";
 import { useAuth } from "@/context/AuthContext";
 
 const Hero = () => {
   const { isAuthorized } = useAuth();
-  const particles = Array.from({ length: 3 }, (_, i) => i);
-  
+  const [displayedLines, setDisplayedLines] = useState<number>(0);
+  const [currentText, setCurrentText] = useState("");
+  const [isTyping, setIsTyping] = useState(true);
+
+  const terminalLines = [
+    { type: "command", text: "$ whoami" },
+    { type: "output", text: "hareesh_ragavendra" },
+    { type: "command", text: "$ cat role.txt" },
+    { type: "output", text: "Android Developer & Full-Stack Engineer" },
+    { type: "command", text: "$ cat about.txt" },
+    { type: "output", text: "Passionate about building modern Android apps with" },
+    { type: "highlight", text: "Kotlin, Jetpack Compose & Django REST Framework" },
+    { type: "command", text: "$ echo $STATUS" },
+    { type: "success", text: "✓ Available for opportunities" },
+  ];
+
+  useEffect(() => {
+    if (displayedLines < terminalLines.length) {
+      const line = terminalLines[displayedLines];
+      const delay = line.type === "command" ? 800 : 400;
+      
+      const timer = setTimeout(() => {
+        setDisplayedLines(prev => prev + 1);
+      }, delay);
+      
+      return () => clearTimeout(timer);
+    } else {
+      setIsTyping(false);
+    }
+  }, [displayedLines]);
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero">
-      {/* Animated background blobs */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl blob" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/5 rounded-full blur-3xl blob" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/3 rounded-full blur-3xl blob" style={{ animationDelay: '4s' }} />
-      </div>
+    <section className="relative min-h-screen flex items-center justify-center bg-[#0a0a0a] overflow-hidden">
+      {/* Scanlines overlay */}
+      <div className="absolute inset-0 scanlines opacity-30 z-10" />
+      
+      {/* Subtle grid */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,0,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
 
-      {/* Floating particles */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-40">
-        {particles.map((i) => (
-          <circle
-            key={i}
-            cx={`${20 + i * 15}%`}
-            cy={`${30 + Math.random() * 40}%`}
-            r="2"
-            fill="hsl(174 72% 56%)"
-            className="particle"
-            opacity={0.5}
-          />
-        ))}
-      </svg>
+      <div className="container relative z-20 px-4 py-20">
+        <div className="max-w-4xl mx-auto">
+          {/* Terminal Window */}
+          <div className="rounded-lg border border-[#00ff00]/30 bg-[#0a0a0a] shadow-[0_0_50px_rgba(0,255,0,0.1)] overflow-hidden">
+            {/* Terminal Header */}
+            <div className="flex items-center gap-2 px-4 py-3 bg-[#111] border-b border-[#00ff00]/20">
+              <div className="flex gap-2">
+                <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+                <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+                <div className="w-3 h-3 rounded-full bg-[#27ca40]" />
+              </div>
+              <span className="ml-4 text-[#606060] text-sm font-mono">hareesh@portfolio ~ </span>
+            </div>
 
-      {/* Grid pattern overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px]" />
+            {/* Terminal Body */}
+            <div className="p-6 font-mono text-sm md:text-base min-h-[400px]">
+              {terminalLines.slice(0, displayedLines).map((line, idx) => (
+                <div key={idx} className="mb-2">
+                  {line.type === "command" && (
+                    <div className="flex items-center gap-2">
+                      <span className="terminal-cyan">❯</span>
+                      <span className="terminal-text">{line.text}</span>
+                    </div>
+                  )}
+                  {line.type === "output" && (
+                    <div className="pl-4 terminal-white">{line.text}</div>
+                  )}
+                  {line.type === "highlight" && (
+                    <div className="pl-4 terminal-yellow">{line.text}</div>
+                  )}
+                  {line.type === "success" && (
+                    <div className="pl-4 terminal-text">{line.text}</div>
+                  )}
+                </div>
+              ))}
+              
+              {/* Blinking cursor */}
+              {isTyping && (
+                <div className="flex items-center gap-2">
+                  <span className="terminal-cyan">❯</span>
+                  <span className="w-2 h-5 bg-[#00ff00] cursor-blink" />
+                </div>
+              )}
 
-      <div className="container relative z-10 px-6 py-20">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Status badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/50 border border-border mb-8"
-          >
-            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-            <span className="text-sm text-muted-foreground font-mono">Available for opportunities</span>
-          </motion.div>
+              {/* After typing complete - show interactive section */}
+              {!isTyping && (
+                <div className="mt-8 pt-6 border-t border-[#00ff00]/20">
+                  {/* Location */}
+                  <div className="mb-4">
+                    <span className="terminal-dim">$ cat location.txt</span>
+                    <div className="pl-4 mt-1">
+                      <ProtectedData 
+                        value="Chennai, Tamil Nadu, India" 
+                        masked="[REDACTED], India" 
+                        className="terminal-white"
+                      />
+                    </div>
+                  </div>
 
-          {/* Main heading */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6"
-          >
-            Hi, I'm{" "}
-            <span className="text-gradient">Hareesh Ragavendra</span>
-          </motion.h1>
+                  {/* Links */}
+                  <div className="mb-6">
+                    <span className="terminal-dim">$ ls -la ./links/</span>
+                    <div className="pl-4 mt-2 space-y-1">
+                      <a 
+                        href="https://github.com/hareesh08" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 terminal-cyan hover:terminal-text transition-colors group"
+                      >
+                        <span className="terminal-dim">drwxr-xr-x</span>
+                        <Github className="w-4 h-4" />
+                        <span>github.com/hareesh08</span>
+                        <span className="terminal-dim group-hover:terminal-text">→</span>
+                      </a>
+                      <a 
+                        href="https://www.linkedin.com/in/hareesh-d-50147727b" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 terminal-cyan hover:terminal-text transition-colors group"
+                      >
+                        <span className="terminal-dim">drwxr-xr-x</span>
+                        <Linkedin className="w-4 h-4" />
+                        <span>linkedin.com/in/hareesh</span>
+                        <span className="terminal-dim group-hover:terminal-text">→</span>
+                      </a>
+                      <a 
+                        href="mailto:hareeshworksoffcial@gmail.com"
+                        className="flex items-center gap-3 terminal-cyan hover:terminal-text transition-colors group"
+                      >
+                        <span className="terminal-dim">-rw-r--r--</span>
+                        <Mail className="w-4 h-4" />
+                        <span>hareeshworksoffcial@gmail.com</span>
+                        <span className="terminal-dim group-hover:terminal-text">→</span>
+                      </a>
+                    </div>
+                  </div>
 
-          {/* Role */}
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl sm:text-2xl md:text-3xl text-muted-foreground mb-6"
-          >
-            Android Developer & Full-Stack Engineer
-          </motion.p>
+                  {/* Action buttons */}
+                  <div className="flex flex-wrap gap-4">
+                    <a 
+                      href="mailto:hareeshworksoffcial@gmail.com"
+                      className="px-4 py-2 border border-[#00ff00] text-[#00ff00] hover:bg-[#00ff00] hover:text-[#0a0a0a] transition-all font-mono text-sm"
+                    >
+                      ./contact.sh
+                    </a>
+                    <a 
+                      href="#projects"
+                      className="px-4 py-2 border border-[#00ffff] text-[#00ffff] hover:bg-[#00ffff] hover:text-[#0a0a0a] transition-all font-mono text-sm"
+                    >
+                      ./view_projects.sh
+                    </a>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
 
-          {/* Description */}
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-base sm:text-lg text-muted-foreground/80 max-w-2xl mx-auto mb-8 leading-relaxed"
-          >
-            Passionate about building modern Android applications with{" "}
-            <span className="text-primary font-medium">Kotlin</span> and{" "}
-            <span className="text-primary font-medium">Jetpack Compose</span>. 
-            Experienced in full-stack development with Django REST Framework.
-          </motion.p>
-
-          {/* Location */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex items-center justify-center gap-2 text-muted-foreground mb-10"
-          >
-            <MapPin className="w-4 h-4" />
-            <span className="font-mono text-sm">
-              <ProtectedData value="Chennai, Tamil Nadu, India" masked="••••••, India" />
-            </span>
-          </motion.div>
-
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="flex flex-wrap items-center justify-center gap-4 mb-12"
-          >
-            <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-primary transition-all duration-300" asChild>
-              <a href="mailto:hareeshworksoffcial@gmail.com">
-                <Mail className="w-4 h-4 mr-2" />
-                Get in Touch
-              </a>
-            </Button>
-            <Button size="lg" variant="outline" className="border-border hover:bg-secondary hover:border-primary/50 transition-all duration-300" asChild>
-              <a href="#projects">
-                <ExternalLink className="w-4 h-4 mr-2" />
-                View Projects
-              </a>
-            </Button>
-          </motion.div>
-
-          {/* Social Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="flex items-center justify-center gap-4"
-          >
-            <a 
-              href="https://github.com/hareesh08" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-3 rounded-lg bg-secondary/50 border border-border hover:border-primary/50 hover:bg-secondary transition-all duration-300 group"
-            >
-              <Github className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-            </a>
-            <a 
-              href="https://www.linkedin.com/in/hareesh-d-50147727b" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-3 rounded-lg bg-secondary/50 border border-border hover:border-primary/50 hover:bg-secondary transition-all duration-300 group"
-            >
-              <Linkedin className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-            </a>
-            <a 
-              href="mailto:hareeshworksoffcial@gmail.com"
-              className="p-3 rounded-lg bg-secondary/50 border border-border hover:border-primary/50 hover:bg-secondary transition-all duration-300 group"
-            >
-              <Mail className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-            </a>
-          </motion.div>
+          {/* Scroll indicator */}
+          <div className="flex justify-center mt-8">
+            <div className="text-[#00ff00]/50 text-sm font-mono animate-pulse">
+              ↓ scroll for more ↓
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div 
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        style={{ willChange: "transform" }}
-      >
-        <div className="w-6 h-10 rounded-full border-2 border-primary/40 flex items-start justify-center p-2 hover:border-primary/60 transition-colors">
-          <motion.div 
-            className="w-1 h-2 bg-primary rounded-full"
-            animate={{ opacity: [0.3, 1, 0.3], y: [0, 6, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            style={{ willChange: "transform, opacity" }}
-          />
-        </div>
-      </motion.div>
     </section>
   );
 };
