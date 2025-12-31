@@ -6,50 +6,50 @@ const skillCategories = [
     icon: Code2,
     title: "Languages",
     skills: ["Kotlin", "Java", "Python", "C#"],
-    color: "from-pink-500 to-rose-500",
+    color: "text-amber-500",
+    bg: "bg-amber-500/10",
   },
   {
     icon: Smartphone,
     title: "Android",
     skills: ["Jetpack Compose", "Android NDK", "MVVM", "Retrofit", "REST APIs", "OkHttp"],
-    color: "from-purple-500 to-pink-500",
+    color: "text-emerald-500",
+    bg: "bg-emerald-500/10",
   },
   {
     icon: Database,
     title: "Backend",
     skills: ["Django REST", "PostgreSQL", "Git", "cPanel"],
-    color: "from-cyan-500 to-blue-500",
+    color: "text-blue-500",
+    bg: "bg-blue-500/10",
   },
   {
     icon: Shield,
     title: "Security",
     skills: ["Pen Testing", "Reverse Engineering", "Burp Suite"],
-    color: "from-orange-500 to-pink-500",
+    color: "text-red-500",
+    bg: "bg-red-500/10",
   },
 ];
 
 const Skills = () => {
   return (
-    <section id="skills" className="py-20 px-4 bg-gradient-hero relative overflow-hidden">
-      {/* Background orbs */}
-      <div className="absolute top-1/4 right-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl" />
-
-      <div className="max-w-6xl mx-auto relative z-10">
+    <section id="skills" className="py-16 md:py-20 px-4 bg-[#1a1a1a]">
+      <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="mb-10"
         >
-          <span className="text-pink-400 text-sm font-medium tracking-wider uppercase">What I Know</span>
-          <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">
-            Skills & <span className="text-gradient">Expertise</span>
+          <p className="text-amber-500 text-sm font-medium mb-2">Skills</p>
+          <h2 className="text-2xl md:text-3xl font-semibold text-white">
+            Technical Expertise
           </h2>
         </motion.div>
 
-        {/* Bento Grid - 2 columns on mobile, 2 on desktop */}
+        {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {skillCategories.map((category, idx) => (
             <motion.div
@@ -58,25 +58,22 @@ const Skills = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="bento-card glass-card rounded-3xl p-6 overflow-hidden relative group"
+              className="bento-card glass-card rounded-xl p-5"
             >
-              {/* Gradient overlay on hover */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${category.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
-              
-              {/* Icon */}
-              <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${category.color} flex items-center justify-center mb-4`}>
-                <category.icon className="w-6 h-6 text-white" />
+              {/* Icon & Title */}
+              <div className="flex items-center gap-3 mb-4">
+                <div className={`w-10 h-10 ${category.bg} rounded-lg flex items-center justify-center`}>
+                  <category.icon className={`w-5 h-5 ${category.color}`} />
+                </div>
+                <h3 className="font-medium text-white">{category.title}</h3>
               </div>
-
-              {/* Title */}
-              <h3 className="text-lg font-semibold text-white mb-3">{category.title}</h3>
 
               {/* Skills */}
               <div className="flex flex-wrap gap-2">
                 {category.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="px-3 py-1 text-sm bg-white/5 text-white/70 rounded-full border border-white/10 hover:border-white/30 hover:bg-white/10 transition-all"
+                    className="px-3 py-1.5 text-sm bg-white/5 text-gray-300 rounded-lg border border-white/5 hover:border-amber-500/30 transition-colors"
                   >
                     {skill}
                   </span>
@@ -86,12 +83,11 @@ const Skills = () => {
           ))}
         </div>
 
-        {/* Stats row */}
+        {/* Stats */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
           className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4"
         >
           {[
@@ -100,9 +96,9 @@ const Skills = () => {
             { value: "15+", label: "Tools" },
             { value: "3+", label: "Years" },
           ].map((stat) => (
-            <div key={stat.label} className="glass-card rounded-2xl p-4 text-center">
-              <p className="text-2xl font-bold text-gradient">{stat.value}</p>
-              <p className="text-xs text-white/50">{stat.label}</p>
+            <div key={stat.label} className="glass-card rounded-xl p-4 text-center">
+              <p className="text-xl font-bold text-amber-500">{stat.value}</p>
+              <p className="text-xs text-gray-500">{stat.label}</p>
             </div>
           ))}
         </motion.div>

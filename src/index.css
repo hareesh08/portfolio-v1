@@ -6,35 +6,35 @@
 
 @layer base {
   :root {
-    --background: 250 20% 6%;
-    --foreground: 0 0% 98%;
+    --background: 0 0% 10%;
+    --foreground: 220 10% 96%;
 
-    --card: 250 20% 10%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 14%;
+    --card-foreground: 220 10% 96%;
 
-    --popover: 250 20% 10%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 14%;
+    --popover-foreground: 220 10% 96%;
 
-    --primary: 330 90% 60%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 36 100% 54%;
+    --primary-foreground: 0 0% 5%;
 
-    --secondary: 250 20% 15%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 0 0% 18%;
+    --secondary-foreground: 220 10% 96%;
 
-    --muted: 250 15% 20%;
-    --muted-foreground: 250 10% 60%;
+    --muted: 0 0% 22%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 200 100% 60%;
+    --accent: 168 76% 42%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 250 15% 20%;
-    --input: 250 20% 15%;
-    --ring: 330 90% 60%;
+    --border: 0 0% 20%;
+    --input: 0 0% 16%;
+    --ring: 36 100% 54%;
 
-    --radius: 1.5rem;
+    --radius: 1rem;
     
     /* Typography */
     --font-display: 'Inter', system-ui, sans-serif;
@@ -63,93 +63,54 @@
 
 @layer utilities {
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-500 to-orange-500;
   }
 
   .bg-gradient-hero {
-    background: linear-gradient(135deg, #0f0f1a 0%, #1a1025 50%, #0f0f1a 100%);
+    background: #1a1a1a;
   }
 
-  /* Glassmorphism */
+  /* Glassmorphism - LeetCode style */
   .glass {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(40, 40, 40, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .glass-strong {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-  }
-
-  .glass-card {
-    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    background: rgba(40, 40, 40, 0.8);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
+  .glass-card {
+    background: rgba(40, 40, 40, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
   .glow-primary {
-    box-shadow: 0 0 30px rgba(236, 72, 153, 0.3), 0 0 60px rgba(236, 72, 153, 0.1);
+    box-shadow: 0 0 20px rgba(255, 161, 22, 0.2);
   }
 
   .glow-accent {
-    box-shadow: 0 0 30px rgba(34, 211, 238, 0.3), 0 0 60px rgba(34, 211, 238, 0.1);
-  }
-
-  .glow-purple {
-    box-shadow: 0 0 30px rgba(168, 85, 247, 0.3), 0 0 60px rgba(168, 85, 247, 0.1);
-  }
-
-  /* Story ring gradient */
-  .story-ring {
-    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-    padding: 3px;
-    border-radius: 50%;
-  }
-
-  /* Gradient borders */
-  .gradient-border {
-    position: relative;
-  }
-  .gradient-border::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(135deg, rgba(236,72,153,0.5), rgba(168,85,247,0.5), rgba(34,211,238,0.5));
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
+    box-shadow: 0 0 20px rgba(0, 184, 163, 0.2);
   }
 
   .font-mono {
     font-family: var(--font-mono);
   }
 
-  /* Animated gradient background */
-  @keyframes gradient-shift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-  }
-
-  .animate-gradient {
-    background-size: 200% 200%;
-    animation: gradient-shift 8s ease infinite;
-  }
-
-  /* Bento hover effect */
+  /* Card hover effect */
   .bento-card {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.2s ease;
   }
   .bento-card:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+    border-color: rgba(255, 161, 22, 0.3);
   }
 
   .animate-float {

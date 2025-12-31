@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Github, Linkedin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Github, Linkedin } from "lucide-react";
 import ProtectedData from "./ProtectedData";
 import { useAuth } from "@/context/AuthContext";
 
@@ -7,136 +7,107 @@ const Contact = () => {
   const { isAuthorized } = useAuth();
 
   return (
-    <section id="contact" className="py-20 px-4 bg-gradient-hero relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl" />
-
-      <div className="max-w-4xl mx-auto relative z-10">
+    <section id="contact" className="py-16 md:py-20 px-4 bg-[#1a1a1a]">
+      <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="mb-10"
         >
-          <span className="text-cyan-400 text-sm font-medium tracking-wider uppercase">Get in Touch</span>
-          <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">
-            Let's <span className="text-gradient">Connect</span>
+          <p className="text-amber-500 text-sm font-medium mb-2">Contact</p>
+          <h2 className="text-2xl md:text-3xl font-semibold text-white">
+            Get in Touch
           </h2>
-          <p className="text-white/50 mt-4 max-w-md mx-auto">
-            Have a project in mind? Let's talk about it.
-          </p>
         </motion.div>
 
-        {/* Contact Card - DM Style */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="glass-card rounded-3xl overflow-hidden"
+          className="glass-card rounded-xl p-5 md:p-8"
         >
-          {/* Chat header */}
-          <div className="p-4 border-b border-white/10 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 to-purple-500 flex items-center justify-center text-xl font-bold text-white">
-              HR
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Contact Info */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
+                <div className="w-10 h-10 bg-amber-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Mail className="w-5 h-5 text-amber-500" />
+                </div>
+                <div>
+                  <p className="text-gray-500 text-xs mb-0.5">Email</p>
+                  {isAuthorized ? (
+                    <a href="mailto:hareeshworksoffcial@gmail.com" className="text-white text-sm hover:text-amber-500 transition-colors">
+                      hareeshworksoffcial@gmail.com
+                    </a>
+                  ) : (
+                    <ProtectedData value="hareeshworksoffcial@gmail.com" masked="h•••••@gmail.com" className="text-white text-sm" />
+                  )}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
+                <div className="w-10 h-10 bg-emerald-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Phone className="w-5 h-5 text-emerald-500" />
+                </div>
+                <div>
+                  <p className="text-gray-500 text-xs mb-0.5">Phone</p>
+                  {isAuthorized ? (
+                    <a href="tel:+918072703652" className="text-white text-sm hover:text-emerald-500 transition-colors">
+                      +91 80727 03652
+                    </a>
+                  ) : (
+                    <ProtectedData value="+91 80727 03652" masked="+91 •••••••••" className="text-white text-sm" />
+                  )}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
+                <div className="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-5 h-5 text-blue-500" />
+                </div>
+                <div>
+                  <p className="text-gray-500 text-xs mb-0.5">Location</p>
+                  <ProtectedData value="Chennai, Tamil Nadu, India" masked="Location hidden" className="text-white text-sm" />
+                </div>
+              </div>
             </div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-white">Hareesh Ragavendra</h3>
-              <p className="text-xs text-green-400 flex items-center gap-1">
-                <span className="w-2 h-2 bg-green-400 rounded-full" />
-                Active now
+
+            {/* CTA */}
+            <div className="flex flex-col justify-center">
+              <p className="text-gray-400 mb-6">
+                Have a project in mind? Let's work together and build something great.
               </p>
-            </div>
-          </div>
 
-          {/* Contact info as messages */}
-          <div className="p-6 space-y-4">
-            {/* Email */}
-            <div className="flex gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-purple-500 flex items-center justify-center flex-shrink-0">
-                <Mail className="w-5 h-5 text-white" />
-              </div>
-              <div className="glass rounded-2xl rounded-tl-sm p-4 max-w-xs">
-                <p className="text-xs text-white/50 mb-1">Email</p>
-                {isAuthorized ? (
-                  <a href="mailto:hareeshworksoffcial@gmail.com" className="text-white hover:text-pink-400 transition-colors">
-                    hareeshworksoffcial@gmail.com
-                  </a>
-                ) : (
-                  <ProtectedData value="hareeshworksoffcial@gmail.com" masked="h•••••@gmail.com" className="text-white" />
-                )}
-              </div>
-            </div>
+              <a
+                href="mailto:hareeshworksoffcial@gmail.com"
+                className="w-full px-6 py-3 bg-amber-500 hover:bg-amber-600 text-black font-medium rounded-xl transition-colors flex items-center justify-center gap-2 mb-4"
+              >
+                <Mail className="w-4 h-4" />
+                Send Email
+              </a>
 
-            {/* Phone */}
-            <div className="flex gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center flex-shrink-0">
-                <Phone className="w-5 h-5 text-white" />
-              </div>
-              <div className="glass rounded-2xl rounded-tl-sm p-4 max-w-xs">
-                <p className="text-xs text-white/50 mb-1">Phone</p>
-                {isAuthorized ? (
-                  <a href="tel:+918072703652" className="text-white hover:text-cyan-400 transition-colors">
-                    +91 80727 03652
-                  </a>
-                ) : (
-                  <ProtectedData value="+91 80727 03652" masked="+91 •••••••••" className="text-white" />
-                )}
-              </div>
-            </div>
-
-            {/* Location */}
-            <div className="flex gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
-                <MapPin className="w-5 h-5 text-white" />
-              </div>
-              <div className="glass rounded-2xl rounded-tl-sm p-4 max-w-xs">
-                <p className="text-xs text-white/50 mb-1">Location</p>
-                <ProtectedData value="Chennai, Tamil Nadu, India" masked="••••••, India" className="text-white" />
+              <div className="flex items-center justify-center gap-3">
+                <a
+                  href="https://github.com/hareesh08"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 glass rounded-lg flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+                >
+                  <Github className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/hareesh-d-50147727b"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 glass rounded-lg flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+                >
+                  <Linkedin className="w-5 h-5" />
+                </a>
               </div>
             </div>
           </div>
-
-          {/* Message input */}
-          <div className="p-4 border-t border-white/10">
-            <a
-              href="mailto:hareeshworksoffcial@gmail.com"
-              className="flex items-center gap-4 w-full"
-            >
-              <div className="flex-1 glass rounded-full px-6 py-3 text-white/50 text-sm">
-                Send me a message...
-              </div>
-              <button className="w-12 h-12 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 flex items-center justify-center text-white hover:scale-105 transition-transform">
-                <Send className="w-5 h-5" />
-              </button>
-            </a>
-          </div>
-        </motion.div>
-
-        {/* Social Links */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="flex justify-center gap-4 mt-8"
-        >
-          <a
-            href="https://github.com/hareesh08"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-12 h-12 glass rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all"
-          >
-            <Github className="w-6 h-6" />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/hareesh-d-50147727b"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-12 h-12 glass rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all"
-          >
-            <Linkedin className="w-6 h-6" />
-          </a>
         </motion.div>
 
         {/* Footer */}
@@ -144,10 +115,10 @@ const Contact = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-center mt-16 pt-8 border-t border-white/10"
+          className="text-center mt-12 pt-8 border-t border-white/5"
         >
-          <p className="text-white/30 text-sm">
-            © 2025 Hareesh Ragavendra • Built with React + TypeScript
+          <p className="text-gray-500 text-sm">
+            © 2025 Hareesh Ragavendra
           </p>
         </motion.div>
       </div>

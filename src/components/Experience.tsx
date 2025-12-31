@@ -7,14 +7,14 @@ const experiences = [
     title: "Android Developer Intern",
     company: "Ky Technologies Pvt Ltd",
     period: "Jan 2025 - Mar 2025",
-    description: "Built Customer Service Management System with JWT auth, geofencing, automated workflows",
+    description: "Built Customer Service Management System with JWT auth, geofencing",
     current: true,
   },
   {
     title: "Freelance Developer",
     company: "Upwork",
     period: "Jul 2021 - Jul 2022",
-    description: "Python web scraping & automation tools for various clients",
+    description: "Python web scraping & automation tools for clients",
     current: false,
   },
 ];
@@ -34,60 +34,50 @@ const certifications = [
 
 const Experience = () => {
   return (
-    <section id="experience" className="py-20 px-4 bg-gradient-hero relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute top-1/3 right-0 w-72 h-72 bg-pink-500/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/3 left-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl" />
-
-      <div className="max-w-6xl mx-auto relative z-10">
+    <section id="experience" className="py-16 md:py-20 px-4 bg-[#1a1a1a]">
+      <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="mb-10"
         >
-          <span className="text-purple-400 text-sm font-medium tracking-wider uppercase">Journey</span>
-          <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">
-            Experience & <span className="text-gradient">Education</span>
+          <p className="text-amber-500 text-sm font-medium mb-2">Experience</p>
+          <h2 className="text-2xl md:text-3xl font-semibold text-white">
+            Work & Education
           </h2>
         </motion.div>
 
-        {/* Bento Layout */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {/* Work Experience - Large card */}
+        <div className="grid md:grid-cols-2 gap-4">
+          {/* Work */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="md:col-span-2 bento-card glass-card rounded-3xl p-6"
+            className="glass-card rounded-xl p-5"
           >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 to-purple-500 flex items-center justify-center">
-                <Briefcase className="w-5 h-5 text-white" />
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-10 h-10 bg-amber-500/10 rounded-lg flex items-center justify-center">
+                <Briefcase className="w-5 h-5 text-amber-500" />
               </div>
-              <h3 className="text-lg font-semibold text-white">Work Experience</h3>
+              <h3 className="font-medium text-white">Work</h3>
             </div>
 
             <div className="space-y-4">
               {experiences.map((exp, idx) => (
-                <div
-                  key={idx}
-                  className="p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-white/10 transition-colors"
-                >
-                  <div className="flex items-start justify-between mb-2">
-                    <div>
-                      <h4 className="font-semibold text-white">{exp.title}</h4>
-                      <p className="text-sm text-pink-400">{exp.company}</p>
-                    </div>
+                <div key={idx} className="p-4 bg-white/5 rounded-lg">
+                  <div className="flex items-start justify-between mb-1">
+                    <h4 className="font-medium text-white text-sm">{exp.title}</h4>
                     {exp.current && (
-                      <span className="px-2 py-1 text-xs bg-green-500/20 text-green-400 rounded-full">
+                      <span className="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 text-xs rounded">
                         Current
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-white/50 mb-2">{exp.period}</p>
-                  <p className="text-sm text-white/70">{exp.description}</p>
+                  <p className="text-amber-500 text-xs mb-1">{exp.company}</p>
+                  <p className="text-gray-500 text-xs mb-2">{exp.period}</p>
+                  <p className="text-gray-400 text-sm">{exp.description}</p>
                 </div>
               ))}
             </div>
@@ -99,51 +89,40 @@ const Experience = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="bento-card glass-card rounded-3xl p-6"
+            className="glass-card rounded-xl p-5"
           >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center">
-                <GraduationCap className="w-5 h-5 text-white" />
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center">
+                <GraduationCap className="w-5 h-5 text-blue-500" />
               </div>
-              <h3 className="text-lg font-semibold text-white">Education</h3>
+              <h3 className="font-medium text-white">Education</h3>
             </div>
 
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/5">
-              <h4 className="font-semibold text-white mb-1">{education.degree}</h4>
-              <p className="text-sm text-cyan-400 mb-2">{education.institution}</p>
-              <p className="text-xs text-white/50 mb-3">{education.period}</p>
+            <div className="p-4 bg-white/5 rounded-lg mb-4">
+              <h4 className="font-medium text-white text-sm mb-1">{education.degree}</h4>
+              <p className="text-blue-500 text-xs mb-1">{education.institution}</p>
+              <p className="text-gray-500 text-xs mb-3">{education.period}</p>
               <div className="flex items-center gap-2">
-                <span className="text-sm text-white/70">CGPA:</span>
-                <span className="px-3 py-1 bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-full">
-                  <ProtectedData value={education.cgpa} masked="•.••" className="text-sm font-semibold text-white" />
+                <span className="text-gray-400 text-sm">CGPA:</span>
+                <span className="px-2 py-0.5 bg-amber-500/10 text-amber-500 text-sm rounded">
+                  <ProtectedData value={education.cgpa} masked="•.••" />
                 </span>
               </div>
             </div>
-          </motion.div>
 
-          {/* Certifications */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="md:col-span-2 lg:col-span-3 bento-card glass-card rounded-3xl p-6"
-          >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-pink-500 flex items-center justify-center">
-                <Award className="w-5 h-5 text-white" />
+            {/* Certifications */}
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-8 h-8 bg-emerald-500/10 rounded-lg flex items-center justify-center">
+                <Award className="w-4 h-4 text-emerald-500" />
               </div>
-              <h3 className="text-lg font-semibold text-white">Certifications</h3>
+              <h4 className="font-medium text-white text-sm">Certifications</h4>
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="space-y-2">
               {certifications.map((cert, idx) => (
-                <span
-                  key={idx}
-                  className="px-4 py-2 glass rounded-full text-sm text-white/80 hover:text-white hover:bg-white/10 transition-all"
-                >
-                  🏆 {cert}
-                </span>
+                <div key={idx} className="px-3 py-2 bg-white/5 rounded-lg text-gray-400 text-sm">
+                  {cert}
+                </div>
               ))}
             </div>
           </motion.div>
