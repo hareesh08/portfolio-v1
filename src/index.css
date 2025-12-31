@@ -98,18 +98,22 @@
 
   .animate-float {
     animation: float 6s ease-in-out infinite;
+    will-change: transform;
   }
 
   .animate-pulse-slow {
     animation: pulse-slow 4s ease-in-out infinite;
+    will-change: opacity;
   }
 
   .animate-slide-up {
     animation: slide-up 0.6s ease-out forwards;
+    will-change: transform, opacity;
   }
 
   .animate-fade-in {
     animation: fade-in 0.8s ease-out forwards;
+    will-change: opacity;
   }
 }
 
@@ -139,22 +143,14 @@
   to { opacity: 1; }
 }
 
-/* Particle animations */
+/* Particle animations - optimized for performance */
 @keyframes particle-float {
   0%, 100% { 
     transform: translate(0, 0) rotate(0deg);
-    opacity: 0.5;
-  }
-  25% { 
-    transform: translate(20px, -30px) rotate(90deg);
-    opacity: 0.8;
+    opacity: 0.4;
   }
   50% { 
-    transform: translate(-10px, -50px) rotate(180deg);
-    opacity: 0.6;
-  }
-  75% { 
-    transform: translate(15px, -20px) rotate(270deg);
+    transform: translate(10px, -25px) rotate(180deg);
     opacity: 0.7;
   }
 }
@@ -166,15 +162,20 @@
   }
   50% { 
     r: 3px;
-    opacity: 0.7;
+    opacity: 0.6;
   }
 }
 
 @keyframes blob-animation {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(20px, -50px) scale(1.1); }
-  50% { transform: translate(-30px, 20px) scale(0.9); }
-  75% { transform: translate(50px, 50px) scale(1.05); }
+  0%, 100% { 
+    transform: translate(0, 0) scale(1); 
+  }
+  33% { 
+    transform: translate(20px, -30px) scale(1.05); 
+  }
+  66% { 
+    transform: translate(-20px, 20px) scale(0.95); 
+  }
 }
 
 @keyframes scroll-indicator {
@@ -189,25 +190,44 @@
 }
 
 .particle {
-  animation: particle-float 6s infinite ease-in-out;
+  animation: particle-float 8s infinite ease-in-out;
+  will-change: transform, opacity;
 }
 
 .particle:nth-child(1) { animation-delay: 0s; }
-.particle:nth-child(2) { animation-delay: 1s; }
-.particle:nth-child(3) { animation-delay: 2s; }
-.particle:nth-child(4) { animation-delay: 3s; }
-.particle:nth-child(5) { animation-delay: 4s; }
+.particle:nth-child(2) { animation-delay: 1.6s; }
+.particle:nth-child(3) { animation-delay: 3.2s; }
+.particle:nth-child(4) { animation-delay: 4.8s; }
+.particle:nth-child(5) { animation-delay: 6.4s; }
 
 .blob {
-  animation: blob-animation 8s infinite ease-in-out;
+  animation: blob-animation 12s infinite ease-in-out;
+  will-change: transform;
 }
 
 .blob:nth-child(1) { animation-delay: 0s; }
-.blob:nth-child(2) { animation-delay: 2s; }
-.blob:nth-child(3) { animation-delay: 4s; }
+.blob:nth-child(2) { animation-delay: 4s; }
+.blob:nth-child(3) { animation-delay: 8s; }
 
 .scroll-indicator {
   animation: scroll-indicator 2s infinite ease-in-out;
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-pulse-slow,
+  .particle,
+  .blob,
+  .scroll-indicator {
+    animation: none;
+  }
+  
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Scrollbar styling */

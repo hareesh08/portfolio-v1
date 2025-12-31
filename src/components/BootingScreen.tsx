@@ -38,12 +38,12 @@ const BootingScreen = ({ onComplete }: BootingScreenProps) => {
           idx === currentStep ? { ...step, status: "complete" } : step
         ));
         setCurrentStep(prev => prev + 1);
-      }, 150);
+      }, 200); // Slightly increased delay to prevent rapid state changes
 
       return () => clearTimeout(timer);
     } else if (currentStep === steps.length) {
       setShowWelcome(true);
-      const timer = setTimeout(onComplete, 600);
+      const timer = setTimeout(onComplete, 800); // Increased delay for smoother transition
       return () => clearTimeout(timer);
     }
   }, [currentStep, steps.length, onComplete]);
@@ -66,16 +66,18 @@ const BootingScreen = ({ onComplete }: BootingScreenProps) => {
         />
       </div>
 
-      {/* Glowing orbs */}
+      {/* Glowing orbs - optimized with reduced complexity */}
       <motion.div
         className="absolute top-1/3 left-1/3 w-64 h-64 rounded-full bg-primary/10 blur-[100px]"
-        animate={{ scale: [1, 1.3, 1] }}
-        transition={{ duration: 1.5, repeat: Infinity }}
+        animate={{ scale: [1, 1.2, 1] }}
+        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        style={{ willChange: "transform" }}
       />
       <motion.div
         className="absolute bottom-1/3 right-1/3 w-48 h-48 rounded-full bg-accent/10 blur-[80px]"
-        animate={{ scale: [1.2, 1, 1.2] }}
-        transition={{ duration: 1.5, repeat: Infinity }}
+        animate={{ scale: [1.1, 1, 1.1] }}
+        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+        style={{ willChange: "transform" }}
       />
 
       <div className="relative z-10 w-full max-w-md px-6">
@@ -96,8 +98,15 @@ const BootingScreen = ({ onComplete }: BootingScreenProps) => {
                   <div className="flex items-center gap-3">
                     <motion.div
                       className="w-3 h-3 rounded-full bg-primary"
-                      animate={{ boxShadow: ["0 0 10px hsl(var(--primary))", "0 0 20px hsl(var(--primary))", "0 0 10px hsl(var(--primary))"] }}
-                      transition={{ duration: 1, repeat: Infinity }}
+                      animate={{ 
+                        boxShadow: [
+                          "0 0 10px hsl(var(--primary))", 
+                          "0 0 20px hsl(var(--primary))", 
+                          "0 0 10px hsl(var(--primary))"
+                        ] 
+                      }}
+                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                      style={{ willChange: "box-shadow" }}
                     />
                     <span className="font-mono text-sm text-primary font-medium">portfolio.init</span>
                   </div>
@@ -133,7 +142,8 @@ const BootingScreen = ({ onComplete }: BootingScreenProps) => {
                           <motion.div
                             className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full"
                             animate={{ rotate: 360 }}
-                            transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
+                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                            style={{ willChange: "transform" }}
                           />
                         )}
                         {step.status === "complete" && (
@@ -174,8 +184,9 @@ const BootingScreen = ({ onComplete }: BootingScreenProps) => {
               {/* Decorative rings */}
               <motion.div
                 className="absolute -top-10 -right-10 w-24 h-24 border-2 border-primary/20 rounded-full"
-                animate={{ rotate: 360, scale: [1, 1.1, 1] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                style={{ willChange: "transform" }}
               />
             </motion.div>
           ) : (

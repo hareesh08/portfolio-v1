@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import { motion } from "framer-motion";
 
 const Hero = () => {
-  const particles = Array.from({ length: 5 }, (_, i) => i);
+  const particles = Array.from({ length: 3 }, (_, i) => i); // Reduced from 5 to 3 particles
   
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero">
@@ -142,15 +142,17 @@ const Hero = () => {
 
       {/* Scroll indicator */}
       <motion.div 
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-indicator"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
         animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        style={{ willChange: "transform" }}
       >
         <div className="w-6 h-10 rounded-full border-2 border-primary/40 flex items-start justify-center p-2 hover:border-primary/60 transition-colors">
           <motion.div 
             className="w-1 h-2 bg-primary rounded-full"
             animate={{ opacity: [0.3, 1, 0.3], y: [0, 6, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            style={{ willChange: "transform, opacity" }}
           />
         </div>
       </motion.div>
