@@ -1,137 +1,114 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
+import { Code2, Smartphone, Database, Shield } from "lucide-react";
 
 const skillCategories = [
   {
-    name: "languages",
+    icon: Code2,
+    title: "Languages",
     skills: ["Kotlin", "Java", "Python", "C#"],
-    color: "terminal-cyan",
+    color: "from-pink-500 to-rose-500",
+    size: "col-span-1",
   },
   {
-    name: "android",
-    skills: ["Jetpack Compose", "Android NDK", "REST APIs", "MVVM", "Retrofit", "OkHttp", "Unit Testing"],
-    color: "terminal-text",
+    icon: Smartphone,
+    title: "Android",
+    skills: ["Jetpack Compose", "Android NDK", "MVVM", "Retrofit", "REST APIs", "OkHttp"],
+    color: "from-purple-500 to-pink-500",
+    size: "col-span-1 md:col-span-2 row-span-2",
   },
   {
-    name: "backend",
-    skills: ["SQL", "PostgreSQL", "Django REST Framework", "Git", "cPanel", "WordPress"],
-    color: "terminal-yellow",
+    icon: Database,
+    title: "Backend",
+    skills: ["Django REST", "PostgreSQL", "Git", "cPanel"],
+    color: "from-cyan-500 to-blue-500",
+    size: "col-span-1",
   },
   {
-    name: "security",
-    skills: ["Penetration Testing", "Web Testing", "Reverse Engineering", "Burp Suite", "Debugging"],
-    color: "terminal-magenta",
+    icon: Shield,
+    title: "Security",
+    skills: ["Pen Testing", "Reverse Engineering", "Burp Suite"],
+    color: "from-orange-500 to-pink-500",
+    size: "col-span-1 md:col-span-2",
   },
 ];
 
 const Skills = () => {
-  const [activeTab, setActiveTab] = useState("languages");
-
   return (
-    <section id="skills" className="py-24 bg-[#0a0a0a] relative overflow-hidden">
-      {/* Scanlines */}
-      <div className="absolute inset-0 scanlines opacity-20 z-0" />
-      
-      <div className="container px-4 relative z-10">
-        <div className="max-w-4xl mx-auto">
-          {/* Terminal Window */}
+    <section id="skills" className="py-20 px-4 bg-gradient-hero relative overflow-hidden">
+      {/* Background orbs */}
+      <div className="absolute top-1/4 right-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl" />
+
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <span className="text-pink-400 text-sm font-medium tracking-wider uppercase">What I Know</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">
+            Skills & <span className="text-gradient">Expertise</span>
+          </h2>
+        </motion.div>
+
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[180px]">
+          {skillCategories.map((category, idx) => (
+            <motion.div
+              key={category.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              className={`${category.size} bento-card glass-card rounded-3xl p-6 overflow-hidden relative group`}
+            >
+              {/* Gradient overlay on hover */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${category.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+              
+              {/* Icon */}
+              <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${category.color} flex items-center justify-center mb-4`}>
+                <category.icon className="w-6 h-6 text-white" />
+              </div>
+
+              {/* Title */}
+              <h3 className="text-lg font-semibold text-white mb-3">{category.title}</h3>
+
+              {/* Skills */}
+              <div className="flex flex-wrap gap-2">
+                {category.skills.map((skill) => (
+                  <span
+                    key={skill}
+                    className="px-3 py-1 text-sm bg-white/5 text-white/70 rounded-full border border-white/10 hover:border-white/30 hover:bg-white/10 transition-all"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+
+          {/* Stats card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="rounded-lg border border-[#00ff00]/30 bg-[#0a0a0a] shadow-[0_0_50px_rgba(0,255,0,0.1)] overflow-hidden"
+            transition={{ delay: 0.4 }}
+            className="col-span-1 bento-card glass-card rounded-3xl p-6 flex flex-col justify-center"
           >
-            {/* Terminal Header */}
-            <div className="flex items-center gap-2 px-4 py-3 bg-[#111] border-b border-[#00ff00]/20">
-              <div className="flex gap-2">
-                <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-                <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-                <div className="w-3 h-3 rounded-full bg-[#27ca40]" />
-              </div>
-              <span className="ml-4 text-[#606060] text-sm font-mono">skills.sh</span>
-            </div>
-
-            {/* Terminal Body */}
-            <div className="p-6 font-mono text-sm md:text-base">
-              {/* Command */}
-              <div className="mb-6">
-                <span className="terminal-cyan">❯</span>
-                <span className="terminal-text ml-2">$ cat skills.json | jq '.categories'</span>
-              </div>
-
-              {/* Tree structure */}
-              <div className="mb-8">
-                <div className="terminal-text mb-2">skills/</div>
-                {skillCategories.map((cat, idx) => (
-                  <div key={cat.name} className="ml-4">
-                    <button
-                      onClick={() => setActiveTab(cat.name)}
-                      className={`flex items-center gap-2 hover:terminal-text transition-colors ${
-                        activeTab === cat.name ? cat.color : "terminal-dim"
-                      }`}
-                    >
-                      <span>{idx === skillCategories.length - 1 ? "└──" : "├──"}</span>
-                      <span className="hover:underline">{cat.name}/</span>
-                      <span className="text-xs terminal-dim">({cat.skills.length} items)</span>
-                    </button>
-                  </div>
-                ))}
-              </div>
-
-              {/* Active category display */}
-              <div className="border-t border-[#00ff00]/20 pt-6">
-                <div className="mb-4">
-                  <span className="terminal-cyan">❯</span>
-                  <span className="terminal-text ml-2">$ ls -la ./skills/{activeTab}/</span>
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { value: "4+", label: "Languages" },
+                { value: "8+", label: "Frameworks" },
+                { value: "15+", label: "Tools" },
+                { value: "3+", label: "Years" },
+              ].map((stat) => (
+                <div key={stat.label} className="text-center">
+                  <p className="text-2xl font-bold text-gradient">{stat.value}</p>
+                  <p className="text-xs text-white/50">{stat.label}</p>
                 </div>
-
-                <div className="bg-[#111] rounded p-4 border border-[#00ff00]/10">
-                  <div className="terminal-dim text-xs mb-3">
-                    total {skillCategories.find(c => c.name === activeTab)?.skills.length}
-                  </div>
-                  
-                  {skillCategories
-                    .find(c => c.name === activeTab)
-                    ?.skills.map((skill, idx) => (
-                      <motion.div
-                        key={skill}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: idx * 0.05 }}
-                        className="flex items-center gap-4 py-1 hover:bg-[#1a1a1a] px-2 -mx-2 rounded transition-colors"
-                      >
-                        <span className="terminal-dim text-xs w-20">-rwxr-xr-x</span>
-                        <span className="terminal-dim text-xs w-16">hareesh</span>
-                        <span className={skillCategories.find(c => c.name === activeTab)?.color}>
-                          {skill}
-                        </span>
-                      </motion.div>
-                    ))}
-                </div>
-              </div>
-
-              {/* Stats */}
-              <div className="mt-8 pt-6 border-t border-[#00ff00]/20">
-                <div className="mb-4">
-                  <span className="terminal-cyan">❯</span>
-                  <span className="terminal-text ml-2">$ neofetch --stats</span>
-                </div>
-                
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {[
-                    { label: "Languages", value: "4+", icon: "λ" },
-                    { label: "Frameworks", value: "8+", icon: "⚙" },
-                    { label: "Tools", value: "15+", icon: "🔧" },
-                    { label: "Years", value: "3+", icon: "⏱" },
-                  ].map((stat) => (
-                    <div key={stat.label} className="bg-[#111] border border-[#00ff00]/10 rounded p-4 text-center">
-                      <div className="terminal-text text-2xl mb-1">{stat.value}</div>
-                      <div className="terminal-dim text-xs">{stat.label}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              ))}
             </div>
           </motion.div>
         </div>

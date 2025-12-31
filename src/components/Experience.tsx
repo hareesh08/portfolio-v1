@@ -1,29 +1,27 @@
 import { motion } from "framer-motion";
+import { Briefcase, GraduationCap, Award } from "lucide-react";
 import ProtectedData from "./ProtectedData";
 
 const experiences = [
   {
     title: "Android Developer Intern",
     company: "Ky Technologies Pvt Ltd",
-    location: "Chennai (Remote)",
     period: "Jan 2025 - Mar 2025",
-    description: "Developed a Customer Service Management System with JWT authentication, geofencing, and automated ticket workflows.",
+    description: "Built Customer Service Management System with JWT auth, geofencing, automated workflows",
     current: true,
   },
   {
     title: "Freelance Developer",
     company: "Upwork",
-    location: "Chennai (Remote)",
     period: "Jul 2021 - Jul 2022",
-    description: "Developed Python-based web scraping tools and automation solutions for various clients.",
+    description: "Python web scraping & automation tools for various clients",
     current: false,
   },
 ];
 
 const education = {
-  degree: "Bachelor of Information Technology",
+  degree: "B.Tech Information Technology",
   institution: "SRM Easwari Engineering College",
-  location: "Chennai, India",
   period: "2022 - 2026",
   cgpa: "7.75",
 };
@@ -36,110 +34,117 @@ const certifications = [
 
 const Experience = () => {
   return (
-    <section id="experience" className="py-24 bg-[#0a0a0a] relative overflow-hidden">
-      {/* Scanlines */}
-      <div className="absolute inset-0 scanlines opacity-20 z-0" />
-      
-      <div className="container px-4 relative z-10">
-        <div className="max-w-4xl mx-auto">
-          {/* Terminal Window */}
+    <section id="experience" className="py-20 px-4 bg-gradient-hero relative overflow-hidden">
+      {/* Background */}
+      <div className="absolute top-1/3 right-0 w-72 h-72 bg-pink-500/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-1/3 left-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl" />
+
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <span className="text-purple-400 text-sm font-medium tracking-wider uppercase">Journey</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">
+            Experience & <span className="text-gradient">Education</span>
+          </h2>
+        </motion.div>
+
+        {/* Bento Layout */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {/* Work Experience - Large card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="rounded-lg border border-[#00ff00]/30 bg-[#0a0a0a] shadow-[0_0_50px_rgba(0,255,0,0.1)] overflow-hidden"
+            className="md:col-span-2 bento-card glass-card rounded-3xl p-6"
           >
-            {/* Terminal Header */}
-            <div className="flex items-center gap-2 px-4 py-3 bg-[#111] border-b border-[#00ff00]/20">
-              <div className="flex gap-2">
-                <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-                <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-                <div className="w-3 h-3 rounded-full bg-[#27ca40]" />
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 to-purple-500 flex items-center justify-center">
+                <Briefcase className="w-5 h-5 text-white" />
               </div>
-              <span className="ml-4 text-[#606060] text-sm font-mono">experience.sh</span>
+              <h3 className="text-lg font-semibold text-white">Work Experience</h3>
             </div>
 
-            {/* Terminal Body */}
-            <div className="p-6 font-mono text-sm">
-              
-              {/* Work Experience Section */}
-              <div className="mb-8">
-                <div className="mb-4">
-                  <span className="terminal-cyan">❯</span>
-                  <span className="terminal-text ml-2">$ cat /var/log/work_history.log</span>
-                </div>
-
-                <div className="space-y-4">
-                  {experiences.map((exp, idx) => (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: idx * 0.1 }}
-                      className="bg-[#111] border border-[#00ff00]/10 rounded p-4"
-                    >
-                      <div className="flex flex-wrap items-center gap-2 mb-2">
-                        {exp.current && (
-                          <span className="px-2 py-0.5 text-xs bg-[#00ff00]/10 terminal-text animate-pulse">
-                            ACTIVE
-                          </span>
-                        )}
-                        <span className="terminal-yellow">{exp.period}</span>
-                      </div>
-                      <div className="terminal-white font-medium">{exp.title}</div>
-                      <div className="terminal-cyan text-xs mb-2">@ {exp.company} • {exp.location}</div>
-                      <div className="terminal-dim text-xs leading-relaxed">{exp.description}</div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Education Section */}
-              <div className="mb-8 pt-6 border-t border-[#00ff00]/20">
-                <div className="mb-4">
-                  <span className="terminal-cyan">❯</span>
-                  <span className="terminal-text ml-2">$ cat ~/.education</span>
-                </div>
-
-                <div className="bg-[#111] border border-[#00ff00]/10 rounded p-4">
-                  <div className="terminal-white font-medium">{education.degree}</div>
-                  <div className="terminal-cyan text-xs mb-2">@ {education.institution}</div>
-                  <div className="flex flex-wrap gap-4 text-xs">
-                    <span className="terminal-dim">{education.period}</span>
-                    <span className="terminal-dim">{education.location}</span>
-                    <span className="flex items-center gap-2">
-                      <span className="terminal-dim">CGPA:</span>
-                      <ProtectedData value={education.cgpa} masked="•.••" className="terminal-yellow" />
-                    </span>
+            <div className="space-y-4">
+              {experiences.map((exp, idx) => (
+                <div
+                  key={idx}
+                  className="p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-white/10 transition-colors"
+                >
+                  <div className="flex items-start justify-between mb-2">
+                    <div>
+                      <h4 className="font-semibold text-white">{exp.title}</h4>
+                      <p className="text-sm text-pink-400">{exp.company}</p>
+                    </div>
+                    {exp.current && (
+                      <span className="px-2 py-1 text-xs bg-green-500/20 text-green-400 rounded-full">
+                        Current
+                      </span>
+                    )}
                   </div>
+                  <p className="text-xs text-white/50 mb-2">{exp.period}</p>
+                  <p className="text-sm text-white/70">{exp.description}</p>
                 </div>
-              </div>
+              ))}
+            </div>
+          </motion.div>
 
-              {/* Certifications */}
-              <div className="pt-6 border-t border-[#00ff00]/20">
-                <div className="mb-4">
-                  <span className="terminal-cyan">❯</span>
-                  <span className="terminal-text ml-2">$ ls ~/certifications/</span>
-                </div>
-
-                <div className="space-y-1">
-                  {certifications.map((cert, idx) => (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: idx * 0.1 }}
-                      className="flex items-center gap-3 py-1 hover:bg-[#111] px-2 -mx-2 rounded transition-colors"
-                    >
-                      <span className="terminal-dim text-xs">-rw-r--r--</span>
-                      <span className="terminal-text">{cert}</span>
-                    </motion.div>
-                  ))}
-                </div>
+          {/* Education */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="bento-card glass-card rounded-3xl p-6"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center">
+                <GraduationCap className="w-5 h-5 text-white" />
               </div>
+              <h3 className="text-lg font-semibold text-white">Education</h3>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/5">
+              <h4 className="font-semibold text-white mb-1">{education.degree}</h4>
+              <p className="text-sm text-cyan-400 mb-2">{education.institution}</p>
+              <p className="text-xs text-white/50 mb-3">{education.period}</p>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-white/70">CGPA:</span>
+                <span className="px-3 py-1 bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-full">
+                  <ProtectedData value={education.cgpa} masked="•.••" className="text-sm font-semibold text-white" />
+                </span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Certifications */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="md:col-span-2 lg:col-span-3 bento-card glass-card rounded-3xl p-6"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-pink-500 flex items-center justify-center">
+                <Award className="w-5 h-5 text-white" />
+              </div>
+              <h3 className="text-lg font-semibold text-white">Certifications</h3>
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              {certifications.map((cert, idx) => (
+                <span
+                  key={idx}
+                  className="px-4 py-2 glass rounded-full text-sm text-white/80 hover:text-white hover:bg-white/10 transition-all"
+                >
+                  🏆 {cert}
+                </span>
+              ))}
             </div>
           </motion.div>
         </div>

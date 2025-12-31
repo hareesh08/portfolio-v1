@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import Desktop from "@/components/Desktop";
+import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
+import Skills from "@/components/Skills";
+import Projects from "@/components/Projects";
+import Experience from "@/components/Experience";
+import Contact from "@/components/Contact";
 import BootingScreen from "@/components/BootingScreen";
 import IntroScreen from "@/components/IntroScreen";
 
@@ -27,20 +32,25 @@ const Index = () => {
   };
 
   if (phase === "checking") {
-    return <div className="fixed inset-0 bg-[#1e1e2e]" />;
+    return <div className="fixed inset-0 bg-[#0f0f1a]" />;
   }
 
   return (
     <>
-      {phase === "intro" && (
-        <IntroScreen onComplete={handleIntroComplete} />
+      {phase === "intro" && <IntroScreen onComplete={handleIntroComplete} />}
+      {phase === "booting" && <BootingScreen onComplete={handleBootingComplete} />}
+      {phase === "main" && (
+        <div className="min-h-screen bg-[#0f0f1a]">
+          <Navbar />
+          <main>
+            <Hero />
+            <Skills />
+            <Projects />
+            <Experience />
+            <Contact />
+          </main>
+        </div>
       )}
-
-      {phase === "booting" && (
-        <BootingScreen onComplete={handleBootingComplete} />
-      )}
-
-      {phase === "main" && <Desktop />}
     </>
   );
 };

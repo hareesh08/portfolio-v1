@@ -1,190 +1,155 @@
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { Github, ExternalLink, Heart, MessageCircle, Send, Bookmark } from "lucide-react";
 
 const projects = [
   {
-    hash: "a1b2c3d",
     title: "Service Management App",
-    description: "Customer Service Management System with JWT authentication, geofencing, and automated ticket workflows.",
-    tech: ["Kotlin", "Jetpack Compose", "Django REST", "PostgreSQL"],
+    description: "Customer Service Management with JWT auth, geofencing, automated workflows",
+    tech: ["Kotlin", "Compose", "Django"],
     github: "https://github.com/hareesh08/servicemanagerportal",
-    date: "2025-03-15",
-    type: "feat",
+    image: "🔧",
+    likes: "1.2K",
     featured: true,
   },
   {
-    hash: "e4f5g6h",
-    title: "ERP WebView Android App",
-    description: "Advanced JSON API parser using Retrofit and OkHttp to efficiently process and display dynamic data.",
-    tech: ["Kotlin", "Jetpack Compose", "Retrofit", "OkHttp"],
+    title: "ERP WebView App",
+    description: "Advanced JSON API parser using Retrofit and OkHttp",
+    tech: ["Kotlin", "Retrofit", "OkHttp"],
     github: "https://github.com/hareesh08/EECFate1",
-    date: "2024-12-20",
-    type: "feat",
+    image: "📱",
+    likes: "890",
     featured: true,
   },
   {
-    hash: "i7j8k9l",
-    title: "Offline License Management",
-    description: "Secure licensing system using JWT, AES encryption, and HWID binding with offline validation.",
-    tech: ["C#", "Native AOT", "JWT", "AES"],
+    title: "License Management",
+    description: "Secure licensing with JWT, AES encryption, HWID binding",
+    tech: ["C#", "JWT", "AES"],
     github: "https://github.com/hareesh08/ButterAuth-1",
-    date: "2025-06-10",
-    type: "security",
+    image: "🔐",
+    likes: "654",
     featured: false,
   },
   {
-    hash: "m0n1o2p",
-    title: "Report Automation Tool",
-    description: "Python-based system for automating distribution of internal assessment marks via email.",
-    tech: ["Python", "Pandas", "Email Automation"],
+    title: "Report Automation",
+    description: "Python-based email automation for assessment marks",
+    tech: ["Python", "Pandas"],
     github: "https://github.com/hareesh08/MailSender_Web-ui_Raw",
-    date: "2024-02-28",
-    type: "tool",
-    featured: false,
-  },
-  {
-    hash: "q3r4s5t",
-    title: "Lead Generator Text Tool",
-    description: "Text-based manipulation tool built in C# with Native AOT optimization.",
-    tech: ["C#", "Native AOT", "Text Processing"],
-    github: "https://github.com/hareesh08/FixcomboV3",
-    date: "2024-08-15",
-    type: "tool",
+    image: "📊",
+    likes: "432",
     featured: false,
   },
 ];
 
 const Projects = () => {
   return (
-    <section id="projects" className="py-24 bg-[#0a0a0a] relative overflow-hidden">
-      {/* Scanlines */}
-      <div className="absolute inset-0 scanlines opacity-20 z-0" />
-      
-      <div className="container px-4 relative z-10">
-        <div className="max-w-4xl mx-auto">
-          {/* Terminal Window */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="rounded-lg border border-[#00ff00]/30 bg-[#0a0a0a] shadow-[0_0_50px_rgba(0,255,0,0.1)] overflow-hidden"
-          >
-            {/* Terminal Header */}
-            <div className="flex items-center gap-2 px-4 py-3 bg-[#111] border-b border-[#00ff00]/20">
-              <div className="flex gap-2">
-                <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-                <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-                <div className="w-3 h-3 rounded-full bg-[#27ca40]" />
-              </div>
-              <span className="ml-4 text-[#606060] text-sm font-mono">projects.sh</span>
-            </div>
+    <section id="projects" className="py-20 px-4 bg-gradient-hero relative overflow-hidden">
+      {/* Background */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl" />
 
-            {/* Terminal Body */}
-            <div className="p-6 font-mono text-sm">
-              {/* Command */}
-              <div className="mb-6">
-                <span className="terminal-cyan">❯</span>
-                <span className="terminal-text ml-2">$ git log --oneline --all --graph</span>
-              </div>
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <span className="text-cyan-400 text-sm font-medium tracking-wider uppercase">Portfolio</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">
+            Featured <span className="text-gradient">Projects</span>
+          </h2>
+        </motion.div>
 
-              {/* Git log style projects */}
-              <div className="space-y-1">
-                {projects.map((project, idx) => (
-                  <motion.div
-                    key={project.hash}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: idx * 0.1 }}
-                  >
-                    {/* Git graph line */}
-                    <div className="flex items-start gap-3 group">
-                      {/* Graph decoration */}
-                      <div className="flex items-center gap-1 flex-shrink-0">
-                        <span className="terminal-red">*</span>
-                      </div>
-
-                      {/* Commit info */}
-                      <div className="flex-1 py-2 px-3 -mx-3 rounded hover:bg-[#111] transition-colors">
-                        <div className="flex flex-wrap items-center gap-2 mb-1">
-                          <span className="terminal-yellow">{project.hash}</span>
-                          <span className={`px-2 py-0.5 text-xs rounded ${
-                            project.type === "feat" ? "bg-[#00ff00]/10 terminal-text" :
-                            project.type === "security" ? "bg-[#ff00ff]/10 terminal-magenta" :
-                            "bg-[#00ffff]/10 terminal-cyan"
-                          }`}>
-                            {project.type}
-                          </span>
-                          {project.featured && (
-                            <span className="px-2 py-0.5 text-xs bg-[#ffff00]/10 terminal-yellow">
-                              ★ featured
-                            </span>
-                          )}
-                        </div>
-                        
-                        <div className="terminal-white font-medium mb-1">
-                          {project.title}
-                        </div>
-                        
-                        <div className="terminal-dim text-xs mb-2 leading-relaxed">
-                          {project.description}
-                        </div>
-
-                        {/* Tech tags */}
-                        <div className="flex flex-wrap gap-2 mb-2">
-                          {project.tech.map((tech) => (
-                            <span key={tech} className="text-xs terminal-cyan">
-                              [{tech}]
-                            </span>
-                          ))}
-                        </div>
-
-                        {/* Meta info */}
-                        <div className="flex items-center gap-4 text-xs">
-                          <span className="terminal-dim">{project.date}</span>
-                          <a
-                            href={project.github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="terminal-cyan hover:terminal-text flex items-center gap-1 transition-colors"
-                          >
-                            view source <ExternalLink className="w-3 h-3" />
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Graph connector */}
-                    {idx < projects.length - 1 && (
-                      <div className="flex items-center gap-3">
-                        <span className="terminal-red ml-[3px]">│</span>
-                      </div>
-                    )}
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* GitHub link */}
-              <div className="mt-8 pt-6 border-t border-[#00ff00]/20">
-                <div className="mb-4">
-                  <span className="terminal-cyan">❯</span>
-                  <span className="terminal-text ml-2">$ open https://github.com/hareesh08</span>
+        {/* Projects Grid - Instagram Post Style */}
+        <div className="grid md:grid-cols-2 gap-6">
+          {projects.map((project, idx) => (
+            <motion.article
+              key={project.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              className="bento-card glass-card rounded-3xl overflow-hidden"
+            >
+              {/* Post header */}
+              <div className="flex items-center gap-3 p-4 border-b border-white/5">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-purple-500 flex items-center justify-center text-lg">
+                  {project.image}
                 </div>
-                
+                <div className="flex-1">
+                  <p className="font-semibold text-white text-sm">{project.title}</p>
+                  <p className="text-xs text-white/50">
+                    {project.featured && <span className="text-pink-400">Featured • </span>}
+                    {project.tech.join(" • ")}
+                  </p>
+                </div>
                 <a
-                  href="https://github.com/hareesh08"
+                  href={project.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 border border-[#00ff00] text-[#00ff00] hover:bg-[#00ff00] hover:text-[#0a0a0a] transition-all text-sm"
+                  className="text-white/50 hover:text-white transition-colors"
                 >
-                  <span>View all repositories</span>
-                  <ExternalLink className="w-4 h-4" />
+                  <ExternalLink className="w-5 h-5" />
                 </a>
               </div>
-            </div>
-          </motion.div>
+
+              {/* Post content */}
+              <div className="p-6 min-h-[120px] flex items-center justify-center bg-gradient-to-br from-white/5 to-transparent">
+                <div className="text-6xl">{project.image}</div>
+              </div>
+
+              {/* Post actions - Instagram style */}
+              <div className="p-4 border-t border-white/5">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-4">
+                    <button className="text-white/70 hover:text-pink-500 transition-colors">
+                      <Heart className="w-6 h-6" />
+                    </button>
+                    <button className="text-white/70 hover:text-white transition-colors">
+                      <MessageCircle className="w-6 h-6" />
+                    </button>
+                    <a 
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white/70 hover:text-white transition-colors"
+                    >
+                      <Github className="w-6 h-6" />
+                    </a>
+                  </div>
+                  <button className="text-white/70 hover:text-white transition-colors">
+                    <Bookmark className="w-6 h-6" />
+                  </button>
+                </div>
+                
+                <p className="text-sm font-semibold text-white mb-1">{project.likes} likes</p>
+                <p className="text-sm text-white/70">
+                  <span className="font-semibold text-white">hareesh.dev</span>{" "}
+                  {project.description}
+                </p>
+              </div>
+            </motion.article>
+          ))}
         </div>
+
+        {/* View all link */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center mt-10"
+        >
+          <a
+            href="https://github.com/hareesh08"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 glass rounded-full text-white/70 hover:text-white hover:bg-white/10 transition-all"
+          >
+            <Github className="w-5 h-5" />
+            View all on GitHub
+          </a>
+        </motion.div>
       </div>
     </section>
   );
