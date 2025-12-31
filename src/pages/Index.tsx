@@ -18,17 +18,17 @@ const Index = () => {
   useEffect(() => {
     const hasVisited = localStorage.getItem("portfolio_visited");
     if (hasVisited) {
-      // Returning visitor - skip intro, go to boot screen
+      // Returning visitor - show boot screen
       setPhase("booting");
     } else {
-      // First time visitor - show intro
+      // First time visitor - show intro, then go directly to main
       setPhase("intro");
     }
   }, []);
 
   const handleIntroComplete = () => {
     localStorage.setItem("portfolio_visited", "true");
-    setPhase("booting");
+    setPhase("main"); // Go directly to main after intro
   };
 
   const handleBootingComplete = () => {
@@ -42,12 +42,12 @@ const Index = () => {
 
   return (
     <>
-      {/* Intro Screen - only on first visit */}
+      {/* Intro Screen - only on first visit, goes directly to main */}
       {phase === "intro" && (
         <IntroScreen onComplete={handleIntroComplete} />
       )}
 
-      {/* Booting Screen */}
+      {/* Booting Screen - only for returning visitors */}
       {phase === "booting" && (
         <BootingScreen onComplete={handleBootingComplete} />
       )}
