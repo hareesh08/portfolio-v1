@@ -18,7 +18,7 @@ const Hero = () => {
             {/* Avatar */}
             <div className="w-24 h-24 md:w-28 md:h-28 rounded-xl overflow-hidden flex-shrink-0 border border-white/10">
               <img 
-                src="/favicon.ico" 
+                src="/android-chrome-512x512.png" 
                 alt="Hareesh Ragavendra" 
                 className="w-full h-full object-cover"
               />
