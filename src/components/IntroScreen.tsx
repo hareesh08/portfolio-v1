@@ -8,12 +8,27 @@ const fallbackFacts = [
   "The first website is still online at info.cern.ch.",
 ];
 
-// Motivational quotes
-const motivationalQuotes = [
+// Motivational quotes - expanded collection
+const allMotivationalQuotes = [
   "Every expert was once a beginner.",
   "Your potential is limitless.",
   "Great things take time. Keep going.",
+  "Dream big. Start small. Act now.",
+  "Success is built one step at a time.",
+  "The best time to start is today.",
+  "Believe in yourself and create magic.",
+  "Your only limit is your mind.",
+  "Turn your obstacles into opportunities.",
+  "Progress, not perfection.",
+  "Stay curious. Stay hungry.",
+  "Make today count.",
 ];
+
+// Get 3 random quotes
+const getRandomQuotes = () => {
+  const shuffled = [...allMotivationalQuotes].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, 3);
+};
 
 interface IntroScreenProps {
   onComplete: () => void;
@@ -48,11 +63,11 @@ type Phase = "askName" | "welcome" | "motivation" | "loading" | "facts" | "ready
 const IntroScreen = ({ onComplete }: IntroScreenProps) => {
   const [userName, setUserName] = useState("");
   const [phase, setPhase] = useState<Phase>("askName");
-  const [facts, setFacts] = useState<string[]>([]);
-  const [currentFactIndex, setCurrentFactIndex] = useState(0);
+  const [fact, setFact] = useState("");
   const [currentTime, setCurrentTime] = useState(getISTTime());
   const [textVisible, setTextVisible] = useState(false);
   const [motivationIndex, setMotivationIndex] = useState(0);
+  const [motivationalQuotes] = useState(getRandomQuotes);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleComplete = useCallback(() => {
@@ -72,26 +87,24 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
     return () => clearInterval(timer);
   }, []);
 
-  // Fetch facts
+  // Fetch single fact
   useEffect(() => {
-    const fetchFacts = async () => {
+    const fetchFact = async () => {
       try {
-        const fetchedFacts: string[] = [];
-        for (let i = 0; i < 3; i++) {
-          const response = await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random?language=en");
-          if (response.ok) {
-            const data = await response.json();
-            if (data.text && data.text.length < 150) {
-              fetchedFacts.push(data.text);
-            }
+        const response = await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random?language=en");
+        if (response.ok) {
+          const data = await response.json();
+          if (data.text && data.text.length < 150) {
+            setFact(data.text);
+            return;
           }
         }
-        setFacts(fetchedFacts.length >= 3 ? fetchedFacts : fallbackFacts);
+        setFact(fallbackFacts[Math.floor(Math.random() * fallbackFacts.length)]);
       } catch {
-        setFacts(fallbackFacts);
+        setFact(fallbackFacts[Math.floor(Math.random() * fallbackFacts.length)]);
       }
     };
-    fetchFacts();
+    fetchFact();
   }, []);
 
   // Handle name submission
@@ -143,19 +156,11 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
 
     if (phase === "facts") {
       const timer = setTimeout(() => {
-        if (currentFactIndex < facts.length - 1) {
-          setTextVisible(false);
-          setTimeout(() => {
-            setCurrentFactIndex(prev => prev + 1);
-            setTextVisible(true);
-          }, 400);
-        } else {
-          setTextVisible(false);
-          setTimeout(() => {
-            setPhase("ready");
-            setTextVisible(true);
-          }, 500);
-        }
+        setTextVisible(false);
+        setTimeout(() => {
+          setPhase("ready");
+          setTextVisible(true);
+        }, 500);
       }, 3000);
       return () => clearTimeout(timer);
     }
@@ -167,10 +172,9 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
       }, 2000);
       return () => clearTimeout(timer);
     }
-  }, [phase, motivationIndex, currentFactIndex, facts.length, handleComplete]);
+  }, [phase, motivationIndex, motivationalQuotes.length, handleComplete]);
 
-  const progress = phase === "facts" ? ((currentFactIndex + 1) / facts.length) * 100 : 
-                   phase === "ready" || phase === "exit" ? 100 : 0;
+
 
   return (
     <div
@@ -273,29 +277,15 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
         )}
 
         {/* Facts Phase */}
-        {phase === "facts" && facts.length > 0 && (
-          <div className="space-y-8">
+        {phase === "facts" && fact && (
+          <div className="space-y-6">
             <p className="text-white/40 text-xs tracking-[0.2em] uppercase">Did you know?</p>
             
-            {/* Progress bar */}
-            <div className="w-64 md:w-96 mx-auto">
-              <div className="h-1 bg-white/10 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-white/30 to-white/60 rounded-full transition-all duration-700 ease-out"
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
-              <p className="text-white/20 text-xs text-center mt-2 tracking-wider font-mono">
-                {currentFactIndex + 1} / {facts.length}
-              </p>
-            </div>
-
-            {/* Fact text below progress bar */}
             <div className={`transition-all duration-500 ease-out max-w-2xl ${
               textVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}>
               <p className="text-white/60 text-base md:text-lg font-light leading-relaxed">
-                {facts[currentFactIndex]}
+                {fact}
               </p>
             </div>
           </div>
