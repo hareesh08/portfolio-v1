@@ -1,5 +1,6 @@
 import { Briefcase, MapPin, Calendar } from "lucide-react";
 import { motion, Variants } from "framer-motion";
+import ProtectedData from "./ProtectedData";
 
 const experiences = [
   {
@@ -183,12 +184,9 @@ const Experience = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-sm text-muted-foreground">CGPA:</span>
-                  <motion.span 
-                    className="px-3 py-1 font-mono font-semibold bg-primary/10 text-primary rounded-md border border-primary/20 group-hover:border-primary/50 transition-all"
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    {education.cgpa}
-                  </motion.span>
+                  <span className="px-3 py-1 font-mono font-semibold bg-primary/10 text-primary rounded-md border border-primary/20 group-hover:border-primary/50 transition-all">
+                    <ProtectedData value={education.cgpa} masked="•.••" />
+                  </span>
                 </div>
               </motion.div>
 

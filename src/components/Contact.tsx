@@ -1,6 +1,8 @@
 import { Mail, Phone, MapPin, Github, Linkedin, Globe } from "lucide-react";
 import { Button } from "./ui/button";
 import { motion, Variants } from "framer-motion";
+import ProtectedData from "./ProtectedData";
+import { useAuth } from "@/context/AuthContext";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -22,6 +24,8 @@ const itemVariants: Variants = {
 };
 
 const Contact = () => {
+  const { isAuthorized } = useAuth();
+  
   return (
     <section id="contact" className="py-24 bg-gradient-hero relative">
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:64px_64px]" />
@@ -51,41 +55,51 @@ const Contact = () => {
               viewport={{ once: true, margin: "-100px" }}
               className="space-y-6"
             >
-              <motion.a
+              <motion.div
                 variants={itemVariants}
-                href="mailto:dhareesh205@gmail.com"
                 className="group flex items-center gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg"
-                whileHover={{ scale: 1.03, x: 5 }}
               >
-                <motion.div 
-                  className="p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors flex-shrink-0"
-                  whileHover={{ scale: 1.1, rotate: 10 }}
-                >
+                <div className="p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors flex-shrink-0">
                   <Mail className="w-5 h-5 text-primary" />
-                </motion.div>
+                </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Email</p>
-                  <p className="font-semibold group-hover:text-primary transition-colors">Dhareesh205@gmail.com</p>
+                  {isAuthorized ? (
+                    <a href="mailto:dhareesh205@gmail.com" className="font-semibold group-hover:text-primary transition-colors">
+                      Dhareesh205@gmail.com
+                    </a>
+                  ) : (
+                    <ProtectedData 
+                      value="Dhareesh205@gmail.com" 
+                      masked="d•••••@gmail.com"
+                      className="font-semibold"
+                    />
+                  )}
                 </div>
-              </motion.a>
+              </motion.div>
 
-              <motion.a
+              <motion.div
                 variants={itemVariants}
-                href="tel:+918072703652"
                 className="group flex items-center gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg"
-                whileHover={{ scale: 1.03, x: 5 }}
               >
-                <motion.div 
-                  className="p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors flex-shrink-0"
-                  whileHover={{ scale: 1.1, rotate: 10 }}
-                >
+                <div className="p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors flex-shrink-0">
                   <Phone className="w-5 h-5 text-primary" />
-                </motion.div>
+                </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Phone</p>
-                  <p className="font-semibold group-hover:text-primary transition-colors">+91 80727 03652</p>
+                  {isAuthorized ? (
+                    <a href="tel:+918072703652" className="font-semibold group-hover:text-primary transition-colors">
+                      +91 80727 03652
+                    </a>
+                  ) : (
+                    <ProtectedData 
+                      value="+91 80727 03652" 
+                      masked="+91 •••••••••"
+                      className="font-semibold"
+                    />
+                  )}
                 </div>
-              </motion.a>
+              </motion.div>
 
               <motion.div
                 variants={itemVariants}

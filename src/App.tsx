@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
+import { AuthProvider } from "@/context/AuthContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -31,23 +32,25 @@ const ScrollToSection = ({ children }: { children: React.ReactNode }) => {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <HashRouter>
-        <ScrollToSection>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/skills" element={<Index />} />
-            <Route path="/projects" element={<Index />} />
-            <Route path="/experience" element={<Index />} />
-            <Route path="/contact" element={<Index />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </ScrollToSection>
-      </HashRouter>
-    </TooltipProvider>
+    <AuthProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <HashRouter>
+          <ScrollToSection>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/skills" element={<Index />} />
+              <Route path="/projects" element={<Index />} />
+              <Route path="/experience" element={<Index />} />
+              <Route path="/contact" element={<Index />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </ScrollToSection>
+        </HashRouter>
+      </TooltipProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 
