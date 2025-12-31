@@ -1,14 +1,12 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Code2 } from "lucide-react";
 
-// Fallback facts in case API fails
 const fallbackFacts = [
   "The first computer programmer was Ada Lovelace in 1843.",
   "The first 1GB hard drive weighed 550 pounds.",
   "The first website is still online at info.cern.ch.",
 ];
 
-// Motivational quotes - expanded collection
 const allMotivationalQuotes = [
   "Every expert was once a beginner.",
   "Your potential is limitless.",
@@ -24,7 +22,6 @@ const allMotivationalQuotes = [
   "Make today count.",
 ];
 
-// Get 3 random quotes
 const getRandomQuotes = () => {
   const shuffled = [...allMotivationalQuotes].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, 3);
@@ -34,7 +31,6 @@ interface IntroScreenProps {
   onComplete: () => void;
 }
 
-// Get current IST time
 const getISTTime = () => {
   const now = new Date();
   const istOffset = 5.5 * 60 * 60 * 1000;
@@ -74,20 +70,17 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
     onComplete();
   }, [onComplete]);
 
-  // Focus input on mount
   useEffect(() => {
     if (phase === "askName" && inputRef.current) {
       inputRef.current.focus();
     }
   }, [phase]);
 
-  // Update time
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(getISTTime()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  // Fetch single fact
   useEffect(() => {
     const fetchFact = async () => {
       try {
@@ -107,7 +100,6 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
     fetchFact();
   }, []);
 
-  // Handle name submission
   const handleNameSubmit = () => {
     if (userName.trim()) {
       setPhase("welcome");
@@ -115,7 +107,6 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
     }
   };
 
-  // Phase transitions
   useEffect(() => {
     if (phase === "welcome") {
       const timer = setTimeout(() => {
@@ -174,39 +165,35 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
     }
   }, [phase, motivationIndex, motivationalQuotes.length, handleComplete]);
 
-
-
   return (
     <div
-      className={`fixed inset-0 z-[60] flex flex-col items-center justify-center bg-black transition-all duration-1000 ease-out ${
+      className={`fixed inset-0 z-[60] flex flex-col items-center justify-center bg-[#1e1e2e] transition-all duration-1000 ${
         phase === "exit" ? "opacity-0 scale-105" : "opacity-100 scale-100"
       }`}
     >
-      {/* Ambient glow */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-white/[0.02] to-transparent rounded-full" />
-      </div>
+      {/* Background pattern */}
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%239C92AC\" fill-opacity=\"0.03\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]" />
 
       {/* Time display */}
       <div className="absolute top-8 left-1/2 -translate-x-1/2 text-center">
-        <p className="text-white/60 text-3xl md:text-4xl font-extralight tracking-wider font-mono">
+        <p className="text-[#a9b7c6]/60 text-3xl md:text-4xl font-light tracking-wider font-mono">
           {currentTime}
         </p>
-        <p className="text-white/30 text-xs tracking-[0.3em] uppercase mt-1">IST</p>
+        <p className="text-[#606060] text-xs tracking-[0.3em] uppercase mt-1">IST</p>
       </div>
 
-      {/* Main content area */}
+      {/* Main content */}
       <div className="relative z-10 flex flex-col items-center justify-center px-6 md:px-16 max-w-3xl mx-auto text-center min-h-[300px]">
         
         {/* Ask Name Phase */}
         {phase === "askName" && (
           <div className="animate-fade-in space-y-8">
             <div className="space-y-2">
-              <Sparkles className="w-8 h-8 text-white/40 mx-auto mb-4" />
-              <h2 className="text-white/90 text-2xl md:text-4xl font-extralight tracking-wide">
+              <Code2 className="w-10 h-10 text-blue-400 mx-auto mb-4" />
+              <h2 className="text-[#a9b7c6] text-2xl md:text-4xl font-light tracking-wide">
                 {getGreeting()}!
               </h2>
-              <p className="text-white/50 text-base md:text-lg font-light">
+              <p className="text-[#606060] text-base md:text-lg">
                 What should I call you?
               </p>
             </div>
@@ -219,17 +206,17 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
                 onChange={(e) => setUserName(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleNameSubmit()}
                 placeholder="Enter your name..."
-                className="w-64 md:w-80 bg-transparent border-b-2 border-white/20 focus:border-white/50 text-white text-center text-xl md:text-2xl font-light py-3 outline-none transition-all duration-300 placeholder:text-white/20"
+                className="w-64 md:w-80 bg-[#2b2b2b] border border-[#3c3f41] focus:border-blue-500 text-[#a9b7c6] text-center text-xl md:text-2xl font-mono py-3 px-4 rounded-lg outline-none transition-all placeholder:text-[#606060]"
                 autoComplete="off"
               />
               
               <button
                 onClick={handleNameSubmit}
                 disabled={!userName.trim()}
-                className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm tracking-wider uppercase transition-all duration-300 ${
+                className={`flex items-center gap-2 px-6 py-3 rounded-lg text-sm tracking-wider transition-all duration-300 font-mono ${
                   userName.trim() 
-                    ? "bg-white/10 text-white/80 hover:bg-white/20 hover:scale-105" 
-                    : "bg-white/5 text-white/20 cursor-not-allowed"
+                    ? "bg-blue-600 text-white hover:bg-blue-700" 
+                    : "bg-[#3c3f41] text-[#606060] cursor-not-allowed"
                 }`}
               >
                 Continue <ArrowRight className="w-4 h-4" />
@@ -240,25 +227,25 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
 
         {/* Welcome Phase */}
         {phase === "welcome" && (
-          <div className={`transition-all duration-700 ease-out ${
+          <div className={`transition-all duration-700 ${
             textVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}>
-            <p className="text-white/40 text-sm tracking-[0.3em] uppercase mb-4">Welcome</p>
-            <h1 className="text-white text-4xl md:text-6xl font-extralight tracking-wide mb-4">
-              Hello, <span className="text-white/90">{userName}</span>
+            <p className="text-[#606060] text-sm tracking-[0.3em] uppercase mb-4 font-mono">Welcome</p>
+            <h1 className="text-[#a9b7c6] text-4xl md:text-6xl font-light tracking-wide mb-4">
+              Hello, <span className="text-blue-400">{userName}</span>
             </h1>
-            <p className="text-white/50 text-lg font-light">
-              It's wonderful to have you here ✨
+            <p className="text-[#808080] text-lg">
+              Great to have you here
             </p>
           </div>
         )}
 
         {/* Motivation Phase */}
         {phase === "motivation" && (
-          <div className={`transition-all duration-500 ease-out ${
+          <div className={`transition-all duration-500 ${
             textVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
           }`}>
-            <p className="text-white/70 text-xl md:text-3xl font-extralight leading-relaxed tracking-wide italic">
+            <p className="text-[#cc7832] text-xl md:text-3xl font-light leading-relaxed tracking-wide italic font-mono">
               "{motivationalQuotes[motivationIndex]}"
             </p>
           </div>
@@ -268,23 +255,23 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
         {phase === "loading" && (
           <div className="space-y-4">
             <div className="flex items-center justify-center gap-1">
-              <div className="w-2 h-2 bg-white/50 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-              <div className="w-2 h-2 bg-white/50 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-              <div className="w-2 h-2 bg-white/50 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+              <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+              <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+              <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
             </div>
-            <p className="text-white/30 text-sm tracking-wider">Preparing something special...</p>
+            <p className="text-[#606060] text-sm tracking-wider font-mono">Loading workspace...</p>
           </div>
         )}
 
         {/* Facts Phase */}
         {phase === "facts" && fact && (
           <div className="space-y-6">
-            <p className="text-white/40 text-xs tracking-[0.2em] uppercase">Did you know?</p>
+            <p className="text-[#6a8759] text-xs tracking-[0.2em] uppercase font-mono">// Did you know?</p>
             
-            <div className={`transition-all duration-500 ease-out max-w-2xl ${
+            <div className={`transition-all duration-500 max-w-2xl ${
               textVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}>
-              <p className="text-white/60 text-base md:text-lg font-light leading-relaxed">
+              <p className="text-[#a9b7c6] text-base md:text-lg font-light leading-relaxed">
                 {fact}
               </p>
             </div>
@@ -293,15 +280,15 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
 
         {/* Ready Phase */}
         {phase === "ready" && (
-          <div className={`transition-all duration-700 ease-out ${
+          <div className={`transition-all duration-700 ${
             textVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"
           }`}>
-            <p className="text-white/40 text-sm tracking-[0.3em] uppercase mb-6">Ready to explore</p>
-            <h1 className="text-white text-3xl md:text-5xl font-extralight tracking-wide mb-3">
-              {userName}'s Journey Begins
+            <p className="text-[#6a8759] text-sm tracking-[0.3em] uppercase mb-6 font-mono">// Ready</p>
+            <h1 className="text-[#a9b7c6] text-3xl md:text-5xl font-light tracking-wide mb-3">
+              Opening <span className="text-blue-400">{userName}'s</span> Workspace
             </h1>
-            <p className="text-white/50 text-lg font-light">
-              Welcome to the portfolio of <span className="text-white/80">Hareesh Ragavendra</span>
+            <p className="text-[#808080] text-lg">
+              Portfolio of <span className="text-[#ffc66d]">Hareesh Ragavendra</span>
             </p>
           </div>
         )}
@@ -314,9 +301,9 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
             setPhase("exit");
             setTimeout(handleComplete, 800);
           }}
-          className="absolute bottom-8 right-8 text-white/20 hover:text-white/40 text-xs tracking-[0.2em] uppercase transition-all duration-300"
+          className="absolute bottom-8 right-8 text-[#606060] hover:text-[#a9b7c6] text-xs tracking-[0.2em] uppercase transition-colors font-mono"
         >
-          Skip
+          Skip →
         </button>
       )}
     </div>

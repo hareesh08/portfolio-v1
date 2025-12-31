@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Fira+Code:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,52 +6,62 @@
 
 @layer base {
   :root {
-    --background: 0 0% 4%;
-    --foreground: 120 100% 80%;
+    --background: 220 13% 18%;
+    --foreground: 220 13% 91%;
 
-    --card: 0 0% 6%;
-    --card-foreground: 120 100% 80%;
+    --card: 220 13% 22%;
+    --card-foreground: 220 13% 91%;
 
-    --popover: 0 0% 6%;
-    --popover-foreground: 120 100% 80%;
+    --popover: 220 13% 20%;
+    --popover-foreground: 220 13% 91%;
 
-    --primary: 120 100% 50%;
-    --primary-foreground: 0 0% 4%;
+    --primary: 210 100% 56%;
+    --primary-foreground: 220 13% 10%;
 
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 120 100% 80%;
+    --secondary: 220 13% 26%;
+    --secondary-foreground: 220 13% 91%;
 
-    --muted: 0 0% 12%;
-    --muted-foreground: 120 40% 50%;
+    --muted: 220 13% 30%;
+    --muted-foreground: 220 13% 65%;
 
-    --accent: 180 100% 50%;
-    --accent-foreground: 0 0% 4%;
+    --accent: 280 65% 60%;
+    --accent-foreground: 220 13% 10%;
 
-    --destructive: 0 100% 50%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 120 100% 20%;
-    --input: 0 0% 10%;
-    --ring: 120 100% 50%;
+    --border: 220 13% 26%;
+    --input: 220 13% 24%;
+    --ring: 210 100% 56%;
 
-    --radius: 0.25rem;
+    --radius: 0.5rem;
 
-    /* Terminal colors */
-    --terminal-green: #00ff00;
-    --terminal-cyan: #00ffff;
-    --terminal-yellow: #ffff00;
-    --terminal-red: #ff0000;
-    --terminal-magenta: #ff00ff;
-    --terminal-blue: #0080ff;
-    --terminal-white: #ffffff;
-    --terminal-gray: #808080;
-    --terminal-dim: #404040;
-    --terminal-bg: #0a0a0a;
-    --terminal-card: #111111;
+    /* IDE Colors - JetBrains Darcula inspired */
+    --ide-bg: #2b2b2b;
+    --ide-sidebar: #3c3f41;
+    --ide-active: #4e5254;
+    --ide-border: #323232;
+    --ide-tab-active: #4e5254;
+    --ide-tab-inactive: #3c3f41;
+    --ide-text: #a9b7c6;
+    --ide-text-dim: #808080;
+    --ide-keyword: #cc7832;
+    --ide-string: #6a8759;
+    --ide-number: #6897bb;
+    --ide-comment: #808080;
+    --ide-function: #ffc66d;
+    --ide-class: #a9b7c6;
+    --ide-variable: #9876aa;
+    --ide-highlight: #214283;
+    
+    /* Desktop Colors */
+    --desktop-bg: #1e1e2e;
+    --taskbar-bg: #181825;
+    --window-border: #45475a;
     
     /* Typography */
-    --font-display: 'JetBrains Mono', 'Fira Code', monospace;
-    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --font-display: 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
   }
 }
 
@@ -76,83 +86,58 @@
 
 @layer utilities {
   .text-gradient {
-    @apply text-[#00ff00];
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400;
   }
 
   .bg-gradient-hero {
-    background: #0a0a0a;
+    background: linear-gradient(135deg, #1e1e2e 0%, #2b2b3d 100%);
   }
 
   .bg-gradient-card {
-    background: #111111;
+    background: linear-gradient(145deg, #2b2b2b 0%, #242424 100%);
   }
 
   .glow-primary {
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3), 0 0 40px rgba(0, 255, 0, 0.1);
-    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
   }
 
   .glow-accent {
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
   }
 
   .font-mono {
     font-family: var(--font-mono);
   }
 
-  /* Terminal specific utilities */
-  .terminal-text {
-    color: #00ff00;
-    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+  /* IDE Syntax Colors */
+  .ide-keyword { color: #cc7832; }
+  .ide-string { color: #6a8759; }
+  .ide-number { color: #6897bb; }
+  .ide-comment { color: #808080; font-style: italic; }
+  .ide-function { color: #ffc66d; }
+  .ide-class { color: #a9b7c6; }
+  .ide-variable { color: #9876aa; }
+  .ide-text { color: #a9b7c6; }
+  .ide-dim { color: #606060; }
+
+  /* Window styles */
+  .window-shadow {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
   }
 
-  .terminal-cyan {
-    color: #00ffff;
-    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+  .ide-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
   }
-
-  .terminal-yellow {
-    color: #ffff00;
-    text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+  .ide-scrollbar::-webkit-scrollbar-track {
+    background: #2b2b2b;
   }
-
-  .terminal-red {
-    color: #ff6b6b;
-    text-shadow: 0 0 5px rgba(255, 107, 107, 0.5);
+  .ide-scrollbar::-webkit-scrollbar-thumb {
+    background: #424242;
+    border-radius: 4px;
   }
-
-  .terminal-magenta {
-    color: #ff00ff;
-    text-shadow: 0 0 5px rgba(255, 0, 255, 0.5);
-  }
-
-  .terminal-dim {
-    color: #606060;
-  }
-
-  .terminal-white {
-    color: #e0e0e0;
-  }
-
-  .scanlines {
-    background: repeating-linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.1),
-      rgba(0, 0, 0, 0.1) 1px,
-      transparent 1px,
-      transparent 2px
-    );
-    pointer-events: none;
-  }
-
-  .crt-effect {
-    animation: crt-flicker 0.15s infinite;
-  }
-
-  @keyframes crt-flicker {
-    0% { opacity: 0.97; }
-    50% { opacity: 1; }
-    100% { opacity: 0.98; }
+  .ide-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555;
   }
 
   @keyframes blink {
@@ -164,15 +149,12 @@
     animation: blink 1s step-end infinite;
   }
 
-  @keyframes typing {
-    from { width: 0; }
-    to { width: 100%; }
-  }
-
-  .typing-effect {
-    overflow: hidden;
-    white-space: nowrap;
-    animation: typing 2s steps(40, end);
+  .line-number {
+    color: #606060;
+    text-align: right;
+    user-select: none;
+    padding-right: 1rem;
+    min-width: 3rem;
   }
 
   .animate-float {
