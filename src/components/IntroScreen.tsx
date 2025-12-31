@@ -4,8 +4,6 @@ import { useState, useEffect, useCallback } from "react";
 const fallbackFacts = [
   "The first computer programmer was Ada Lovelace, who wrote algorithms for Charles Babbage's Analytical Engine in 1843.",
   "The first 1GB hard drive, announced in 1980, weighed about 550 pounds and cost $40,000.",
-  "The QWERTY keyboard layout was designed to slow typists down and prevent jamming on mechanical typewriters.",
-  "Over 6,000 new computer viruses are created and released every month.",
   "The first website ever created is still online at info.cern.ch.",
 ];
 
@@ -13,23 +11,45 @@ interface IntroScreenProps {
   onComplete: () => void;
 }
 
+// Get current IST time
+const getISTTime = () => {
+  const now = new Date();
+  const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
+  const istTime = new Date(now.getTime() + (istOffset + now.getTimezoneOffset() * 60 * 1000));
+  return istTime.toLocaleTimeString('en-IN', { 
+    hour: '2-digit', 
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: true 
+  });
+};
+
 const IntroScreen = ({ onComplete }: IntroScreenProps) => {
   const [facts, setFacts] = useState<string[]>([]);
-  const [currentFactIndex, setCurrentFactIndex] = useState(-1); // -1 for initial state
+  const [currentFactIndex, setCurrentFactIndex] = useState(-1);
   const [phase, setPhase] = useState<"loading" | "showing" | "ending" | "exit">("loading");
   const [textVisible, setTextVisible] = useState(false);
+  const [currentTime, setCurrentTime] = useState(getISTTime());
 
   const handleComplete = useCallback(() => {
     onComplete();
   }, [onComplete]);
+
+  // Update time every second
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(getISTTime());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   // Fetch facts from API
   useEffect(() => {
     const fetchFacts = async () => {
       try {
         const fetchedFacts: string[] = [];
-        // Fetch multiple facts from useless facts API
-        for (let i = 0; i < 4; i++) {
+        // Fetch 3 facts from useless facts API
+        for (let i = 0; i < 3; i++) {
           const response = await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random?language=en");
           if (response.ok) {
             const data = await response.json();
@@ -42,10 +62,10 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
         if (fetchedFacts.length > 0) {
           setFacts(fetchedFacts);
         } else {
-          setFacts(fallbackFacts.slice(0, 4));
+          setFacts(fallbackFacts);
         }
       } catch {
-        setFacts(fallbackFacts.slice(0, 4));
+        setFacts(fallbackFacts);
       }
       
       // Start showing facts after a brief moment
@@ -155,20 +175,25 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
         )}
       </div>
 
-      {/* Minimal progress indicator */}
-      <div className="absolute bottom-[10vh] left-1/2 -translate-x-1/2 flex items-center gap-3">
-        {facts.length > 0 && phase === "showing" && (
-          <>
-            {facts.map((_, idx) => (
-              <div
-                key={idx}
-                className={`h-[2px] w-8 transition-all duration-500 ${
-                  idx <= currentFactIndex ? "bg-white/60" : "bg-white/20"
-                }`}
-              />
-            ))}
-          </>
-        )}
+      {/* Current IST Time */}
+      <div className="absolute top-[10vh] left-1/2 -translate-x-1/2 text-center">
+        <p className="text-white/30 text-xs tracking-[0.2em] uppercase mb-1">India Standard Time</p>
+        <p className="text-white/70 text-2xl md:text-3xl font-light tracking-wider font-mono">
+          {currentTime}
+        </p>
+      </div>
+
+      {/* Progress bar */}
+      <div className="absolute bottom-[10vh] left-1/2 -translate-x-1/2 w-64 md:w-80">
+        <div className="h-[2px] bg-white/10 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-white/50 transition-all duration-700 ease-out rounded-full"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+        <p className="text-white/30 text-xs text-center mt-3 tracking-wider">
+          {phase === "showing" ? `${currentFactIndex + 1} of ${facts.length}` : "Loading..."}
+        </p>
       </div>
 
       {/* Skip button - minimal */}
@@ -181,14 +206,6 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
       >
         Skip
       </button>
-
-      {/* Progress line at very bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-white/5 z-30">
-        <div
-          className="h-full bg-white/30 transition-all duration-700 ease-out"
-          style={{ width: `${progress}%` }}
-        />
-      </div>
     </div>
   );
 };
