@@ -106,32 +106,48 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
   const accentGradient = getAccentColor(timeOfDay);
   const showStars = timeOfDay === "night" || timeOfDay === "midnight" || timeOfDay === "evening";
 
-  // Memoize stars to prevent re-renders
+  // Memoize stars with varied sizes and brightness
   const stars = useMemo(() => 
-    Array.from({ length: 200 }, (_, i) => ({
+    Array.from({ length: 300 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: Math.random() * 2.5 + 0.5,
-      delay: Math.random() * 3,
+      size: Math.random() * 3 + 0.5,
+      delay: Math.random() * 5,
+      duration: 2 + Math.random() * 4,
+      brightness: 0.3 + Math.random() * 0.7,
     })),
   []);
 
-  // Memoize bigbang particles
+  // Memoize bigbang particles with varied properties
   const bigbangParticles = useMemo(() => 
-    Array.from({ length: 50 }, (_, i) => ({
-      angle: (i / 50) * 360,
-      distance: Math.random() * 50 + 30,
-      delay: Math.random() * 400,
+    Array.from({ length: 80 }, (_, i) => ({
+      angle: (i / 80) * 360,
+      distance: Math.random() * 60 + 20,
+      delay: Math.random() * 300,
+      size: Math.random() * 3 + 1,
+      color: ['#fff', '#ffd700', '#ff6b6b', '#4ecdc4', '#a855f7'][Math.floor(Math.random() * 5)],
     })),
   []);
 
-  // Memoize warp lines
+  // Memoize warp lines with streaks
   const warpLines = useMemo(() => 
-    Array.from({ length: 100 }, (_, i) => ({
+    Array.from({ length: 150 }, (_, i) => ({
       left: 50 + (Math.random() - 0.5) * 100,
       top: 50 + (Math.random() - 0.5) * 100,
-      delay: Math.random() * 0.5,
+      delay: Math.random() * 0.3,
+      length: 50 + Math.random() * 100,
+    })),
+  []);
+
+  // Nebula clouds
+  const nebulaClouds = useMemo(() => 
+    Array.from({ length: 5 }, (_, i) => ({
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: 200 + Math.random() * 300,
+      color: ['purple', 'blue', 'pink', 'cyan', 'indigo'][i],
+      delay: Math.random() * 10,
     })),
   []);
 
@@ -305,54 +321,132 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
             </>
           )}
 
-          {/* Big Bang Effect */}
+          {/* Big Bang Effect - Enhanced */}
           {phase === "bigbang" && (
             <>
-              <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full transition-all duration-500 ${
-                bigBangPhase === 0 ? "w-0 h-0 opacity-0" :
-                bigBangPhase === 1 ? "w-4 h-4 bg-white shadow-[0_0_60px_30px_rgba(255,255,255,0.8)]" :
-                bigBangPhase === 2 ? "w-32 h-32 bg-white shadow-[0_0_200px_100px_rgba(255,200,100,0.6)]" :
-                "w-[300vw] h-[300vh] bg-transparent opacity-0"
+              {/* Core singularity */}
+              <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full transition-all ${
+                bigBangPhase === 0 ? "w-0 h-0 opacity-0 duration-300" :
+                bigBangPhase === 1 ? "w-6 h-6 bg-white shadow-[0_0_80px_40px_rgba(255,255,255,0.9),0_0_120px_60px_rgba(255,200,100,0.6)] duration-500" :
+                bigBangPhase === 2 ? "w-40 h-40 bg-gradient-radial from-white via-yellow-200 to-orange-400 shadow-[0_0_300px_150px_rgba(255,200,100,0.8),0_0_500px_250px_rgba(255,100,50,0.4)] duration-700" :
+                "w-[400vw] h-[400vh] bg-transparent opacity-0 duration-1000"
               }`} />
+              
+              {/* Shockwave rings */}
               {bigBangPhase >= 2 && (
                 <>
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/30 bigbang-ring" />
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-purple-500/30 bigbang-ring" style={{ animationDelay: '150ms' }} />
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-blue-500/30 bigbang-ring" style={{ animationDelay: '300ms' }} />
-                  <div className="absolute inset-0">
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white/50 bigbang-ring" />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-yellow-400/40 bigbang-ring" style={{ animationDelay: '100ms' }} />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-orange-500/30 bigbang-ring" style={{ animationDelay: '200ms' }} />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-purple-500/30 bigbang-ring" style={{ animationDelay: '300ms' }} />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-blue-500/20 bigbang-ring" style={{ animationDelay: '400ms' }} />
+                  
+                  {/* Explosion particles */}
+                  <div className="absolute inset-0 overflow-hidden">
                     {bigbangParticles.map((p, i) => (
-                      <div key={i} className="absolute top-1/2 left-1/2 w-1 h-1 bg-white rounded-full bigbang-particle"
-                        style={{ '--angle': `${p.angle}deg`, '--distance': `${p.distance}vw`, animationDelay: `${p.delay}ms` } as React.CSSProperties} />
+                      <div 
+                        key={i} 
+                        className="absolute top-1/2 left-1/2 rounded-full bigbang-particle"
+                        style={{ 
+                          '--angle': `${p.angle}deg`, 
+                          '--distance': `${p.distance}vw`, 
+                          animationDelay: `${p.delay}ms`,
+                          width: `${p.size}px`,
+                          height: `${p.size}px`,
+                          backgroundColor: p.color,
+                          boxShadow: `0 0 ${p.size * 3}px ${p.color}`,
+                        } as React.CSSProperties} 
+                      />
                     ))}
                   </div>
+                  
+                  {/* Flash overlay */}
+                  <div className="absolute inset-0 bg-white bigbang-flash" />
                 </>
               )}
             </>
           )}
 
-          {/* Stars */}
-          <div className={`absolute inset-0 transition-opacity duration-1000 ${phase === "bigbang" && bigBangPhase < 3 ? "opacity-0" : showStars ? "opacity-100" : "opacity-30"}`}>
+          {/* Nebula clouds - ambient background */}
+          {phase !== "bigbang" && phase !== "warp" && (
+            <div className="absolute inset-0 overflow-hidden">
+              {nebulaClouds.map((cloud, i) => (
+                <div
+                  key={i}
+                  className="absolute rounded-full nebula-cloud"
+                  style={{
+                    left: `${cloud.x}%`,
+                    top: `${cloud.y}%`,
+                    width: `${cloud.size}px`,
+                    height: `${cloud.size}px`,
+                    background: `radial-gradient(circle, ${
+                      cloud.color === 'purple' ? 'rgba(147, 51, 234, 0.15)' :
+                      cloud.color === 'blue' ? 'rgba(59, 130, 246, 0.12)' :
+                      cloud.color === 'pink' ? 'rgba(236, 72, 153, 0.1)' :
+                      cloud.color === 'cyan' ? 'rgba(34, 211, 238, 0.1)' :
+                      'rgba(99, 102, 241, 0.12)'
+                    }, transparent 70%)`,
+                    animationDelay: `${cloud.delay}s`,
+                    transform: 'translate(-50%, -50%)',
+                  }}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* Stars - Enhanced with glow */}
+          <div className={`absolute inset-0 transition-opacity duration-1000 ${phase === "bigbang" && bigBangPhase < 3 ? "opacity-0" : showStars ? "opacity-100" : "opacity-40"}`}>
             {stars.map((star) => (
-              <div key={star.id} className={`absolute rounded-full bg-white star-twinkle ${phase === "warp" ? "warp-star" : ""}`}
-                style={{ left: `${star.x}%`, top: `${star.y}%`, width: `${star.size}px`, height: `${star.size}px`, animationDelay: `${star.delay}s` }} />
+              <div 
+                key={star.id} 
+                className={`absolute rounded-full star-twinkle ${phase === "warp" ? "warp-star" : ""}`}
+                style={{ 
+                  left: `${star.x}%`, 
+                  top: `${star.y}%`, 
+                  width: `${star.size}px`, 
+                  height: `${star.size}px`, 
+                  animationDelay: `${star.delay}s`,
+                  animationDuration: `${star.duration}s`,
+                  backgroundColor: `rgba(255, 255, 255, ${star.brightness})`,
+                  boxShadow: star.size > 2 ? `0 0 ${star.size * 2}px rgba(255, 255, 255, ${star.brightness * 0.5})` : 'none',
+                }} 
+              />
             ))}
           </div>
 
-          {/* Shooting stars */}
+          {/* Shooting stars - Enhanced with trail */}
           {showStars && phase !== "bigbang" && phase !== "exit" && (
             <>
-              <div className="shooting-star" style={{ top: '15%', left: '5%', animationDelay: '0s' }} />
-              <div className="shooting-star" style={{ top: '35%', left: '70%', animationDelay: '2.5s' }} />
-              <div className="shooting-star" style={{ top: '65%', left: '20%', animationDelay: '5s' }} />
+              <div className="shooting-star-enhanced" style={{ top: '10%', left: '0%', animationDelay: '0s' }} />
+              <div className="shooting-star-enhanced" style={{ top: '25%', left: '60%', animationDelay: '2s' }} />
+              <div className="shooting-star-enhanced" style={{ top: '45%', left: '10%', animationDelay: '4s' }} />
+              <div className="shooting-star-enhanced" style={{ top: '60%', left: '75%', animationDelay: '6s' }} />
+              <div className="shooting-star-enhanced" style={{ top: '80%', left: '30%', animationDelay: '8s' }} />
             </>
           )}
 
-          {/* Warp effect */}
+          {/* Warp effect - Enhanced hyperspace */}
           {phase === "warp" && (
-            <div className="absolute inset-0">
+            <div className="absolute inset-0 overflow-hidden">
+              {/* Center glow */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full warp-center-glow" />
+              
+              {/* Streaking lines */}
               {warpLines.map((l, i) => (
-                <div key={i} className="warp-line" style={{ left: `${l.left}%`, top: `${l.top}%`, animationDelay: `${l.delay}s` }} />
+                <div 
+                  key={i} 
+                  className="warp-streak" 
+                  style={{ 
+                    left: `${l.left}%`, 
+                    top: `${l.top}%`, 
+                    animationDelay: `${l.delay}s`,
+                    '--streak-length': `${l.length}px`,
+                  } as React.CSSProperties} 
+                />
               ))}
+              
+              {/* Radial blur overlay */}
+              <div className="absolute inset-0 warp-blur-overlay" />
             </div>
           )}
 
@@ -510,67 +604,147 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
       )}
 
       <style>{`
+        /* Base animations */
         @keyframes fadeIn {
           from { opacity: 0; }
           to { opacity: 1; }
         }
         @keyframes slideUp {
-          from { opacity: 0; transform: translateY(20px); }
+          from { opacity: 0; transform: translateY(30px); }
           to { opacity: 1; transform: translateY(0); }
         }
         @keyframes scaleIn {
-          from { opacity: 0; transform: scale(0.95); }
+          from { opacity: 0; transform: scale(0.9); }
           to { opacity: 1; transform: scale(1); }
         }
-        .animate-fadeIn { animation: fadeIn 0.6s ease-out forwards; }
-        .animate-slideUp { animation: slideUp 0.6s ease-out forwards; }
-        .animate-scaleIn { animation: scaleIn 0.6s ease-out forwards; }
+        .animate-fadeIn { animation: fadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+        .animate-slideUp { animation: slideUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+        .animate-scaleIn { animation: scaleIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
         
+        /* Star twinkle - enhanced */
         @keyframes twinkle {
-          0%, 100% { opacity: 0.3; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.2); }
+          0%, 100% { opacity: 0.2; transform: scale(0.8); }
+          50% { opacity: 1; transform: scale(1.3); }
         }
         .star-twinkle { animation: twinkle 3s ease-in-out infinite; }
         
-        @keyframes shoot {
-          0% { transform: translateX(0) translateY(0); opacity: 1; }
-          100% { transform: translateX(400px) translateY(400px); opacity: 0; }
+        /* Nebula floating animation */
+        @keyframes nebulaFloat {
+          0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+          50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
         }
-        .shooting-star {
+        .nebula-cloud { animation: nebulaFloat 15s ease-in-out infinite; }
+        
+        /* Enhanced shooting star */
+        @keyframes shootEnhanced {
+          0% { 
+            transform: translateX(0) translateY(0) rotate(-45deg); 
+            opacity: 0;
+          }
+          5% { opacity: 1; }
+          70% { opacity: 1; }
+          100% { 
+            transform: translateX(500px) translateY(500px) rotate(-45deg); 
+            opacity: 0; 
+          }
+        }
+        .shooting-star-enhanced {
           position: absolute;
-          width: 150px;
+          width: 200px;
           height: 2px;
-          background: linear-gradient(90deg, white, transparent);
-          transform: rotate(-45deg);
-          animation: shoot 4s ease-out infinite;
+          background: linear-gradient(90deg, 
+            rgba(255, 255, 255, 1) 0%, 
+            rgba(255, 255, 255, 0.8) 20%, 
+            rgba(255, 200, 150, 0.4) 60%, 
+            transparent 100%
+          );
+          border-radius: 2px;
+          animation: shootEnhanced 5s ease-out infinite;
+          box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 200, 150, 0.3);
         }
-        
-        @keyframes bigbang-expand {
-          0% { width: 0; height: 0; opacity: 1; }
-          100% { width: 200vw; height: 200vh; opacity: 0; }
-        }
-        .bigbang-ring { animation: bigbang-expand 1.2s ease-out forwards; }
-        
-        @keyframes bigbang-particle {
-          0% { transform: translate(-50%, -50%) rotate(var(--angle)) translateX(0); opacity: 1; }
-          100% { transform: translate(-50%, -50%) rotate(var(--angle)) translateX(var(--distance)); opacity: 0; }
-        }
-        .bigbang-particle { animation: bigbang-particle 1.2s ease-out forwards; }
-        
-        @keyframes warpLine {
-          0% { transform: scale(0); opacity: 0; }
-          50% { opacity: 1; }
-          100% { transform: scale(100); opacity: 0; }
-        }
-        .warp-line {
+        .shooting-star-enhanced::before {
+          content: '';
           position: absolute;
-          width: 2px;
-          height: 2px;
+          left: 0;
+          top: -1px;
+          width: 6px;
+          height: 4px;
           background: white;
           border-radius: 50%;
-          animation: warpLine 1.2s ease-in forwards;
+          box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.8);
         }
-        .warp-star { animation: warpLine 0.8s ease-in forwards !important; }
+        
+        /* Big Bang effects */
+        @keyframes bigbang-expand {
+          0% { width: 0; height: 0; opacity: 1; }
+          60% { opacity: 0.8; }
+          100% { width: 250vw; height: 250vh; opacity: 0; }
+        }
+        .bigbang-ring { animation: bigbang-expand 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+        
+        @keyframes bigbang-particle {
+          0% { 
+            transform: translate(-50%, -50%) rotate(var(--angle)) translateX(0); 
+            opacity: 1; 
+          }
+          60% { opacity: 0.8; }
+          100% { 
+            transform: translate(-50%, -50%) rotate(var(--angle)) translateX(var(--distance)); 
+            opacity: 0; 
+          }
+        }
+        .bigbang-particle { animation: bigbang-particle 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+        
+        @keyframes bigbang-flash {
+          0% { opacity: 0.9; }
+          100% { opacity: 0; }
+        }
+        .bigbang-flash { animation: bigbang-flash 0.8s ease-out forwards; }
+        
+        /* Warp/Hyperspace effects */
+        @keyframes warpStreak {
+          0% { 
+            transform: translate(-50%, -50%) scale(0.5);
+            width: 3px;
+            height: 3px;
+            opacity: 0;
+          }
+          10% { opacity: 1; }
+          100% { 
+            transform: translate(-50%, -50%) scale(50);
+            width: var(--streak-length);
+            height: 2px;
+            opacity: 0;
+          }
+        }
+        .warp-streak {
+          position: absolute;
+          background: linear-gradient(90deg, transparent, white, transparent);
+          border-radius: 2px;
+          animation: warpStreak 1.5s ease-in forwards;
+        }
+        
+        @keyframes warpCenterGlow {
+          0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 50px 20px white; }
+          100% { transform: translate(-50%, -50%) scale(200); box-shadow: 0 0 100px 50px white; opacity: 0; }
+        }
+        .warp-center-glow { animation: warpCenterGlow 1.5s ease-in forwards; }
+        
+        @keyframes warpBlur {
+          0% { opacity: 0; }
+          50% { opacity: 0.3; }
+          100% { opacity: 0.8; }
+        }
+        .warp-blur-overlay {
+          background: radial-gradient(circle at center, transparent 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.3) 100%);
+          animation: warpBlur 1.5s ease-in forwards;
+        }
+        
+        .warp-star { 
+          animation: warpStreak 0.8s ease-in forwards !important; 
+          width: 3px !important;
+          height: 3px !important;
+        }
       `}</style>
     </div>
   );
