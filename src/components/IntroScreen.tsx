@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef, useMemo } from "react";
+import React, { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { ArrowRight } from "lucide-react";
 
 const getPersonalizedQuotes = (name: string) => [
@@ -100,6 +100,7 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
   const [allQuotes, setAllQuotes] = useState<string[]>([]);
   const [bigBangPhase, setBigBangPhase] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [showStartOverlay, setShowStartOverlay] = useState(true);
 
   const handleComplete = useCallback(() => onComplete(), [onComplete]);
   const accentGradient = getAccentColor(timeOfDay);
@@ -158,22 +159,19 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
     fetchFact();
   }, []);
 
-  // Intro phase - start video immediately
-  useEffect(() => {
-    if (phase === "intro") {
-      // Preload video first
-      const video = videoRef.current;
-      if (video) {
-        video.load();
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(() => {
-            // Auto-play failed, video will start muted
-          });
-        }
+  // Handle video play on start
+  const handleStart = async () => {
+    const video = videoRef.current;
+    if (video) {
+      video.muted = false;
+      try {
+        await video.play();
+        setShowStartOverlay(false);
+      } catch {
+        // Play failed
       }
     }
-  }, [phase]);
+  };
 
   // Big Bang sequence - simplified
   useEffect(() => {
@@ -248,12 +246,40 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
             ref={videoRef}
             className="w-full h-full object-contain"
             playsInline
-            muted
+            muted={false}
             autoPlay
             onEnded={() => setPhase("bigbang")}
           >
             <source src="/Intro-Desktop.mp4" type="video/mp4" />
           </video>
+          
+          {/* Start Overlay with Glass Button */}
+          {showStartOverlay && (
+            <div
+              className="absolute inset-0 flex items-center justify-center bg-black/20 z-20"
+            >
+              <button
+                onClick={handleStart}
+                className="group relative inline-flex items-center justify-center"
+              >
+                {/* Glass button layers */}
+                <div className="absolute inset-0 rounded-full bg-white/20 backdrop-blur-xl border border-white/40 shadow-[0_8px_32px_rgba(255,255,255,0.2)] transition-all duration-300 group-hover:bg-white/30 group-hover:shadow-[0_8px_40px_rgba(255,255,255,0.35)]" />
+                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/40 via-white/20 to-white/5 transition-all duration-300 group-hover:from-white/50" />
+                
+                {/* Button content */}
+                <div className="relative flex items-center gap-3 px-10 py-5 rounded-full">
+                  <svg className="w-6 h-6 text-white drop-shadow-lg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span className="text-white text-sm font-semibold uppercase tracking-widest drop-shadow-lg">Start</span>
+                </div>
+                
+                {/* Glow effect */}
+                <div className="absolute -inset-3 rounded-full bg-white/20 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </button>
+            </div>
+          )}
         </div>
       )}
 
