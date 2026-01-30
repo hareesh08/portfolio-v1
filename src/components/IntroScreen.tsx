@@ -144,7 +144,15 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
     if (phase === "blackScreen") {
       const timer = setTimeout(() => {
         setPhase("video");
-        setTimeout(() => videoRef.current?.play(), 100);
+        setTimeout(() => {
+          if (videoRef.current) {
+            videoRef.current.muted = false;
+            videoRef.current.play().catch(() => {
+              // Auto-unmute failed, keep muted
+              videoRef.current!.muted = true;
+            });
+          }
+        }, 100);
       }, 1000);
       return () => clearTimeout(timer);
     }
@@ -240,7 +248,6 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
             ref={videoRef}
             className="w-full h-full object-contain"
             playsInline
-            muted
             onEnded={() => setVideoEnded(true)}
           >
             <source src="/Intro-Desktop.mp4" type="video/mp4" />
