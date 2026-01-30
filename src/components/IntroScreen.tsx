@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { ArrowRight } from "lucide-react";
 
 const getPersonalizedQuotes = (name: string) => [
@@ -83,7 +83,7 @@ const getAccentColor = (timeOfDay: string) => {
   }
 };
 
-type Phase = "blackScreen" | "video" | "bigbang" | "askName" | "welcome" | "journey" | "motivation" | "cosmic" | "warp" | "exit";
+type Phase = "intro" | "bigbang" | "askName" | "welcome" | "journey" | "motivation" | "cosmic" | "warp" | "exit";
 
 interface IntroScreenProps {
   onComplete: () => void;
@@ -91,15 +91,13 @@ interface IntroScreenProps {
 
 const IntroScreen = ({ onComplete }: IntroScreenProps) => {
   const [userName, setUserName] = useState("");
-  const [phase, setPhase] = useState<Phase>("blackScreen");
-  const [videoEnded, setVideoEnded] = useState(false);
+  const [phase, setPhase] = useState<Phase>("intro");
   const videoRef = useRef<HTMLVideoElement>(null);
   const [cosmicFact, setCosmicFact] = useState("");
   const [currentTime, setCurrentTime] = useState(getISTTime());
   const [timeOfDay] = useState(getTimeOfDay());
   const [motivationIndex, setMotivationIndex] = useState(0);
   const [allQuotes, setAllQuotes] = useState<string[]>([]);
-  const [stars, setStars] = useState<Array<{ id: number; x: number; y: number; size: number; delay: number }>>([]);
   const [bigBangPhase, setBigBangPhase] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -107,22 +105,43 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
   const accentGradient = getAccentColor(timeOfDay);
   const showStars = timeOfDay === "night" || timeOfDay === "midnight" || timeOfDay === "evening";
 
+  // Memoize stars to prevent re-renders
+  const stars = useMemo(() => 
+    Array.from({ length: 200 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 2.5 + 0.5,
+      delay: Math.random() * 3,
+    })),
+  []);
+
+  // Memoize bigbang particles
+  const bigbangParticles = useMemo(() => 
+    Array.from({ length: 50 }, (_, i) => ({
+      angle: (i / 50) * 360,
+      distance: Math.random() * 50 + 30,
+      delay: Math.random() * 400,
+    })),
+  []);
+
+  // Memoize warp lines
+  const warpLines = useMemo(() => 
+    Array.from({ length: 100 }, (_, i) => ({
+      left: 50 + (Math.random() - 0.5) * 100,
+      top: 50 + (Math.random() - 0.5) * 100,
+      delay: Math.random() * 0.5,
+    })),
+  []);
+
   // Update time every second
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(getISTTime()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  // Generate stars and fetch fact on mount
+  // Fetch cosmic fact once
   useEffect(() => {
-    setStars(Array.from({ length: 200 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 2.5 + 0.5,
-      delay: Math.random() * 3,
-    })));
-
     const fetchFact = async () => {
       try {
         const res = await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random?language=en");
@@ -139,211 +158,184 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
     fetchFact();
   }, []);
 
-  // Black screen to video transition
+  // Intro phase - start video immediately
   useEffect(() => {
-    if (phase === "blackScreen") {
-      const timer = setTimeout(() => {
-        setPhase("video");
-        setTimeout(() => {
-          if (videoRef.current) {
-            videoRef.current.muted = false;
-            videoRef.current.play().catch(() => {
-              // Auto-unmute failed, keep muted
-              videoRef.current!.muted = true;
-            });
-          }
-        }, 100);
-      }, 1000);
-      return () => clearTimeout(timer);
+    if (phase === "intro") {
+      // Preload video first
+      const video = videoRef.current;
+      if (video) {
+        video.load();
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // Auto-play failed, video will start muted
+          });
+        }
+      }
     }
   }, [phase]);
 
-  // Handle video ending - transition to bigbang
+  // Big Bang sequence - simplified
   useEffect(() => {
-    if (phase === "video" && videoEnded) {
-      setPhase("bigbang");
+    if (phase === "bigbang") {
+      setBigBangPhase(1);
+      const t2 = setTimeout(() => setBigBangPhase(2), 800);
+      const t3 = setTimeout(() => setBigBangPhase(3), 1800);
+      const t4 = setTimeout(() => setPhase("askName"), 2500);
+      return () => { clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
     }
-  }, [phase, videoEnded]);
-
-  // Big Bang sequence
-  useEffect(() => {
-    if (phase !== "bigbang") return;
-    const timers = [
-      setTimeout(() => setBigBangPhase(1), 500),
-      setTimeout(() => setBigBangPhase(2), 1500),
-      setTimeout(() => setBigBangPhase(3), 2500),
-      setTimeout(() => setPhase("askName"), 3500),
-    ];
-    return () => timers.forEach(clearTimeout);
   }, [phase]);
 
   // Focus input when askName phase starts
   useEffect(() => {
     if (phase === "askName") {
-      setTimeout(() => inputRef.current?.focus(), 300);
+      setTimeout(() => inputRef.current?.focus(), 100);
     }
   }, [phase]);
 
   // Handle name submission
   const handleNameSubmit = () => {
     if (!userName.trim()) return;
-    
     const personalized = getPersonalizedQuotes(userName.trim())
       .sort(() => Math.random() - 0.5)
       .slice(0, 2);
     const general = generalMotivations
       .sort(() => Math.random() - 0.5)
       .slice(0, 1);
-    
     setAllQuotes([...personalized, ...general].sort(() => Math.random() - 0.5));
     setPhase("welcome");
   };
 
-  // Phase transitions
+  // Phase transitions - simplified
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-
-    switch (phase) {
-      case "welcome":
-        timer = setTimeout(() => setPhase("journey"), 3000);
-        break;
-      case "journey":
-        timer = setTimeout(() => setPhase("motivation"), 3500);
-        break;
-      case "motivation":
-        timer = setTimeout(() => {
-          if (motivationIndex < allQuotes.length - 1) {
-            setMotivationIndex(prev => prev + 1);
-          } else {
-            setPhase("cosmic");
-          }
-        }, 3500);
-        break;
-      case "cosmic":
-        timer = setTimeout(() => setPhase("warp"), 4000);
-        break;
-      case "warp":
-        timer = setTimeout(() => {
-          setPhase("exit");
-          setTimeout(handleComplete, 1000);
-        }, 2500);
-        break;
+    if (phase === "welcome") {
+      const t = setTimeout(() => setPhase("journey"), 2000);
+      return () => clearTimeout(t);
     }
-
-    return () => clearTimeout(timer);
+    if (phase === "journey") {
+      const t = setTimeout(() => setPhase("motivation"), 2500);
+      return () => clearTimeout(t);
+    }
+    if (phase === "motivation") {
+      if (motivationIndex < allQuotes.length - 1) {
+        const t = setTimeout(() => setMotivationIndex(prev => prev + 1), 3000);
+        return () => clearTimeout(t);
+      } else {
+        const t = setTimeout(() => setPhase("cosmic"), 3000);
+        return () => clearTimeout(t);
+      }
+    }
+    if (phase === "cosmic") {
+      const t = setTimeout(() => setPhase("warp"), 3000);
+      return () => clearTimeout(t);
+    }
+    if (phase === "warp") {
+      const t = setTimeout(() => {
+        setPhase("exit");
+        setTimeout(handleComplete, 500);
+      }, 2000);
+      return () => clearTimeout(t);
+    }
   }, [phase, motivationIndex, allQuotes.length, handleComplete]);
 
   return (
-    <div className={`fixed inset-0 z-[60] flex flex-col items-center justify-center overflow-hidden transition-opacity duration-1000 ${phase === "exit" ? "opacity-0" : "opacity-100"}`}>
+    <div className={`fixed inset-0 z-[60] flex flex-col items-center justify-center overflow-hidden transition-opacity duration-700 ${phase === "exit" ? "opacity-0" : "opacity-100"}`}>
       
-      {/* Black Screen Phase */}
-      {phase === "blackScreen" && (
-        <div className="absolute inset-0 bg-black" />
-      )}
-
-      {/* Video Phase */}
-      {phase === "video" && (
-        <div className="absolute inset-0 bg-black flex items-center justify-center">
+      {/* Intro Video Phase */}
+      {phase === "intro" && (
+        <div className="absolute inset-0 bg-black">
           <video
             ref={videoRef}
             className="w-full h-full object-contain"
             playsInline
-            onEnded={() => setVideoEnded(true)}
+            muted
+            autoPlay
+            onEnded={() => setPhase("bigbang")}
           >
             <source src="/Intro-Desktop.mp4" type="video/mp4" />
           </video>
-          {/* Skip video button */}
-          <button
-            onClick={() => {
-              videoRef.current?.pause();
-              setVideoEnded(true);
-            }}
-            className="absolute bottom-8 right-8 text-white/50 hover:text-white text-xs uppercase tracking-[0.3em] transition-colors duration-300 z-20"
-          >
-            Skip
-          </button>
         </div>
       )}
 
-      {/* Background - only show when not in blackScreen or video phase */}
-      {phase !== "blackScreen" && phase !== "video" && (
+      {/* Background */}
+      {phase !== "intro" && (
         <div className="absolute inset-0 bg-black">
-        <div className={`absolute inset-0 ${getBackgroundStyle(timeOfDay)} transition-all duration-1000`} />
-        
-        {/* Sun/Moon */}
-        {phase !== "bigbang" && (
-          <>
-            {(timeOfDay === "sunrise" || timeOfDay === "morning" || timeOfDay === "afternoon") && (
-              <div className={`absolute w-32 h-32 rounded-full blur-xl ${
-                timeOfDay === "sunrise" ? "top-1/3 right-1/4 bg-orange-400/30" :
-                timeOfDay === "morning" ? "top-1/4 right-1/3 bg-yellow-300/20" :
-                "top-1/4 left-1/2 bg-yellow-200/20"
+          <div className={`absolute inset-0 ${getBackgroundStyle(timeOfDay)} transition-all duration-1000`} />
+          
+          {/* Sun/Moon */}
+          {phase !== "bigbang" && (
+            <>
+              {(timeOfDay === "sunrise" || timeOfDay === "morning" || timeOfDay === "afternoon") && (
+                <div className={`absolute w-32 h-32 rounded-full blur-xl ${
+                  timeOfDay === "sunrise" ? "top-1/3 right-1/4 bg-orange-400/30" :
+                  timeOfDay === "morning" ? "top-1/4 right-1/3 bg-yellow-300/20" :
+                  "top-1/4 left-1/2 bg-yellow-200/20"
+                }`} />
+              )}
+              {timeOfDay === "sunset" && (
+                <div className="absolute bottom-1/4 left-1/4 w-40 h-40 rounded-full bg-orange-500/30 blur-2xl" />
+              )}
+              {(timeOfDay === "night" || timeOfDay === "midnight") && (
+                <div className="absolute top-1/4 right-1/4 w-20 h-20 rounded-full bg-slate-200/20 blur-sm" />
+              )}
+            </>
+          )}
+
+          {/* Big Bang Effect */}
+          {phase === "bigbang" && (
+            <>
+              <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full transition-all duration-500 ${
+                bigBangPhase === 0 ? "w-0 h-0 opacity-0" :
+                bigBangPhase === 1 ? "w-4 h-4 bg-white shadow-[0_0_60px_30px_rgba(255,255,255,0.8)]" :
+                bigBangPhase === 2 ? "w-32 h-32 bg-white shadow-[0_0_200px_100px_rgba(255,200,100,0.6)]" :
+                "w-[300vw] h-[300vh] bg-transparent opacity-0"
               }`} />
-            )}
-            {timeOfDay === "sunset" && (
-              <div className="absolute bottom-1/4 left-1/4 w-40 h-40 rounded-full bg-orange-500/30 blur-2xl" />
-            )}
-            {(timeOfDay === "night" || timeOfDay === "midnight") && (
-              <div className="absolute top-1/4 right-1/4 w-20 h-20 rounded-full bg-slate-200/20 blur-sm" />
-            )}
-          </>
-        )}
+              {bigBangPhase >= 2 && (
+                <>
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/30 bigbang-ring" />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-purple-500/30 bigbang-ring" style={{ animationDelay: '150ms' }} />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-blue-500/30 bigbang-ring" style={{ animationDelay: '300ms' }} />
+                  <div className="absolute inset-0">
+                    {bigbangParticles.map((p, i) => (
+                      <div key={i} className="absolute top-1/2 left-1/2 w-1 h-1 bg-white rounded-full bigbang-particle"
+                        style={{ '--angle': `${p.angle}deg`, '--distance': `${p.distance}vw`, animationDelay: `${p.delay}ms` } as React.CSSProperties} />
+                    ))}
+                  </div>
+                </>
+              )}
+            </>
+          )}
 
-        {/* Big Bang Effect */}
-        {phase === "bigbang" && (
-          <>
-            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full transition-all duration-700 ${
-              bigBangPhase === 0 ? "w-0 h-0 opacity-0" :
-              bigBangPhase === 1 ? "w-4 h-4 bg-white shadow-[0_0_60px_30px_rgba(255,255,255,0.8)]" :
-              bigBangPhase === 2 ? "w-32 h-32 bg-white shadow-[0_0_200px_100px_rgba(255,200,100,0.6)]" :
-              "w-[300vw] h-[300vh] bg-transparent opacity-0"
-            }`} />
-            {bigBangPhase >= 2 && (
-              <>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/30 bigbang-ring" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-purple-500/30 bigbang-ring" style={{ animationDelay: '150ms' }} />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-blue-500/30 bigbang-ring" style={{ animationDelay: '300ms' }} />
-                <div className="absolute inset-0">
-                  {Array.from({ length: 50 }).map((_, i) => (
-                    <div key={i} className="absolute top-1/2 left-1/2 w-1 h-1 bg-white rounded-full bigbang-particle"
-                      style={{ '--angle': `${(i / 50) * 360}deg`, '--distance': `${Math.random() * 50 + 30}vw`, animationDelay: `${Math.random() * 400}ms` } as React.CSSProperties} />
-                  ))}
-                </div>
-              </>
-            )}
-          </>
-        )}
-
-        {/* Stars */}
-        <div className={`absolute inset-0 transition-opacity duration-1000 ${phase === "bigbang" && bigBangPhase < 3 ? "opacity-0" : showStars ? "opacity-100" : "opacity-30"}`}>
-          {stars.map((star) => (
-            <div key={star.id} className={`absolute rounded-full bg-white star-twinkle ${phase === "warp" ? "warp-star" : ""}`}
-              style={{ left: `${star.x}%`, top: `${star.y}%`, width: `${star.size}px`, height: `${star.size}px`, animationDelay: `${star.delay}s` }} />
-          ))}
-        </div>
-
-        {/* Shooting stars - only at night */}
-        {showStars && phase !== "bigbang" && phase !== "exit" && (
-          <>
-            <div className="shooting-star" style={{ top: '15%', left: '5%', animationDelay: '0s' }} />
-            <div className="shooting-star" style={{ top: '35%', left: '70%', animationDelay: '2.5s' }} />
-            <div className="shooting-star" style={{ top: '65%', left: '20%', animationDelay: '5s' }} />
-          </>
-        )}
-
-        {/* Warp effect */}
-        {phase === "warp" && (
-          <div className="absolute inset-0">
-            {Array.from({ length: 100 }).map((_, i) => (
-              <div key={i} className="warp-line" style={{ left: `${50 + (Math.random() - 0.5) * 100}%`, top: `${50 + (Math.random() - 0.5) * 100}%`, animationDelay: `${Math.random() * 0.5}s` }} />
+          {/* Stars */}
+          <div className={`absolute inset-0 transition-opacity duration-1000 ${phase === "bigbang" && bigBangPhase < 3 ? "opacity-0" : showStars ? "opacity-100" : "opacity-30"}`}>
+            {stars.map((star) => (
+              <div key={star.id} className={`absolute rounded-full bg-white star-twinkle ${phase === "warp" ? "warp-star" : ""}`}
+                style={{ left: `${star.x}%`, top: `${star.y}%`, width: `${star.size}px`, height: `${star.size}px`, animationDelay: `${star.delay}s` }} />
             ))}
           </div>
-        )}
 
-        {/* Central glow */}
-        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl transition-all duration-1000 ${
-          phase === "warp" ? "w-[200vw] h-[200vh] bg-white/80" : phase === "bigbang" ? "w-0 h-0" : "w-[600px] h-[600px] bg-white/5"
-        }`} />
+          {/* Shooting stars */}
+          {showStars && phase !== "bigbang" && phase !== "exit" && (
+            <>
+              <div className="shooting-star" style={{ top: '15%', left: '5%', animationDelay: '0s' }} />
+              <div className="shooting-star" style={{ top: '35%', left: '70%', animationDelay: '2.5s' }} />
+              <div className="shooting-star" style={{ top: '65%', left: '20%', animationDelay: '5s' }} />
+            </>
+          )}
+
+          {/* Warp effect */}
+          {phase === "warp" && (
+            <div className="absolute inset-0">
+              {warpLines.map((l, i) => (
+                <div key={i} className="warp-line" style={{ left: `${l.left}%`, top: `${l.top}%`, animationDelay: `${l.delay}s` }} />
+              ))}
+            </div>
+          )}
+
+          {/* Central glow */}
+          <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl transition-all duration-1000 ${
+            phase === "warp" ? "w-[200vw] h-[200vh] bg-white/80" : phase === "bigbang" ? "w-0 h-0" : "w-[600px] h-[600px] bg-white/5"
+          }`} />
         </div>
       )}
 
@@ -484,9 +476,9 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
       </div>
 
       {/* Skip Button */}
-      {phase !== "bigbang" && phase !== "askName" && phase !== "exit" && phase !== "warp" && (
+      {phase !== "bigbang" && phase !== "askName" && phase !== "exit" && phase !== "warp" && phase !== "intro" && (
         <button 
-          onClick={() => { setPhase("exit"); setTimeout(handleComplete, 800); }}
+          onClick={() => { setPhase("exit"); setTimeout(handleComplete, 500); }}
           className="absolute bottom-8 right-8 text-white/30 hover:text-white/60 text-xs uppercase tracking-[0.3em] transition-colors duration-300"
         >
           Skip
@@ -499,16 +491,16 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
           to { opacity: 1; }
         }
         @keyframes slideUp {
-          from { opacity: 0; transform: translateY(30px); }
+          from { opacity: 0; transform: translateY(20px); }
           to { opacity: 1; transform: translateY(0); }
         }
         @keyframes scaleIn {
-          from { opacity: 0; transform: scale(0.9); }
+          from { opacity: 0; transform: scale(0.95); }
           to { opacity: 1; transform: scale(1); }
         }
-        .animate-fadeIn { animation: fadeIn 0.8s ease-out forwards; }
-        .animate-slideUp { animation: slideUp 0.8s ease-out forwards; }
-        .animate-scaleIn { animation: scaleIn 0.8s ease-out forwards; }
+        .animate-fadeIn { animation: fadeIn 0.6s ease-out forwards; }
+        .animate-slideUp { animation: slideUp 0.6s ease-out forwards; }
+        .animate-scaleIn { animation: scaleIn 0.6s ease-out forwards; }
         
         @keyframes twinkle {
           0%, 100% { opacity: 0.3; transform: scale(1); }
@@ -533,13 +525,13 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
           0% { width: 0; height: 0; opacity: 1; }
           100% { width: 200vw; height: 200vh; opacity: 0; }
         }
-        .bigbang-ring { animation: bigbang-expand 1.5s ease-out forwards; }
+        .bigbang-ring { animation: bigbang-expand 1.2s ease-out forwards; }
         
         @keyframes bigbang-particle {
           0% { transform: translate(-50%, -50%) rotate(var(--angle)) translateX(0); opacity: 1; }
           100% { transform: translate(-50%, -50%) rotate(var(--angle)) translateX(var(--distance)); opacity: 0; }
         }
-        .bigbang-particle { animation: bigbang-particle 1.5s ease-out forwards; }
+        .bigbang-particle { animation: bigbang-particle 1.2s ease-out forwards; }
         
         @keyframes warpLine {
           0% { transform: scale(0); opacity: 0; }
@@ -552,9 +544,9 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
           height: 2px;
           background: white;
           border-radius: 50%;
-          animation: warpLine 1.5s ease-in forwards;
+          animation: warpLine 1.2s ease-in forwards;
         }
-        .warp-star { animation: warpLine 1s ease-in forwards !important; }
+        .warp-star { animation: warpLine 0.8s ease-in forwards !important; }
       `}</style>
     </div>
   );
