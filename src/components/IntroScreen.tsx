@@ -501,13 +501,13 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
         )}
       </div>
 
-      {/* Skip Button */}
-      {phase !== "bigbang" && phase !== "askName" && phase !== "exit" && phase !== "warp" && phase !== "intro" && (
-        <button 
+      {/* Skip Button - visible during intro and other phases */}
+      {phase !== "askName" && phase !== "exit" && (
+        <button
           onClick={() => { setPhase("exit"); setTimeout(handleComplete, 500); }}
-          className="absolute bottom-8 right-8 text-white/30 hover:text-white/60 text-xs uppercase tracking-[0.3em] transition-colors duration-300"
+          className="absolute bottom-8 right-8 group inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white/50 hover:text-white hover:bg-white/20 hover:border-white/40 transition-all duration-300"
         >
-          Skip
+          <span className="text-xs uppercase tracking-[0.25em]">Skip</span>
         </button>
       )}
 
