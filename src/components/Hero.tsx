@@ -17,9 +17,9 @@ const Hero = () => {
           <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mb-8">
             {/* Avatar */}
             <div className="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden flex-shrink-0 border border-white/10">
-              <img 
-                src="/portfolio-v1/profile.png" 
-                alt="Hareesh Ragavendra" 
+              <img
+                src="./profile.png"
+                alt="Hareesh Ragavendra"
                 className="w-full h-full object-cover"
               />
             </div>

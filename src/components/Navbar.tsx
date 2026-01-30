@@ -56,7 +56,7 @@ const Navbar = () => {
             {/* Logo */}
             <a href="#" className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-full overflow-hidden border border-white/10">
-                <img src="/portfolio-v1/profile.png" alt="H" className="w-full h-full object-cover" />
+                <img src="./profile.png" alt="H" className="w-full h-full object-cover" />
               </div>
               <span className="font-semibold text-white hidden sm:block">Hareesh</span>
             </a>
