@@ -253,30 +253,28 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
             <source src="/Intro-Desktop.mp4" type="video/mp4" />
           </video>
           
-          {/* Start Overlay with Glass Button */}
+          {/* Start Overlay with Styled Button */}
           {showStartOverlay && (
             <div
               className="absolute inset-0 flex items-center justify-center bg-black/20 z-20"
             >
               <button
                 onClick={handleStart}
-                className="group relative inline-flex items-center justify-center"
+                className="start-button"
               >
-                {/* Glass button layers */}
-                <div className="absolute inset-0 rounded-full bg-white/20 backdrop-blur-xl border border-white/40 shadow-[0_8px_32px_rgba(255,255,255,0.2)] transition-all duration-300 group-hover:bg-white/30 group-hover:shadow-[0_8px_40px_rgba(255,255,255,0.35)]" />
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/40 via-white/20 to-white/5 transition-all duration-300 group-hover:from-white/50" />
-                
-                {/* Button content */}
-                <div className="relative flex items-center gap-3 px-10 py-5 rounded-full">
-                  <svg className="w-6 h-6 text-white drop-shadow-lg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span className="text-white text-sm font-semibold uppercase tracking-widest drop-shadow-lg">Start</span>
-                </div>
-                
-                {/* Glow effect */}
-                <div className="absolute -inset-3 rounded-full bg-white/20 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <svg
+                  height="24"
+                  width="24"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M0 0h24v24H0z" fill="none"></path>
+                  <path
+                    d="M5 13c0-5.088 2.903-9.436 7-11.182C16.097 3.564 19 7.912 19 13c0 .823-.076 1.626-.22 2.403l1.94 1.832a.5.5 0 0 1 .095.603l-2.495 4.575a.5.5 0 0 1-.793.114l-2.234-2.234a1 1 0 0 0-.707-.293H9.414a1 1 0 0 0-.707.293l-2.234 2.234a.5.5 0 0 1-.793-.114l-2.495-4.575a.5.5 0 0 1 .095-.603l1.94-1.832C5.077 14.626 5 13.823 5 13zm1.476 6.696l.817-.817A3 3 0 0 1 9.414 18h5.172a3 3 0 0 1 2.121.879l.817.817.982-1.8-1.1-1.04a2 2 0 0 1-.593-1.82c.124-.664.187-1.345.187-2.036 0-3.87-1.995-7.3-5-8.96C8.995 5.7 7 9.13 7 13c0 .691.063 1.372.187 2.037a2 2 0 0 1-.593 1.82l-1.1 1.039.982 1.8zM12 13a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+                <span>Start</span>
               </button>
             </div>
           )}

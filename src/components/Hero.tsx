@@ -49,15 +49,15 @@ const Hero = () => {
             {/* Stats */}
             <div className="flex md:flex-col gap-6 md:gap-4 text-center">
               <div>
-                <p className="text-2xl font-bold text-amber-500">5+</p>
+                <p className="text-2xl font-bold text-amber-500">6+</p>
                 <p className="text-xs text-gray-500">Projects</p>
               </div>
               <div>
-                <p className="text-2xl font-bold text-amber-500">3+</p>
+                <p className="text-2xl font-bold text-amber-500">4+</p>
                 <p className="text-xs text-gray-500">Years</p>
               </div>
               <div>
-                <p className="text-2xl font-bold text-amber-500">15+</p>
+                <p className="text-2xl font-bold text-amber-500">20+</p>
                 <p className="text-xs text-gray-500">Skills</p>
               </div>
             </div>
@@ -65,16 +65,18 @@ const Hero = () => {
 
           {/* Bio */}
           <p className="text-gray-400 leading-relaxed mb-8 text-center md:text-left">
-            Passionate about building modern Android applications with 
-            <span className="text-amber-500"> Kotlin</span> and 
-            <span className="text-amber-500"> Jetpack Compose</span>. 
-            Experienced in full-stack development with Django REST Framework.
+            Results-driven Android & Backend Developer skilled in
+            <span className="text-amber-500"> Kotlin</span>,
+            <span className="text-amber-500"> Jetpack Compose</span>,
+            <span className="text-amber-500"> Python</span>, and
+            <span className="text-amber-500"> Django</span>.
+            Experienced with agentic development tools to improve productivity and code quality.
           </p>
 
           {/* Actions */}
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <a
-              href="mailto:hareeshworksoffcial@gmail.com"
+              href="mailto:hareeshworksofficial@gmail.com"
               className="w-full sm:w-auto px-6 py-3 bg-amber-500 hover:bg-amber-600 text-black font-medium rounded-xl transition-colors flex items-center justify-center gap-2"
             >
               <Mail className="w-4 h-4" />
@@ -107,7 +109,7 @@ const Hero = () => {
               <Linkedin className="w-5 h-5" />
             </a>
             <a
-              href="mailto:hareeshworksoffcial@gmail.com"
+              href="mailto:hareeshworksofficial@gmail.com"
               className="w-10 h-10 glass rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:border-amber-500/30 transition-all"
             >
               <Mail className="w-5 h-5" />

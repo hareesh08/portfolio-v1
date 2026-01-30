@@ -4,28 +4,31 @@ import ProtectedData from "./ProtectedData";
 
 const experiences = [
   {
-    title: "Android Developer Intern",
-    company: "Ky Technologies Pvt Ltd",
+    title: "Android & Backend Developer Intern",
+    company: "Ky Technologies Pvt Ltd, Chennai",
     period: "Jan 2025 - Mar 2025",
-    description: "Built Customer Service Management System with JWT auth, geofencing",
+    description: "Engineered full-stack service management platform with JWT auth, geofencing, and 40% API optimization",
   },
   {
-    title: "Freelance Developer",
-    company: "Upwork",
+    title: "Freelance Python Developer",
+    company: "Upwork - Remote",
     period: "Jul 2021 - Jul 2022",
-    description: "Python web scraping & automation tools for clients",
+    description: "Automated data extraction pipelines for 8+ clients, processing 50,000+ records with 70% efficiency gain",
   },
 ];
 
 const education = {
   degree: "B.Tech Information Technology",
-  institution: "SRM Easwari Engineering College",
+  institution: "SRM Easwari Engineering College, Chennai",
   period: "2022 - 2026",
   cgpa: "7.75",
 };
 
 const certifications = [
   "Microsoft Azure Fundamentals (AZ-900)",
+  "Cisco CCNA (Modules 1-3)",
+  "Cisco Python Essentials (Modules 1-2)",
+  "Introduction to CyberSecurity",
   "Android App Development",
   "Python Advance Course",
 ];

@@ -1,32 +1,46 @@
 import { motion } from "framer-motion";
-import { Code2, Smartphone, Database, Shield } from "lucide-react";
+import { Code2, Smartphone, Database, Shield, Server, Cloud } from "lucide-react";
 
 const skillCategories = [
   {
     icon: Code2,
-    title: "Languages",
-    skills: ["Kotlin", "Java", "Python", "C#"],
+    title: "Programming",
+    skills: ["Kotlin", "Java", "Python", "C#", "SQL"],
     color: "text-amber-500",
     bg: "bg-amber-500/10",
   },
   {
     icon: Smartphone,
     title: "Android",
-    skills: ["Jetpack Compose", "Android NDK", "MVVM", "Retrofit", "REST APIs", "OkHttp"],
+    skills: ["Jetpack Compose", "MVVM", "Retrofit", "OkHttp", "Room", "Coroutines", "Android Architecture Components"],
     color: "text-emerald-500",
     bg: "bg-emerald-500/10",
   },
   {
-    icon: Database,
+    icon: Server,
     title: "Backend",
-    skills: ["Django REST", "PostgreSQL", "Git", "cPanel"],
+    skills: ["Django REST Framework", "FastAPI", "RESTful APIs", "JWT Auth", "WebSockets", "Microservices"],
     color: "text-blue-500",
     bg: "bg-blue-500/10",
   },
   {
+    icon: Database,
+    title: "Databases",
+    skills: ["PostgreSQL", "SQLite"],
+    color: "text-purple-500",
+    bg: "bg-purple-500/10",
+  },
+  {
+    icon: Cloud,
+    title: "Tools & Platforms",
+    skills: ["Git", "GitHub", "Docker", "Postman", "Azure", "Android Studio", "Linux", "Claude Code"],
+    color: "text-cyan-500",
+    bg: "bg-cyan-500/10",
+  },
+  {
     icon: Shield,
     title: "Security",
-    skills: ["Pen Testing", "Reverse Engineering", "Burp Suite"],
+    skills: ["JWT Authentication", "AES-256 Encryption", "HMAC", "Secure API Design", "API Security"],
     color: "text-red-500",
     bg: "bg-red-500/10",
   },
@@ -91,10 +105,10 @@ const Skills = () => {
           className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4"
         >
           {[
-            { value: "4+", label: "Languages" },
-            { value: "8+", label: "Frameworks" },
+            { value: "5+", label: "Languages" },
+            { value: "10+", label: "Frameworks" },
             { value: "15+", label: "Tools" },
-            { value: "3+", label: "Years" },
+            { value: "4+", label: "Years" },
           ].map((stat) => (
             <div key={stat.label} className="glass-card rounded-xl p-4 text-center">
               <p className="text-xl font-bold text-amber-500">{stat.value}</p>

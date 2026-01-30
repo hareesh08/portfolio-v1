@@ -38,11 +38,11 @@ const Contact = () => {
                 <div>
                   <p className="text-gray-500 text-xs mb-0.5">Email</p>
                   {isAuthorized ? (
-                    <a href="mailto:hareeshworksoffcial@gmail.com" className="text-white text-sm hover:text-amber-500 transition-colors">
-                      hareeshworksoffcial@gmail.com
+                    <a href="mailto:hareeshworksofficial@gmail.com" className="text-white text-sm hover:text-amber-500 transition-colors">
+                      hareeshworksofficial@gmail.com
                     </a>
                   ) : (
-                    <ProtectedData value="hareeshworksoffcial@gmail.com" masked="h•••••@gmail.com" className="text-white text-sm" />
+                    <ProtectedData value="hareeshworksofficial@gmail.com" masked="h••••••••@gmail.com" className="text-white text-sm" />
                   )}
                 </div>
               </div>
@@ -81,7 +81,7 @@ const Contact = () => {
               </p>
 
               <a
-                href="mailto:hareeshworksoffcial@gmail.com"
+                href="mailto:hareeshworksofficial@gmail.com"
                 className="w-full px-6 py-3 bg-amber-500 hover:bg-amber-600 text-black font-medium rounded-xl transition-colors flex items-center justify-center gap-2 mb-4"
               >
                 <Mail className="w-4 h-4" />
@@ -118,7 +118,7 @@ const Contact = () => {
           className="text-center mt-12 pt-8 border-t border-white/5"
         >
           <p className="text-gray-500 text-sm">
-            © 2025 Hareesh Ragavendra
+            © 2026 Hareesh Ragavendra
           </p>
         </motion.div>
       </div>
