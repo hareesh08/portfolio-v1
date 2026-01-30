@@ -83,7 +83,7 @@ const getAccentColor = (timeOfDay: string) => {
   }
 };
 
-type Phase = "bigbang" | "askName" | "welcome" | "journey" | "motivation" | "cosmic" | "warp" | "exit";
+type Phase = "blackScreen" | "video" | "bigbang" | "askName" | "welcome" | "journey" | "motivation" | "cosmic" | "warp" | "exit";
 
 interface IntroScreenProps {
   onComplete: () => void;
@@ -91,7 +91,9 @@ interface IntroScreenProps {
 
 const IntroScreen = ({ onComplete }: IntroScreenProps) => {
   const [userName, setUserName] = useState("");
-  const [phase, setPhase] = useState<Phase>("bigbang");
+  const [phase, setPhase] = useState<Phase>("blackScreen");
+  const [videoEnded, setVideoEnded] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [cosmicFact, setCosmicFact] = useState("");
   const [currentTime, setCurrentTime] = useState(getISTTime());
   const [timeOfDay] = useState(getTimeOfDay());
@@ -136,6 +138,24 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
     };
     fetchFact();
   }, []);
+
+  // Black screen to video transition
+  useEffect(() => {
+    if (phase === "blackScreen") {
+      const timer = setTimeout(() => {
+        setPhase("video");
+        setTimeout(() => videoRef.current?.play(), 100);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [phase]);
+
+  // Handle video ending - transition to bigbang
+  useEffect(() => {
+    if (phase === "video" && videoEnded) {
+      setPhase("bigbang");
+    }
+  }, [phase, videoEnded]);
 
   // Big Bang sequence
   useEffect(() => {
@@ -207,8 +227,40 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
 
   return (
     <div className={`fixed inset-0 z-[60] flex flex-col items-center justify-center overflow-hidden transition-opacity duration-1000 ${phase === "exit" ? "opacity-0" : "opacity-100"}`}>
-      {/* Background */}
-      <div className="absolute inset-0 bg-black">
+      
+      {/* Black Screen Phase */}
+      {phase === "blackScreen" && (
+        <div className="absolute inset-0 bg-black" />
+      )}
+
+      {/* Video Phase */}
+      {phase === "video" && (
+        <div className="absolute inset-0 bg-black flex items-center justify-center">
+          <video
+            ref={videoRef}
+            className="w-full h-full object-contain"
+            playsInline
+            muted
+            onEnded={() => setVideoEnded(true)}
+          >
+            <source src="/Intro-Desktop.mp4" type="video/mp4" />
+          </video>
+          {/* Skip video button */}
+          <button
+            onClick={() => {
+              videoRef.current?.pause();
+              setVideoEnded(true);
+            }}
+            className="absolute bottom-8 right-8 text-white/50 hover:text-white text-xs uppercase tracking-[0.3em] transition-colors duration-300 z-20"
+          >
+            Skip
+          </button>
+        </div>
+      )}
+
+      {/* Background - only show when not in blackScreen or video phase */}
+      {phase !== "blackScreen" && phase !== "video" && (
+        <div className="absolute inset-0 bg-black">
         <div className={`absolute inset-0 ${getBackgroundStyle(timeOfDay)} transition-all duration-1000`} />
         
         {/* Sun/Moon */}
@@ -285,7 +337,8 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
         <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl transition-all duration-1000 ${
           phase === "warp" ? "w-[200vw] h-[200vh] bg-white/80" : phase === "bigbang" ? "w-0 h-0" : "w-[600px] h-[600px] bg-white/5"
         }`} />
-      </div>
+        </div>
+      )}
 
       {/* IST Time Display */}
       {phase !== "bigbang" && phase !== "exit" && (
