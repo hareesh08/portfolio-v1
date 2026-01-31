@@ -269,29 +269,63 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
             <source src="/Intro-Desktop.mp4" type="video/mp4" />
           </video>
           
-          {/* Start Overlay with Styled Button */}
+          {/* Start Overlay with Cinematic Button */}
           {showStartOverlay && (
-            <div
-              className="absolute inset-0 flex items-center justify-center bg-black/20 z-20"
-            >
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black z-20">
+              {/* Cinematic particles */}
+              <div className="absolute inset-0 overflow-hidden">
+                {Array.from({ length: 50 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="absolute rounded-full bg-white/30 intro-particle"
+                    style={{
+                      left: `${Math.random() * 100}%`,
+                      top: `${Math.random() * 100}%`,
+                      width: `${1 + Math.random() * 2}px`,
+                      height: `${1 + Math.random() * 2}px`,
+                      animationDelay: `${Math.random() * 5}s`,
+                      animationDuration: `${3 + Math.random() * 4}s`,
+                    }}
+                  />
+                ))}
+              </div>
+              
+              {/* Ambient glow */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-white/5 via-transparent to-transparent rounded-full blur-3xl" />
+              
+              {/* Title */}
+              <div className="relative z-10 text-center mb-12 intro-title-animate">
+                <p className="text-white/40 text-xs uppercase tracking-[0.5em] mb-4">Welcome to</p>
+                <h1 className="text-white text-5xl md:text-7xl font-extralight tracking-wider mb-4">The Cosmos</h1>
+                <p className="text-white/50 text-sm font-light">A cinematic portfolio experience</p>
+              </div>
+              
+              {/* Start Button - White with black background */}
               <button
                 onClick={handleStart}
-                className="start-button"
+                className="relative z-10 group flex items-center gap-4 px-10 py-5 bg-white text-black rounded-full font-medium text-lg tracking-wide transition-all duration-500 hover:scale-105 hover:shadow-[0_0_60px_20px_rgba(255,255,255,0.3)] intro-button-animate"
               >
-                <svg
-                  height="24"
-                  width="24"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M0 0h24v24H0z" fill="none"></path>
-                  <path
-                    d="M5 13c0-5.088 2.903-9.436 7-11.182C16.097 3.564 19 7.912 19 13c0 .823-.076 1.626-.22 2.403l1.94 1.832a.5.5 0 0 1 .095.603l-2.495 4.575a.5.5 0 0 1-.793.114l-2.234-2.234a1 1 0 0 0-.707-.293H9.414a1 1 0 0 0-.707.293l-2.234 2.234a.5.5 0 0 1-.793-.114l-2.495-4.575a.5.5 0 0 1 .095-.603l1.94-1.832C5.077 14.626 5 13.823 5 13zm1.476 6.696l.817-.817A3 3 0 0 1 9.414 18h5.172a3 3 0 0 1 2.121.879l.817.817.982-1.8-1.1-1.04a2 2 0 0 1-.593-1.82c.124-.664.187-1.345.187-2.036 0-3.87-1.995-7.3-5-8.96C8.995 5.7 7 9.13 7 13c0 .691.063 1.372.187 2.037a2 2 0 0 1-.593 1.82l-1.1 1.039.982 1.8zM12 13a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"
-                    fill="currentColor"
-                  ></path>
-                </svg>
-                <span>Start</span>
+                <span className="relative">
+                  <svg
+                    height="24"
+                    width="24"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="transition-transform duration-500 group-hover:rotate-90"
+                  >
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                    <path
+                      d="M5 13c0-5.088 2.903-9.436 7-11.182C16.097 3.564 19 7.912 19 13c0 .823-.076 1.626-.22 2.403l1.94 1.832a.5.5 0 0 1 .095.603l-2.495 4.575a.5.5 0 0 1-.793.114l-2.234-2.234a1 1 0 0 0-.707-.293H9.414a1 1 0 0 0-.707.293l-2.234 2.234a.5.5 0 0 1-.793-.114l-2.495-4.575a.5.5 0 0 1 .095-.603l1.94-1.832C5.077 14.626 5 13.823 5 13zm1.476 6.696l.817-.817A3 3 0 0 1 9.414 18h5.172a3 3 0 0 1 2.121.879l.817.817.982-1.8-1.1-1.04a2 2 0 0 1-.593-1.82c.124-.664.187-1.345.187-2.036 0-3.87-1.995-7.3-5-8.96C8.995 5.7 7 9.13 7 13c0 .691.063 1.372.187 2.037a2 2 0 0 1-.593 1.82l-1.1 1.039.982 1.8zM12 13a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                </span>
+                <span className="transition-transform duration-300 group-hover:translate-x-1">Begin Experience</span>
+                <ArrowRight className="w-5 h-5 transition-all duration-300 group-hover:translate-x-2" />
               </button>
+              
+              {/* Hint text */}
+              <p className="relative z-10 text-white/30 text-xs mt-8 tracking-widest uppercase intro-hint-animate">Click to start with sound</p>
             </div>
           )}
         </div>
@@ -604,7 +638,32 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
       )}
 
       <style>{`
-        /* Base animations */
+        /* Intro screen animations */
+        @keyframes introParticle {
+          0%, 100% { opacity: 0.2; transform: translateY(0); }
+          50% { opacity: 0.6; transform: translateY(-20px); }
+        }
+        .intro-particle { animation: introParticle 4s ease-in-out infinite; }
+        
+        @keyframes introTitleAnimate {
+          0% { opacity: 0; transform: translateY(30px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .intro-title-animate { animation: introTitleAnimate 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both; }
+        
+        @keyframes introButtonAnimate {
+          0% { opacity: 0; transform: scale(0.9); }
+          100% { opacity: 1; transform: scale(1); }
+        }
+        .intro-button-animate { animation: introButtonAnimate 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.8s both; }
+        
+        @keyframes introHintAnimate {
+          0% { opacity: 0; }
+          100% { opacity: 1; }
+        }
+        .intro-hint-animate { animation: introHintAnimate 1s ease-out 1.2s both; }
+        
+        /* Base animations - optimized */
         @keyframes fadeIn {
           from { opacity: 0; }
           to { opacity: 1; }
@@ -621,129 +680,140 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
         .animate-slideUp { animation: slideUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
         .animate-scaleIn { animation: scaleIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
         
-        /* Star twinkle - enhanced */
+        /* Star twinkle - optimized for performance */
         @keyframes twinkle {
-          0%, 100% { opacity: 0.2; transform: scale(0.8); }
-          50% { opacity: 1; transform: scale(1.3); }
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 1; }
         }
-        .star-twinkle { animation: twinkle 3s ease-in-out infinite; }
+        .star-twinkle { 
+          animation: twinkle 3s ease-in-out infinite;
+          will-change: opacity;
+        }
         
-        /* Nebula floating animation */
+        /* Nebula floating - reduced motion */
         @keyframes nebulaFloat {
-          0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-          50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
+          0%, 100% { opacity: 0.5; }
+          50% { opacity: 0.7; }
         }
-        .nebula-cloud { animation: nebulaFloat 15s ease-in-out infinite; }
+        .nebula-cloud { 
+          animation: nebulaFloat 12s ease-in-out infinite;
+          will-change: opacity;
+        }
         
-        /* Enhanced shooting star */
+        /* Shooting star - simplified */
         @keyframes shootEnhanced {
           0% { 
             transform: translateX(0) translateY(0) rotate(-45deg); 
             opacity: 0;
           }
-          5% { opacity: 1; }
-          70% { opacity: 1; }
+          10% { opacity: 1; }
+          90% { opacity: 0.5; }
           100% { 
-            transform: translateX(500px) translateY(500px) rotate(-45deg); 
+            transform: translateX(400px) translateY(400px) rotate(-45deg); 
             opacity: 0; 
           }
         }
         .shooting-star-enhanced {
           position: absolute;
-          width: 200px;
+          width: 150px;
           height: 2px;
-          background: linear-gradient(90deg, 
-            rgba(255, 255, 255, 1) 0%, 
-            rgba(255, 255, 255, 0.8) 20%, 
-            rgba(255, 200, 150, 0.4) 60%, 
-            transparent 100%
-          );
+          background: linear-gradient(90deg, white 0%, rgba(255, 255, 255, 0.5) 40%, transparent 100%);
           border-radius: 2px;
-          animation: shootEnhanced 5s ease-out infinite;
-          box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 200, 150, 0.3);
+          animation: shootEnhanced 4s ease-out infinite;
+          will-change: transform, opacity;
         }
         .shooting-star-enhanced::before {
           content: '';
           position: absolute;
           left: 0;
           top: -1px;
-          width: 6px;
+          width: 4px;
           height: 4px;
           background: white;
           border-radius: 50%;
-          box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.8);
+          box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.8);
         }
         
-        /* Big Bang effects */
+        /* Big Bang effects - optimized */
         @keyframes bigbang-expand {
           0% { width: 0; height: 0; opacity: 1; }
-          60% { opacity: 0.8; }
-          100% { width: 250vw; height: 250vh; opacity: 0; }
+          100% { width: 200vw; height: 200vh; opacity: 0; }
         }
-        .bigbang-ring { animation: bigbang-expand 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+        .bigbang-ring { 
+          animation: bigbang-expand 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          will-change: width, height, opacity;
+        }
         
         @keyframes bigbang-particle {
           0% { 
             transform: translate(-50%, -50%) rotate(var(--angle)) translateX(0); 
             opacity: 1; 
           }
-          60% { opacity: 0.8; }
           100% { 
             transform: translate(-50%, -50%) rotate(var(--angle)) translateX(var(--distance)); 
             opacity: 0; 
           }
         }
-        .bigbang-particle { animation: bigbang-particle 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+        .bigbang-particle { 
+          animation: bigbang-particle 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          will-change: transform, opacity;
+        }
         
         @keyframes bigbang-flash {
-          0% { opacity: 0.9; }
+          0% { opacity: 0.8; }
           100% { opacity: 0; }
         }
-        .bigbang-flash { animation: bigbang-flash 0.8s ease-out forwards; }
+        .bigbang-flash { 
+          animation: bigbang-flash 0.6s ease-out forwards;
+          will-change: opacity;
+        }
         
-        /* Warp/Hyperspace effects */
+        /* Warp effects - optimized */
         @keyframes warpStreak {
           0% { 
-            transform: translate(-50%, -50%) scale(0.5);
-            width: 3px;
-            height: 3px;
+            transform: translate(-50%, -50%) scaleX(0.1);
             opacity: 0;
           }
-          10% { opacity: 1; }
+          20% { opacity: 1; }
           100% { 
-            transform: translate(-50%, -50%) scale(50);
-            width: var(--streak-length);
-            height: 2px;
+            transform: translate(-50%, -50%) scaleX(30);
             opacity: 0;
           }
         }
         .warp-streak {
           position: absolute;
+          width: var(--streak-length);
+          height: 2px;
           background: linear-gradient(90deg, transparent, white, transparent);
           border-radius: 2px;
-          animation: warpStreak 1.5s ease-in forwards;
+          animation: warpStreak 1.2s ease-in forwards;
+          will-change: transform, opacity;
         }
         
         @keyframes warpCenterGlow {
-          0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 50px 20px white; }
-          100% { transform: translate(-50%, -50%) scale(200); box-shadow: 0 0 100px 50px white; opacity: 0; }
+          0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+          100% { transform: translate(-50%, -50%) scale(100); opacity: 0; }
         }
-        .warp-center-glow { animation: warpCenterGlow 1.5s ease-in forwards; }
+        .warp-center-glow { 
+          animation: warpCenterGlow 1.2s ease-in forwards;
+          box-shadow: 0 0 60px 30px white;
+          will-change: transform, opacity;
+        }
         
         @keyframes warpBlur {
           0% { opacity: 0; }
-          50% { opacity: 0.3; }
-          100% { opacity: 0.8; }
+          100% { opacity: 0.6; }
         }
         .warp-blur-overlay {
-          background: radial-gradient(circle at center, transparent 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.3) 100%);
-          animation: warpBlur 1.5s ease-in forwards;
+          background: radial-gradient(circle at center, transparent 0%, rgba(255, 255, 255, 0.2) 100%);
+          animation: warpBlur 1.2s ease-in forwards;
+          will-change: opacity;
         }
         
         .warp-star { 
-          animation: warpStreak 0.8s ease-in forwards !important; 
-          width: 3px !important;
-          height: 3px !important;
+          animation: warpStreak 0.6s ease-in forwards !important; 
+          width: 2px !important;
+          height: 2px !important;
         }
       `}</style>
     </div>
