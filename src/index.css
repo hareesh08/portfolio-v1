@@ -126,123 +126,76 @@
   }
 
   .animate-fade-in {
-    animation: fade-in 0.8s ease-out forwards;
+    animation: fade-in 0.6s ease-out forwards;
   }
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+  50% { transform: translateY(-10px); }
 }
 
 @keyframes pulse-slow {
   0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.8; }
+  50% { opacity: 0.7; }
 }
 
 @keyframes slide-up {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 @keyframes scale-in {
-  from { opacity: 0; transform: scale(0.9); }
+  from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
 }
 
 .animate-scale-in {
-  animation: scale-in 0.2s ease-out forwards;
+  animation: scale-in 0.3s ease-out forwards;
 }
 
-@keyframes fact-in {
-  0% { opacity: 0; transform: scale(0.8) translateY(20px); }
-  100% { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-.animate-fact-in {
-  animation: fact-in 0.6s ease-out forwards;
-}
-
-/* Particle animations - optimized for performance */
-@keyframes particle-float {
-  0%, 100% { 
-    transform: translate(0, 0);
-    opacity: 0.4;
-  }
-  50% { 
-    transform: translate(10px, -25px);
-    opacity: 0.7;
-  }
-}
-
-@keyframes particle-pulse {
-  0%, 100% { 
-    r: 2px;
-    opacity: 0.3;
-  }
-  50% { 
-    r: 3px;
-    opacity: 0.6;
-  }
-}
-
-@keyframes blob-animation {
-  0%, 100% { 
-    transform: translate(0, 0) scale(1); 
-  }
-  33% { 
-    transform: translate(20px, -30px) scale(1.05); 
-  }
-  66% { 
-    transform: translate(-20px, 20px) scale(0.95); 
-  }
-}
-
-@keyframes scroll-indicator {
-  0%, 100% { 
-    opacity: 0.5;
-    transform: translateY(0);
-  }
-  50% { 
-    opacity: 1;
-    transform: translateY(10px);
-  }
-}
-
+/* Particle animation - lightweight opacity only */
 .particle {
-  animation: particle-float 8s infinite ease-in-out;
+  animation: particleFloat 6s ease-in-out infinite;
 }
 
-.particle:nth-child(1) { animation-delay: 0s; animation-duration: 8s; }
-.particle:nth-child(2) { animation-delay: 1.6s; animation-duration: 9s; }
-.particle:nth-child(3) { animation-delay: 3.2s; animation-duration: 7s; }
-.particle:nth-child(4) { animation-delay: 4.8s; animation-duration: 10s; }
-.particle:nth-child(5) { animation-delay: 6.4s; animation-duration: 8.5s; }
-.particle:nth-child(6) { animation-delay: 2s; animation-duration: 9.5s; }
-.particle:nth-child(7) { animation-delay: 5s; animation-duration: 7.5s; }
-.particle:nth-child(8) { animation-delay: 3.5s; animation-duration: 8.8s; }
+@keyframes particleFloat {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.5; }
+}
 
+.particle:nth-child(1) { animation-delay: 0s; }
+.particle:nth-child(2) { animation-delay: 1s; }
+.particle:nth-child(3) { animation-delay: 2s; }
+.particle:nth-child(4) { animation-delay: 3s; }
+
+/* Blob animation - simple opacity */
 .blob {
-  animation: blob-animation 12s infinite ease-in-out;
+  animation: blobPulse 10s ease-in-out infinite;
+}
+
+@keyframes blobPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.7; }
 }
 
 .blob:nth-child(1) { animation-delay: 0s; }
-.blob:nth-child(2) { animation-delay: 4s; }
-.blob:nth-child(3) { animation-delay: 8s; }
+.blob:nth-child(2) { animation-delay: 3s; }
+.blob:nth-child(3) { animation-delay: 6s; }
 
+/* Scroll indicator */
 .scroll-indicator {
-  animation: scroll-indicator 2s infinite ease-in-out;
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+@keyframes scrollBounce {
+  0%, 100% { opacity: 0.5; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(8px); }
 }
 
 /* Respect user's motion preferences */
@@ -252,13 +205,7 @@
   .particle,
   .blob,
   .scroll-indicator {
-    animation: none;
-  }
-  
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    animation: none !important;
   }
 }
 
