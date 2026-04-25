@@ -44,7 +44,7 @@ const Experience = () => {
           viewport={{ once: true }}
           className="mb-10"
         >
-          <p className="text-amber-500 text-sm font-medium mb-2">Experience</p>
+          <p className="text-emerald-500 text-sm font-medium mb-2">Experience</p>
           <h2 className="text-2xl md:text-3xl font-semibold text-white">
             Work & Education
           </h2>
@@ -59,8 +59,8 @@ const Experience = () => {
             className="glass-card rounded-xl p-5"
           >
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-10 h-10 bg-amber-500/10 rounded-lg flex items-center justify-center">
-                <Briefcase className="w-5 h-5 text-amber-500" />
+              <div className="w-10 h-10 bg-emerald-500/10 rounded-lg flex items-center justify-center">
+                <Briefcase className="w-5 h-5 text-emerald-500" />
               </div>
               <h3 className="font-medium text-white">Work</h3>
             </div>
@@ -69,7 +69,7 @@ const Experience = () => {
               {experiences.map((exp, idx) => (
                 <div key={idx} className="p-4 bg-white/5 rounded-lg">
                   <h4 className="font-medium text-white text-sm mb-1">{exp.title}</h4>
-                  <p className="text-amber-500 text-xs mb-1">{exp.company}</p>
+                  <p className="text-emerald-500 text-xs mb-1">{exp.company}</p>
                   <p className="text-gray-500 text-xs mb-2">{exp.period}</p>
                   <p className="text-gray-400 text-sm">{exp.description}</p>
                 </div>
@@ -94,11 +94,11 @@ const Experience = () => {
 
             <div className="p-4 bg-white/5 rounded-lg mb-4">
               <h4 className="font-medium text-white text-sm mb-1">{education.degree}</h4>
-              <p className="text-blue-500 text-xs mb-1">{education.institution}</p>
+              <p className="text-teal-500 text-xs mb-1">{education.institution}</p>
               <p className="text-gray-500 text-xs mb-3">{education.period}</p>
               <div className="flex items-center gap-2">
                 <span className="text-gray-400 text-sm">CGPA:</span>
-                <span className="px-2 py-0.5 bg-amber-500/10 text-amber-500 text-sm rounded">
+                <span className="px-2 py-0.5 bg-emerald-500/10 text-emerald-500 text-sm rounded">
                   <ProtectedData value={education.cgpa} masked="•.••" />
                 </span>
               </div>

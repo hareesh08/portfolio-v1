@@ -16,7 +16,7 @@ const Contact = () => {
           viewport={{ once: true }}
           className="mb-10"
         >
-          <p className="text-amber-500 text-sm font-medium mb-2">Contact</p>
+          <p className="text-emerald-500 text-sm font-medium mb-2">Contact</p>
           <h2 className="text-2xl md:text-3xl font-semibold text-white">
             Get in Touch
           </h2>
@@ -32,13 +32,13 @@ const Contact = () => {
             {/* Contact Info */}
             <div className="space-y-4">
               <div className="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
-                <div className="w-10 h-10 bg-amber-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-5 h-5 text-amber-500" />
+                <div className="w-10 h-10 bg-emerald-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Mail className="w-5 h-5 text-emerald-500" />
                 </div>
                 <div>
                   <p className="text-gray-500 text-xs mb-0.5">Email</p>
                   {isAuthorized ? (
-                    <a href="mailto:hareeshworksofficial@gmail.com" className="text-white text-sm hover:text-amber-500 transition-colors">
+                    <a href="mailto:hareeshworksofficial@gmail.com" className="text-white text-sm hover:text-emerald-500 transition-colors">
                       hareeshworksofficial@gmail.com
                     </a>
                   ) : (
@@ -48,13 +48,13 @@ const Contact = () => {
               </div>
 
               <div className="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
-                <div className="w-10 h-10 bg-emerald-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-5 h-5 text-emerald-500" />
+                <div className="w-10 h-10 bg-teal-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Phone className="w-5 h-5 text-teal-500" />
                 </div>
                 <div>
                   <p className="text-gray-500 text-xs mb-0.5">Phone</p>
                   {isAuthorized ? (
-                    <a href="tel:+918072703652" className="text-white text-sm hover:text-emerald-500 transition-colors">
+                    <a href="tel:+918072703652" className="text-white text-sm hover:text-teal-500 transition-colors">
                       +91 80727 03652
                     </a>
                   ) : (
@@ -64,8 +64,8 @@ const Contact = () => {
               </div>
 
               <div className="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
-                <div className="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-5 h-5 text-blue-500" />
+                <div className="w-10 h-10 bg-cyan-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-5 h-5 text-cyan-500" />
                 </div>
                 <div>
                   <p className="text-gray-500 text-xs mb-0.5">Location</p>
@@ -82,7 +82,7 @@ const Contact = () => {
 
               <a
                 href="mailto:hareeshworksofficial@gmail.com"
-                className="w-full px-6 py-3 bg-amber-500 hover:bg-amber-600 text-black font-medium rounded-xl transition-colors flex items-center justify-center gap-2 mb-4"
+                className="w-full px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-black font-medium rounded-xl transition-colors flex items-center justify-center gap-2 mb-4"
               >
                 <Mail className="w-4 h-4" />
                 Send Email

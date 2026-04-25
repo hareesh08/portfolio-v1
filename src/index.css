@@ -6,33 +6,33 @@
 
 @layer base {
   :root {
-    --background: 0 0% 10%;
-    --foreground: 220 10% 96%;
+    --background: 160 30% 8%;
+    --foreground: 160 20% 96%;
 
-    --card: 0 0% 14%;
-    --card-foreground: 220 10% 96%;
+    --card: 160 25% 12%;
+    --card-foreground: 160 20% 96%;
 
-    --popover: 0 0% 14%;
-    --popover-foreground: 220 10% 96%;
+    --popover: 160 25% 12%;
+    --popover-foreground: 160 20% 96%;
 
-    --primary: 36 100% 54%;
-    --primary-foreground: 0 0% 5%;
+    --primary: 160 85% 45%;
+    --primary-foreground: 160 30% 8%;
 
-    --secondary: 0 0% 18%;
-    --secondary-foreground: 220 10% 96%;
+    --secondary: 160 20% 18%;
+    --secondary-foreground: 160 20% 96%;
 
-    --muted: 0 0% 22%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 160 15% 22%;
+    --muted-foreground: 160 10% 65%;
 
-    --accent: 168 76% 42%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 160 70% 50%;
+    --accent-foreground: 160 30% 8%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 16%;
-    --ring: 36 100% 54%;
+    --border: 160 20% 20%;
+    --input: 160 20% 16%;
+    --ring: 160 85% 45%;
 
     --radius: 1rem;
     
@@ -63,41 +63,41 @@
 
 @layer utilities {
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-500 to-orange-500;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-500;
   }
 
   .bg-gradient-hero {
-    background: #1a1a1a;
+    background: #0a1a14;
   }
 
-  /* Glassmorphism - LeetCode style */
+  /* Glassmorphism - Forest theme */
   .glass {
-    background: rgba(40, 40, 40, 0.6);
+    background: rgba(20, 40, 32, 0.6);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .glass-strong {
-    background: rgba(40, 40, 40, 0.8);
+    background: rgba(20, 40, 32, 0.8);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .glass-card {
-    background: rgba(40, 40, 40, 0.5);
+    background: rgba(25, 50, 40, 0.5);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .glow-primary {
-    box-shadow: 0 0 20px rgba(255, 161, 22, 0.2);
+    box-shadow: 0 0 20px rgba(20, 184, 166, 0.25);
   }
 
   .glow-accent {
-    box-shadow: 0 0 20px rgba(0, 184, 163, 0.2);
+    box-shadow: 0 0 20px rgba(45, 212, 191, 0.2);
   }
 
   .font-mono {
@@ -110,7 +110,7 @@
   }
   .bento-card:hover {
     transform: translateY(-2px);
-    border-color: rgba(255, 161, 22, 0.3);
+    border-color: rgba(20, 184, 166, 0.3);
   }
 
   .animate-float {

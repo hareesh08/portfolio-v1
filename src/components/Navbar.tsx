@@ -79,7 +79,7 @@ const Navbar = () => {
               href="./Hareesh_Ragavendra_Resume.pdf"
               download={isAuthorized}
               onClick={handleResumeClick}
-              className="hidden md:flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded-full text-black text-sm font-medium transition-all"
+              className="hidden md:flex items-center gap-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 rounded-full text-black text-sm font-medium transition-all"
             >
               {isAuthorized ? <Download className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
               Resume
@@ -112,7 +112,7 @@ const Navbar = () => {
                   href="./Hareesh_Ragavendra_Resume.pdf"
                   download={isAuthorized}
                   onClick={handleResumeClick}
-                  className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-amber-500 rounded-xl text-black font-medium mt-4"
+                  className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-emerald-500 rounded-xl text-black font-medium mt-4"
                 >
                   {isAuthorized ? <Download className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
                   Resume
@@ -135,8 +135,8 @@ const Navbar = () => {
           >
             <div className="p-6">
               <div className="text-center mb-6">
-                <div className="w-16 h-16 mx-auto rounded-full bg-amber-500/20 border border-amber-500/30 flex items-center justify-center mb-4">
-                  <Lock className="w-8 h-8 text-amber-500" />
+                <div className="w-16 h-16 mx-auto rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center mb-4">
+                  <Lock className="w-8 h-8 text-emerald-500" />
                 </div>
                 <h3 className="text-xl font-semibold text-white">Download Resume</h3>
                 <p className="text-sm text-white/50 mt-1">Enter password to access</p>
@@ -151,7 +151,7 @@ const Navbar = () => {
                     placeholder="Enter password"
                     autoFocus
                     className={`w-full px-4 py-3 glass rounded-xl text-white placeholder:text-white/30 outline-none ${
-                      error ? "ring-2 ring-red-500" : "focus:ring-2 focus:ring-amber-500"
+                      error ? "ring-2 ring-red-500" : "focus:ring-2 focus:ring-emerald-500"
                     }`}
                   />
                   <button
@@ -169,7 +169,7 @@ const Navbar = () => {
 
                 <button
                   type="submit"
-                  className="w-full py-3 bg-amber-500 hover:bg-amber-600 rounded-xl text-black font-medium transition-all"
+                  className="w-full py-3 bg-emerald-500 hover:bg-emerald-600 rounded-xl text-black font-medium transition-all"
                 >
                   Unlock
                 </button>

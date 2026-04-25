@@ -43,7 +43,7 @@ const Projects = () => {
           viewport={{ once: true }}
           className="mb-10"
         >
-          <p className="text-amber-500 text-sm font-medium mb-2">Projects</p>
+          <p className="text-emerald-500 text-sm font-medium mb-2">Projects</p>
           <h2 className="text-2xl md:text-3xl font-semibold text-white">
             Featured Work
           </h2>
@@ -64,7 +64,7 @@ const Projects = () => {
               <div className="flex items-start justify-between mb-3">
                 <h3 className="font-medium text-white">{project.title}</h3>
                 {project.featured && (
-                  <div className="flex items-center gap-1 px-2 py-0.5 bg-amber-500/10 rounded text-amber-500 text-xs">
+                  <div className="flex items-center gap-1 px-2 py-0.5 bg-emerald-500/10 rounded text-emerald-500 text-xs">
                     <Star className="w-3 h-3 fill-current" />
                     Featured
                   </div>
@@ -93,7 +93,7 @@ const Projects = () => {
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-amber-500 transition-colors"
+                className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-emerald-500 transition-colors"
               >
                 <Github className="w-4 h-4" />
                 View Code

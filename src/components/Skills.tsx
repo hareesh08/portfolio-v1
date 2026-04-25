@@ -6,43 +6,43 @@ const skillCategories = [
     icon: Code2,
     title: "Programming",
     skills: ["Kotlin", "Java", "Python", "C#", "SQL"],
-    color: "text-amber-500",
-    bg: "bg-amber-500/10",
+    color: "text-emerald-500",
+    bg: "bg-emerald-500/10",
   },
   {
     icon: Smartphone,
     title: "Android",
     skills: ["Jetpack Compose", "MVVM", "Retrofit", "OkHttp", "Room", "Coroutines", "Android Architecture Components"],
-    color: "text-emerald-500",
-    bg: "bg-emerald-500/10",
+    color: "text-teal-500",
+    bg: "bg-teal-500/10",
   },
   {
     icon: Server,
     title: "Backend",
     skills: ["Django REST Framework", "FastAPI", "RESTful APIs", "JWT Auth", "WebSockets", "Microservices"],
-    color: "text-blue-500",
-    bg: "bg-blue-500/10",
+    color: "text-cyan-500",
+    bg: "bg-cyan-500/10",
   },
   {
     icon: Database,
     title: "Databases",
     skills: ["PostgreSQL", "SQLite"],
-    color: "text-purple-500",
-    bg: "bg-purple-500/10",
+    color: "text-emerald-400",
+    bg: "bg-emerald-400/10",
   },
   {
     icon: Cloud,
     title: "Tools & Platforms",
     skills: ["Git", "GitHub", "Docker", "Postman", "Azure", "Android Studio", "Linux", "Claude Code"],
-    color: "text-cyan-500",
-    bg: "bg-cyan-500/10",
+    color: "text-teal-400",
+    bg: "bg-teal-400/10",
   },
   {
     icon: Shield,
     title: "Security",
     skills: ["JWT Authentication", "AES-256 Encryption", "HMAC", "Secure API Design", "API Security"],
-    color: "text-red-500",
-    bg: "bg-red-500/10",
+    color: "text-green-500",
+    bg: "bg-green-500/10",
   },
 ];
 
@@ -57,7 +57,7 @@ const Skills = () => {
           viewport={{ once: true }}
           className="mb-10"
         >
-          <p className="text-amber-500 text-sm font-medium mb-2">Skills</p>
+          <p className="text-emerald-500 text-sm font-medium mb-2">Skills</p>
           <h2 className="text-2xl md:text-3xl font-semibold text-white">
             Technical Expertise
           </h2>
@@ -111,7 +111,7 @@ const Skills = () => {
             { value: "4+", label: "Years" },
           ].map((stat) => (
             <div key={stat.label} className="glass-card rounded-xl p-4 text-center">
-              <p className="text-xl font-bold text-amber-500">{stat.value}</p>
+              <p className="text-xl font-bold text-emerald-500">{stat.value}</p>
               <p className="text-xs text-gray-500">{stat.label}</p>
             </div>
           ))}
