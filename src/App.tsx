@@ -7,6 +7,7 @@ import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AuthProvider } from "@/context/AuthContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import { TerminalGameLauncher } from "./components/TerminalGame";
 
 const queryClient = new QueryClient();
 
@@ -38,15 +39,17 @@ const App = () => (
         <Sonner />
         <HashRouter>
           <ScrollToSection>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/skills" element={<Index />} />
-              <Route path="/projects" element={<Index />} />
-              <Route path="/experience" element={<Index />} />
-              <Route path="/contact" element={<Index />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <TerminalGameLauncher>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/skills" element={<Index />} />
+                <Route path="/projects" element={<Index />} />
+                <Route path="/experience" element={<Index />} />
+                <Route path="/contact" element={<Index />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </TerminalGameLauncher>
           </ScrollToSection>
         </HashRouter>
       </TooltipProvider>
