@@ -35,6 +35,22 @@ const getISTTime = () => {
   return istTime.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true });
 };
 
+const INTRO_VISITED_COOKIE = "portfolio_intro_visited";
+
+const hasVisitedIntro = () => {
+  if (typeof document === "undefined") return false;
+  return document.cookie
+    .split(";")
+    .map((entry) => entry.trim())
+    .some((entry) => entry === `${INTRO_VISITED_COOKIE}=1`);
+};
+
+const markIntroVisited = () => {
+  if (typeof document === "undefined") return;
+  const maxAge = 60 * 60 * 24 * 30;
+  document.cookie = `${INTRO_VISITED_COOKIE}=1; path=/; max-age=${maxAge}; SameSite=Lax`;
+};
+
 type Phase = "intro" | "bigbang" | "askName" | "welcome" | "journey" | "motivation" | "cosmic" | "warp" | "exit";
 
 interface IntroScreenProps {
@@ -43,7 +59,7 @@ interface IntroScreenProps {
 
 const IntroScreen = ({ onComplete }: IntroScreenProps) => {
   const [userName, setUserName] = useState("");
-  const [phase, setPhase] = useState<Phase>("intro");
+  const [phase, setPhase] = useState<Phase>(() => hasVisitedIntro() ? "askName" : "intro");
   const videoRef = useRef<HTMLVideoElement>(null);
   const [cosmicFact, setCosmicFact] = useState("");
   const [currentTime, setCurrentTime] = useState(getISTTime());
@@ -55,6 +71,12 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
   const isMobile = useIsMobile();
 
   const handleComplete = useCallback(() => onComplete(), [onComplete]);
+  const handleSkip = useCallback(() => {
+    markIntroVisited();
+    setShowStartOverlay(false);
+    setPhase("exit");
+    setTimeout(handleComplete, 400);
+  }, [handleComplete]);
 
   // Reduced star count for mobile performance
   const starCount = isMobile ? 30 : 60;
@@ -110,20 +132,29 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
     fetchFact();
   }, []);
 
-  // Handle video play on start
+  useEffect(() => {
+    if (phase !== "intro") {
+      setShowStartOverlay(false);
+    }
+  }, [phase]);
+
+  // Start the first-visit intro video with audio enabled.
   const handleStart = async () => {
     const video = videoRef.current;
     if (video) {
       video.muted = false;
       try {
         await video.play();
+        markIntroVisited();
         setShowStartOverlay(false);
       } catch {
-        // Play failed, skip to bigbang
+        // If playback is blocked, continue the intro sequence immediately.
+        markIntroVisited();
         setShowStartOverlay(false);
         setPhase("bigbang");
       }
     } else {
+      markIntroVisited();
       setShowStartOverlay(false);
       setPhase("bigbang");
     }
@@ -229,23 +260,29 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-white/5 rounded-full blur-xl" />
               
               {/* Title */}
-              <div className="relative z-10 text-center mb-10 intro-fade-in">
-                <p className="text-white/40 text-xs uppercase tracking-[0.4em] mb-3">Welcome to</p>
-                <h1 className="text-white text-4xl md:text-6xl font-extralight tracking-wider mb-3">The Cosmos</h1>
-                <p className="text-white/40 text-sm font-light">A cinematic portfolio experience</p>
+              <div className="relative z-10 text-center mb-10 max-w-2xl intro-fade-in">
+                <p className="text-white/35 text-[11px] uppercase tracking-[0.42em] mb-3">Portfolio Preview</p>
+                <h1 className="text-white text-4xl md:text-6xl font-extralight tracking-[0.08em] mb-4">Designed to feel precise, fast, and memorable.</h1>
+                <p className="text-white/50 text-sm md:text-base font-light leading-relaxed max-w-xl mx-auto">
+                  A short opening sequence before the full portfolio experience.
+                </p>
               </div>
               
-              {/* Start Button - White on black */}
-              <button
-                onClick={handleStart}
-                className="relative z-10 group flex items-center gap-3 px-8 py-4 md:px-10 md:py-5 bg-white text-black rounded-full font-medium text-base md:text-lg tracking-wide transition-all duration-300 hover:bg-white/90 intro-scale-in"
-              >
-                <span className="transition-transform duration-300 group-hover:translate-x-0.5">Begin Experience</span>
-                <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </button>
-              
-              {/* Hint text */}
-              <p className="relative z-10 text-white/30 text-xs mt-6 tracking-widest uppercase intro-fade-in-delayed">Click to start with sound</p>
+              <div className="relative z-10 flex flex-col sm:flex-row items-center gap-3 intro-scale-in">
+                <button
+                  onClick={handleStart}
+                  className="group inline-flex items-center gap-3 px-8 py-4 md:px-10 md:py-5 bg-white text-black rounded-full font-medium text-base md:text-lg tracking-wide transition-all duration-300 hover:bg-white/90"
+                >
+                  <span className="transition-transform duration-300 group-hover:translate-x-0.5">Enter Portfolio</span>
+                  <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                </button>
+                <button
+                  onClick={handleSkip}
+                  className="inline-flex items-center justify-center rounded-full border border-white/12 bg-white/[0.03] px-6 py-4 text-sm font-medium uppercase tracking-[0.22em] text-white/70 transition-colors duration-300 hover:border-white/25 hover:text-white"
+                >
+                  Skip Intro
+                </button>
+              </div>
             </div>
           )}
         </div>
@@ -368,7 +405,7 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
             <div>
               <div className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.4em] mb-6 text-white/40">
                 <span className="w-6 h-px bg-white/20" />
-                <span>Welcome, Traveler</span>
+                <span>Personalize The Visit</span>
                 <span className="w-6 h-px bg-white/20" />
               </div>
               <h2 className="text-white text-3xl md:text-5xl font-extralight tracking-wide">{getGreeting()}</h2>
@@ -380,9 +417,9 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
                 value={userName} 
                 onChange={(e) => setUserName(e.target.value)} 
                 onKeyDown={(e) => e.key === "Enter" && handleNameSubmit()}
-                placeholder="What shall I call you?" 
-                className="w-64 md:w-80 bg-transparent border-b border-white/30 focus:border-white/60 text-white text-center text-xl md:text-2xl font-extralight py-3 outline-none transition-colors duration-300 placeholder:text-white/30" 
-              />
+                 placeholder="What should I call you?" 
+                 className="w-64 md:w-80 bg-transparent border-b border-white/30 focus:border-white/60 text-white text-center text-xl md:text-2xl font-extralight py-3 outline-none transition-colors duration-300 placeholder:text-white/30" 
+               />
               <div>
                 <button 
                   onClick={handleNameSubmit} 
@@ -393,7 +430,7 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
                       : "bg-white/10 text-white/30 cursor-not-allowed"
                   }`}
                 >
-                  <span className="text-sm uppercase tracking-[0.2em]">Begin Journey</span>
+                  <span className="text-sm uppercase tracking-[0.2em]">Continue</span>
                   <ArrowRight className={`w-4 h-4 transition-transform duration-300 ${userName.trim() ? "group-hover:translate-x-1" : ""}`} />
                 </button>
               </div>
@@ -411,17 +448,17 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
             </div>
             <p className="text-xs uppercase tracking-[0.4em] mb-3 text-white/50">Greetings</p>
             <h1 className="text-4xl md:text-6xl font-extralight tracking-wider text-white mb-3">{userName}</h1>
-            <p className="text-white/40 text-base font-extralight">Welcome to my universe</p>
-          </div>
-        )}
+             <p className="text-white/40 text-base font-extralight">Your preview is ready</p>
+           </div>
+         )}
 
         {/* Journey Phase */}
         {phase === "journey" && (
           <div className="phase-scale-in">
             <div className="text-4xl mb-6 text-white/60">✧</div>
             <p className="text-xl md:text-2xl font-extralight text-white/70 leading-relaxed">
-              Prepare for a journey<br/>
-              <span className="text-white">through the cosmos</span>
+              A focused walkthrough<br/>
+              <span className="text-white">before the main portfolio</span>
             </p>
           </div>
         )}
@@ -459,9 +496,9 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
           <div className="phase-slide-up">
             <div className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.3em] mb-6 text-white/40">
               <span className="w-5 h-px bg-white/20" />
-              <span>Did You Know?</span>
-              <span className="w-5 h-px bg-white/20" />
-            </div>
+               <span>Quick Note</span>
+               <span className="w-5 h-px bg-white/20" />
+             </div>
             <p className="text-white/60 text-base md:text-lg font-extralight leading-relaxed max-w-sm">{cosmicFact}</p>
           </div>
         )}
@@ -469,18 +506,18 @@ const IntroScreen = ({ onComplete }: IntroScreenProps) => {
         {/* Warp Phase */}
         {phase === "warp" && (
           <div className="phase-scale-in">
-            <h1 className="text-3xl md:text-5xl font-extralight tracking-wider text-white mb-3">Entering Portfolio</h1>
+            <h1 className="text-3xl md:text-5xl font-extralight tracking-wider text-white mb-3">Opening Portfolio</h1>
             <p className="text-white/50 text-base font-extralight">
-              Hold on, <span className="text-white">{userName}</span>...
+              Almost there, <span className="text-white">{userName}</span>.
             </p>
           </div>
         )}
       </div>
 
       {/* Skip Button */}
-      {phase !== "intro" && phase !== "askName" && phase !== "exit" && (
+      {phase !== "askName" && phase !== "exit" && (
         <button
-          onClick={() => { setPhase("exit"); setTimeout(handleComplete, 400); }}
+          onClick={handleSkip}
           className="absolute bottom-6 right-6 text-white/40 hover:text-white/70 text-xs uppercase tracking-[0.2em] transition-colors duration-300"
         >
           Skip
