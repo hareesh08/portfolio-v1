@@ -139,14 +139,15 @@
     position: sticky;
     top: 5.5rem;
     min-height: calc(100vh - 7rem);
-    border-radius: 2rem;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 2.4rem;
+    border: 4px solid rgba(255, 255, 255, 0.92);
     background:
-      linear-gradient(180deg, rgba(18, 23, 40, 0.92), rgba(8, 10, 18, 0.96)),
-      radial-gradient(circle at top right, rgba(112, 231, 255, 0.12), transparent 34%);
+      linear-gradient(140deg, rgba(12, 19, 36, 0.96), rgba(7, 11, 22, 0.98)),
+      radial-gradient(circle at top right, rgba(112, 231, 255, 0.18), transparent 34%);
     box-shadow:
-      0 30px 90px rgba(0, 0, 0, 0.5),
-      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      0 32px 90px rgba(0, 0, 0, 0.55),
+      0 0 0 8px rgba(255, 255, 255, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
     overflow: hidden;
     isolation: isolate;
   }
@@ -156,17 +157,18 @@
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 28%),
-      linear-gradient(180deg, transparent 0%, rgba(6, 8, 14, 0.12) 100%);
+      radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.16), transparent 18%),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent 28%),
+      linear-gradient(180deg, transparent 0%, rgba(6, 8, 14, 0.16) 100%);
     pointer-events: none;
   }
 
   .flash-card-shell::after {
     content: "";
     position: absolute;
-    inset: 1rem;
-    border-radius: 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.04);
+    inset: 0.95rem;
+    border-radius: 1.75rem;
+    border: 2px solid rgba(255, 255, 255, 0.18);
     pointer-events: none;
   }
 
@@ -189,32 +191,174 @@
 
   .flash-card-shell-hero {
     background:
-      radial-gradient(circle at 14% 18%, rgba(105, 240, 255, 0.18), transparent 28%),
-      linear-gradient(180deg, rgba(19, 25, 45, 0.94), rgba(8, 10, 18, 0.98));
+      radial-gradient(circle at 16% 18%, rgba(255, 231, 95, 0.22), transparent 23%),
+      radial-gradient(circle at 86% 12%, rgba(255, 91, 116, 0.2), transparent 20%),
+      linear-gradient(145deg, #224cff, #102067 58%, #090d1b 100%);
   }
 
   .flash-card-shell-skills {
     background:
-      radial-gradient(circle at 86% 12%, rgba(56, 189, 248, 0.16), transparent 26%),
-      linear-gradient(180deg, rgba(11, 19, 34, 0.94), rgba(6, 9, 18, 0.98));
+      radial-gradient(circle at 84% 14%, rgba(255, 248, 110, 0.2), transparent 20%),
+      radial-gradient(circle at 14% 78%, rgba(255, 255, 255, 0.12), transparent 18%),
+      linear-gradient(145deg, #119446, #0e4f30 60%, #08130d 100%);
   }
 
   .flash-card-shell-projects {
     background:
-      radial-gradient(circle at 18% 78%, rgba(167, 139, 250, 0.16), transparent 28%),
-      linear-gradient(180deg, rgba(15, 18, 36, 0.95), rgba(7, 8, 16, 0.99));
+      radial-gradient(circle at 20% 76%, rgba(255, 255, 255, 0.16), transparent 18%),
+      radial-gradient(circle at 84% 14%, rgba(255, 210, 77, 0.18), transparent 16%),
+      linear-gradient(145deg, #c81f31, #6f0f1e 58%, #18070b 100%);
   }
 
   .flash-card-shell-experience {
     background:
-      radial-gradient(circle at 84% 20%, rgba(52, 211, 153, 0.14), transparent 28%),
-      linear-gradient(180deg, rgba(10, 18, 30, 0.95), rgba(5, 8, 14, 0.98));
+      radial-gradient(circle at 84% 18%, rgba(255, 255, 255, 0.15), transparent 18%),
+      radial-gradient(circle at 18% 80%, rgba(255, 99, 71, 0.14), transparent 16%),
+      linear-gradient(145deg, #f4a000, #8b4f00 60%, #191004 100%);
   }
 
   .flash-card-shell-contact {
     background:
-      radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08), transparent 36%),
-      linear-gradient(180deg, rgba(14, 18, 30, 0.95), rgba(5, 7, 12, 0.99));
+      radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.16), transparent 24%),
+      radial-gradient(circle at 16% 82%, rgba(118, 94, 255, 0.18), transparent 18%),
+      linear-gradient(145deg, #6f34d8, #311467 60%, #0f081d 100%);
+  }
+
+  .uno-surface {
+    background:
+      radial-gradient(circle at 18% 18%, rgba(255, 229, 90, 0.18), transparent 22%),
+      radial-gradient(circle at 80% 20%, rgba(255, 83, 112, 0.16), transparent 18%),
+      radial-gradient(circle at 50% 100%, rgba(46, 88, 255, 0.18), transparent 28%),
+      linear-gradient(180deg, #09101f 0%, #05070f 100%);
+  }
+
+  .uno-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    border: 2px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.08);
+    padding: 0.7rem 1rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .uno-hand {
+    position: relative;
+    height: 20rem;
+    width: min(100%, 72rem);
+  }
+
+  .uno-card {
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    width: min(13.5rem, 27vw);
+    aspect-ratio: 5 / 7;
+    transform:
+      translate(-50%, -50%)
+      rotate(calc(var(--fan-offset) * 9deg))
+      translateX(calc(var(--fan-offset) * 6.6rem))
+      translateY(var(--fan-lift));
+    animation: unoDeal 0.9s cubic-bezier(.2,.9,.15,1) forwards;
+    animation-delay: calc(var(--card-index) * 140ms);
+    opacity: 0;
+  }
+
+  .uno-card-inner {
+    height: 100%;
+    border-radius: 2rem;
+    border: 5px solid rgba(255, 255, 255, 0.94);
+    padding: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 30px 50px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .uno-card-inner::before {
+    content: "";
+    position: absolute;
+    inset: 1rem;
+    border-radius: 1.4rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    pointer-events: none;
+  }
+
+  .uno-card-corner,
+  .uno-card-badge,
+  .uno-card-detail,
+  .uno-card-title {
+    position: relative;
+    z-index: 1;
+  }
+
+  .uno-card-corner {
+    font-size: 2rem;
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+  }
+
+  .uno-card-detail {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.72);
+    margin-bottom: 0.55rem;
+  }
+
+  .uno-card-title {
+    font-size: clamp(1.4rem, 2.4vw, 2rem);
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: white;
+    line-height: 0.95;
+  }
+
+  .uno-card-badge {
+    align-self: flex-end;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    padding: 0.5rem 0.8rem;
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: white;
+  }
+
+  .uno-card-cyan .uno-card-inner {
+    background: linear-gradient(145deg, #2a58ff, #122066 62%, #0a0f20 100%);
+  }
+
+  .uno-card-lime .uno-card-inner {
+    background: linear-gradient(145deg, #1ca64e, #0c572f 62%, #09130d 100%);
+  }
+
+  .uno-card-red .uno-card-inner {
+    background: linear-gradient(145deg, #dd2a3f, #7b1323 62%, #18080c 100%);
+  }
+
+  .uno-card-violet .uno-card-inner {
+    background: linear-gradient(145deg, #8447ff, #45208e 62%, #12091f 100%);
+  }
+
+  .uno-card-amber .uno-card-inner {
+    background: linear-gradient(145deg, #ffb21d, #995500 62%, #1b1104 100%);
+  }
+
+  .uno-enter-button {
+    background: linear-gradient(135deg, #ffffff, #ffe36e);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
   }
 
   .section-label {
@@ -329,6 +473,25 @@
   to { opacity: 1; transform: scale(1); }
 }
 
+@keyframes unoDeal {
+  from {
+    opacity: 0;
+    transform:
+      translate(-50%, -50%)
+      rotate(-22deg)
+      translateY(10rem)
+      scale(0.74);
+  }
+  to {
+    opacity: 1;
+    transform:
+      translate(-50%, -50%)
+      rotate(calc(var(--fan-offset) * 9deg))
+      translateX(calc(var(--fan-offset) * 6.6rem))
+      translateY(var(--fan-lift));
+  }
+}
+
 .animate-scale-in { animation: scale-in 0.3s ease-out forwards; }
 
 .particle { animation: particleFloat 6s ease-in-out infinite; }
@@ -383,7 +546,7 @@
   .flash-card-shell {
     top: 4.75rem;
     min-height: auto;
-    border-radius: 1.5rem;
+    border-radius: 1.6rem;
   }
 
   .flash-card-shell::after {
@@ -396,6 +559,48 @@
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
     align-items: flex-start;
+  }
+
+  .uno-hand {
+    height: 12.5rem;
+  }
+
+  .uno-card {
+    width: min(7.4rem, 26vw);
+    transform:
+      translate(-50%, -50%)
+      rotate(calc(var(--fan-offset) * 8deg))
+      translateX(calc(var(--fan-offset) * 2.8rem))
+      translateY(var(--fan-lift));
+  }
+
+  .uno-card-inner {
+    border-width: 3px;
+    border-radius: 1.2rem;
+    padding: 0.8rem;
+  }
+
+  .uno-card-inner::before {
+    inset: 0.6rem;
+    border-radius: 0.85rem;
+  }
+
+  .uno-card-corner {
+    font-size: 1.35rem;
+  }
+
+  .uno-card-detail {
+    font-size: 0.58rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .uno-card-title {
+    font-size: 0.88rem;
+  }
+
+  .uno-card-badge {
+    padding: 0.35rem 0.55rem;
+    font-size: 0.52rem;
   }
 }
 

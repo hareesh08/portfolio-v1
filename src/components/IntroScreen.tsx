@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { ArrowRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { INTRO_VISITED_COOKIE, markVisitCookie } from "@/lib/visit-flow";
 
 const getPersonalizedQuotes = (name: string) => [
   `${name}, you are made of stardust and infinite possibilities.`,
@@ -35,21 +36,7 @@ const getISTTime = () => {
   return istTime.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true });
 };
 
-const INTRO_VISITED_COOKIE = "portfolio_intro_visited";
-
-const hasVisitedIntro = () => {
-  if (typeof document === "undefined") return false;
-  return document.cookie
-    .split(";")
-    .map((entry) => entry.trim())
-    .some((entry) => entry === `${INTRO_VISITED_COOKIE}=1`);
-};
-
-const markIntroVisited = () => {
-  if (typeof document === "undefined") return;
-  const maxAge = 60 * 60 * 24 * 30;
-  document.cookie = `${INTRO_VISITED_COOKIE}=1; path=/; max-age=${maxAge}; SameSite=Lax`;
-};
+const markIntroVisited = () => markVisitCookie(INTRO_VISITED_COOKIE);
 
 type Phase = "intro" | "bigbang" | "askName" | "welcome" | "journey" | "motivation" | "cosmic" | "warp" | "exit";
 
@@ -59,7 +46,7 @@ interface IntroScreenProps {
 
 const IntroScreen = ({ onComplete }: IntroScreenProps) => {
   const [userName, setUserName] = useState("");
-  const [phase, setPhase] = useState<Phase>(() => hasVisitedIntro() ? "askName" : "intro");
+  const [phase, setPhase] = useState<Phase>("intro");
   const videoRef = useRef<HTMLVideoElement>(null);
   const [cosmicFact, setCosmicFact] = useState("");
   const [currentTime, setCurrentTime] = useState(getISTTime());
