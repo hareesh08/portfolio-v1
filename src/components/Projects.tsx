@@ -68,15 +68,15 @@ const Projects = () => {
 
               <div className="flex flex-wrap gap-2 mb-5">
                 {project.tech.map((tech) => (
-                  <span key={tech} className="chip rounded-none border-white/8 bg-white/4">{tech}</span>
-                ))}
+                    <span key={tech} className="chip">{tech}</span>
+                  ))}
               </div>
 
               <a
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-lime-300 hover:text-white transition-colors"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-cyan-300 hover:text-white transition-colors"
               >
                 <Github className="w-4 h-4" />
                 View Code

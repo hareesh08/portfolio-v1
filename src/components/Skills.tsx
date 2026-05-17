@@ -70,7 +70,7 @@ const Skills = () => {
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-11 h-11 rounded-2xl border border-white/10 bg-white/5 flex items-center justify-center">
-                  <category.icon className="w-5 h-5 text-lime-300" />
+                  <category.icon className="w-5 h-5 text-cyan-300" />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-white">{category.title}</h3>
@@ -80,7 +80,7 @@ const Skills = () => {
 
               <div className="flex flex-wrap gap-2">
                 {category.skills.map((skill) => (
-                  <span key={skill} className="chip rounded-none border-white/8 bg-white/4">
+                  <span key={skill} className="chip">
                     {skill}
                   </span>
                 ))}
@@ -102,7 +102,7 @@ const Skills = () => {
             { value: "4+", label: "Years" },
           ].map((stat) => (
             <div key={stat.label} className="panel-card p-4 text-center">
-              <p className="text-2xl font-black text-lime-300">{stat.value}</p>
+                <p className="text-2xl font-bold text-cyan-300">{stat.value}</p>
               <p className="text-[11px] uppercase tracking-[0.22em] text-white/45 mt-1">{stat.label}</p>
             </div>
           ))}

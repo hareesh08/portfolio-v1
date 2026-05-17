@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,37 +6,37 @@
 
 @layer base {
   :root {
-    --background: 220 24% 6%;
-    --foreground: 44 22% 96%;
+    --background: 225 28% 5%;
+    --foreground: 220 20% 96%;
 
-    --card: 220 20% 10%;
-    --card-foreground: 44 22% 96%;
+    --card: 225 24% 9%;
+    --card-foreground: 220 20% 96%;
 
-    --popover: 220 20% 10%;
-    --popover-foreground: 44 22% 96%;
+    --popover: 225 24% 9%;
+    --popover-foreground: 220 20% 96%;
 
-    --primary: 82 96% 58%;
-    --primary-foreground: 220 24% 6%;
+    --primary: 170 90% 55%;
+    --primary-foreground: 225 28% 5%;
 
-    --secondary: 220 16% 18%;
-    --secondary-foreground: 44 22% 96%;
+    --secondary: 225 18% 16%;
+    --secondary-foreground: 220 20% 96%;
 
-    --muted: 220 12% 20%;
-    --muted-foreground: 44 10% 66%;
+    --muted: 225 16% 18%;
+    --muted-foreground: 220 10% 68%;
 
-    --accent: 82 90% 55%;
-    --accent-foreground: 220 24% 6%;
+    --accent: 170 88% 52%;
+    --accent-foreground: 225 28% 5%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 18% 18%;
-    --input: 220 18% 16%;
-    --ring: 82 96% 58%;
+    --border: 225 16% 18%;
+    --input: 225 16% 16%;
+    --ring: 170 90% 55%;
 
     --radius: 1rem;
 
-    --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+    --font-display: 'Manrope', system-ui, sans-serif;
     --font-mono: 'IBM Plex Mono', monospace;
   }
 
@@ -52,9 +52,9 @@
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-display);
     background:
-      radial-gradient(circle at top left, rgba(174, 255, 82, 0.08), transparent 32%),
-      radial-gradient(circle at top right, rgba(255, 255, 255, 0.05), transparent 28%),
-      linear-gradient(180deg, hsl(var(--background)), hsl(220 24% 4%));
+      radial-gradient(circle at top left, rgba(60, 255, 226, 0.09), transparent 30%),
+      radial-gradient(circle at 80% 18%, rgba(94, 106, 255, 0.08), transparent 24%),
+      linear-gradient(180deg, hsl(var(--background)), hsl(225 28% 3%));
   }
 
   ::selection {
@@ -68,36 +68,36 @@
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-lime-300 to-emerald-400;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-teal-300 to-emerald-300;
   }
 
   .bg-gradient-hero {
-    background: linear-gradient(180deg, #0d1110 0%, #090b0c 100%);
+    background: linear-gradient(180deg, #0b1020 0%, #070a12 100%);
   }
 
   .glass {
-    background: rgba(14, 18, 20, 0.72);
+    background: rgba(11, 16, 28, 0.72);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .glass-strong {
-    background: rgba(10, 12, 14, 0.86);
+    background: rgba(8, 11, 20, 0.86);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .glass-card {
-    background: rgba(18, 22, 26, 0.72);
+    background: rgba(14, 18, 32, 0.72);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.05);
   }
 
   .glow-primary {
-    box-shadow: 0 0 30px rgba(174, 255, 82, 0.16);
+    box-shadow: 0 0 30px rgba(60, 255, 226, 0.16);
   }
 
   .glow-accent {
@@ -110,7 +110,7 @@
 
   .bento-card:hover {
     transform: translateY(-4px);
-    border-color: rgba(174, 255, 82, 0.25);
+    border-color: rgba(60, 255, 226, 0.22);
   }
 
   .animate-float { animation: float 8s ease-in-out infinite; }
@@ -119,15 +119,15 @@
   .animate-fade-in { animation: fade-in 0.7s ease-out forwards; }
 
   .section-shell {
-    @apply px-4 md:px-6 py-16 md:py-24;
+    @apply px-4 md:px-6 py-20 md:py-28;
   }
 
   .section-label {
-    @apply text-xs uppercase tracking-[0.38em] text-lime-300/80 font-mono;
+    @apply text-xs uppercase tracking-[0.38em] text-cyan-300/80 font-mono;
   }
 
   .section-title {
-    @apply text-3xl md:text-5xl font-extrabold tracking-tight text-white;
+    @apply text-3xl md:text-5xl font-bold tracking-tight text-white;
   }
 
   .section-subtitle {
@@ -153,15 +153,15 @@
   }
 
   .chip {
-    @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white/75;
+    @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white/72;
   }
 
   .tag {
-    @apply inline-flex items-center rounded-none border-2 border-lime-300/40 bg-lime-300/10 px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-lime-200;
+    @apply inline-flex items-center rounded-full border border-white/10 bg-white/6 px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-white/72;
   }
 
   .sticker {
-    @apply rounded-none border-4 border-black bg-lime-300 text-black font-black shadow-[8px_8px_0_rgba(0,0,0,0.55)];
+    @apply rounded-full border border-cyan-300/30 bg-white text-slate-950 font-semibold shadow-[0_18px_40px_rgba(0,0,0,0.35)];
   }
 
   .reveal {

@@ -50,9 +50,9 @@ const Navbar = () => {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "glass-strong" : "bg-transparent"}`}
       >
         <nav className="max-w-6xl mx-auto px-4 py-4">
-          <div className="panel-card brutal-panel px-4 py-3 flex items-center justify-between gap-4">
+          <div className="panel-card px-4 py-3 flex items-center justify-between gap-4">
             <a href="#" className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl overflow-hidden border-2 border-black shadow-[6px_6px_0_rgba(0,0,0,0.45)]">
+              <div className="w-11 h-11 rounded-2xl overflow-hidden border border-white/10 shadow-[0_12px_24px_rgba(0,0,0,0.35)]">
                 <img src="./profile.png" alt="H" className="w-full h-full object-cover" />
               </div>
               <div>
@@ -63,7 +63,7 @@ const Navbar = () => {
 
             <div className="hidden md:flex items-center gap-2">
               {navLinks.map((link) => (
-                <a key={link.href} href={link.href} className="chip rounded-none border-white/8 bg-white/4 hover:border-lime-300/40 hover:text-white transition-colors">
+                <a key={link.href} href={link.href} className="chip hover:border-cyan-300/30 hover:text-white transition-colors">
                   {link.label}
                 </a>
               ))}
@@ -86,13 +86,13 @@ const Navbar = () => {
 
           {isMobileMenuOpen && (
             <div className="md:hidden absolute top-full left-0 right-0 px-4 pt-2">
-              <div className="panel-card brutal-panel p-4 space-y-2">
+              <div className="panel-card p-4 space-y-2">
                 {navLinks.map((link) => (
                   <a
                     key={link.href}
                     href={link.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="block px-4 py-3 text-white/75 hover:text-white rounded-none border border-white/8 bg-white/4 transition-all"
+                    className="block px-4 py-3 text-white/75 hover:text-white rounded-2xl border border-white/8 bg-white/4 transition-all"
                   >
                     {link.label}
                   </a>
@@ -119,13 +119,13 @@ const Navbar = () => {
           onClick={() => setShowPasswordModal(false)}
         >
           <div
-            className="w-full max-w-sm panel-card brutal-panel overflow-hidden"
+            className="w-full max-w-sm panel-card overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-6">
               <div className="text-center mb-6">
-                <div className="w-16 h-16 mx-auto rounded-2xl bg-lime-300 border-4 border-black flex items-center justify-center mb-4 shadow-[8px_8px_0_rgba(0,0,0,0.45)]">
-                  <Lock className="w-8 h-8 text-black" />
+                <div className="w-16 h-16 mx-auto rounded-2xl bg-white border border-cyan-300/30 flex items-center justify-center mb-4 shadow-[0_18px_40px_rgba(0,0,0,0.35)]">
+                  <Lock className="w-8 h-8 text-slate-950" />
                 </div>
                 <h3 className="text-xl font-black text-white">Download Resume</h3>
                 <p className="text-sm text-white/50 mt-1">Enter password to access</p>
@@ -139,7 +139,7 @@ const Navbar = () => {
                     onChange={(e) => { setPassword(e.target.value); setError(false); }}
                     placeholder="Enter password"
                     autoFocus
-                    className={`w-full px-4 py-3 bg-white/5 border border-white/10 rounded-none text-white placeholder:text-white/30 outline-none ${error ? "ring-2 ring-red-500" : "focus:ring-2 focus:ring-lime-300"}`}
+                    className={`w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-white placeholder:text-white/30 outline-none ${error ? "ring-2 ring-red-500" : "focus:ring-2 focus:ring-cyan-300"}`}
                   />
                   <button
                     type="button"
