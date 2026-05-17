@@ -122,6 +122,101 @@
     @apply px-4 md:px-6 py-20 md:py-28;
   }
 
+  .flash-deck {
+    @apply px-3 pt-28 pb-14 md:px-6 md:pt-32 md:pb-20;
+  }
+
+  .flash-card-stage {
+    position: relative;
+    min-height: 120vh;
+  }
+
+  .flash-card-stage + .flash-card-stage {
+    margin-top: -28vh;
+  }
+
+  .flash-card-shell {
+    position: sticky;
+    top: 5.5rem;
+    min-height: calc(100vh - 7rem);
+    border-radius: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background:
+      linear-gradient(180deg, rgba(18, 23, 40, 0.92), rgba(8, 10, 18, 0.96)),
+      radial-gradient(circle at top right, rgba(112, 231, 255, 0.12), transparent 34%);
+    box-shadow:
+      0 30px 90px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .flash-card-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 28%),
+      linear-gradient(180deg, transparent 0%, rgba(6, 8, 14, 0.12) 100%);
+    pointer-events: none;
+  }
+
+  .flash-card-shell::after {
+    content: "";
+    position: absolute;
+    inset: 1rem;
+    border-radius: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    pointer-events: none;
+  }
+
+  .flash-card-shell > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .flash-card-shell .section-shell {
+    min-height: calc(100vh - 7rem);
+    display: flex;
+    align-items: center;
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .flash-card-shell-hero .section-shell {
+    padding-top: 2rem;
+  }
+
+  .flash-card-shell-hero {
+    background:
+      radial-gradient(circle at 14% 18%, rgba(105, 240, 255, 0.18), transparent 28%),
+      linear-gradient(180deg, rgba(19, 25, 45, 0.94), rgba(8, 10, 18, 0.98));
+  }
+
+  .flash-card-shell-skills {
+    background:
+      radial-gradient(circle at 86% 12%, rgba(56, 189, 248, 0.16), transparent 26%),
+      linear-gradient(180deg, rgba(11, 19, 34, 0.94), rgba(6, 9, 18, 0.98));
+  }
+
+  .flash-card-shell-projects {
+    background:
+      radial-gradient(circle at 18% 78%, rgba(167, 139, 250, 0.16), transparent 28%),
+      linear-gradient(180deg, rgba(15, 18, 36, 0.95), rgba(7, 8, 16, 0.99));
+  }
+
+  .flash-card-shell-experience {
+    background:
+      radial-gradient(circle at 84% 20%, rgba(52, 211, 153, 0.14), transparent 28%),
+      linear-gradient(180deg, rgba(10, 18, 30, 0.95), rgba(5, 8, 14, 0.98));
+  }
+
+  .flash-card-shell-contact {
+    background:
+      radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08), transparent 36%),
+      linear-gradient(180deg, rgba(14, 18, 30, 0.95), rgba(5, 7, 12, 0.99));
+  }
+
   .section-label {
     @apply text-xs uppercase tracking-[0.38em] text-cyan-300/80 font-mono;
   }
@@ -268,6 +363,39 @@
   .blob,
   .scroll-indicator {
     animation: none !important;
+  }
+
+  .flash-card-shell {
+    position: relative;
+    top: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .flash-card-stage {
+    min-height: auto;
+  }
+
+  .flash-card-stage + .flash-card-stage {
+    margin-top: -10vh;
+  }
+
+  .flash-card-shell {
+    top: 4.75rem;
+    min-height: auto;
+    border-radius: 1.5rem;
+  }
+
+  .flash-card-shell::after {
+    inset: 0.7rem;
+    border-radius: 1rem;
+  }
+
+  .flash-card-shell .section-shell {
+    min-height: auto;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+    align-items: flex-start;
   }
 }
 

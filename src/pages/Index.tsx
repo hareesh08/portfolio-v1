@@ -14,15 +14,39 @@ const Index = () => {
   return (
     <>
       {showIntro && <IntroScreen onComplete={() => setShowIntro(false)} />}
-      <div className="min-h-screen bg-gradient-hero relative overflow-hidden">
+      <div className="min-h-screen bg-gradient-hero relative overflow-x-hidden">
         <BackgroundAnimation />
         <Navbar />
-        <main className="relative z-10">
-          <Hero />
-          <Skills />
-          <Projects />
-          <Experience />
-          <Contact />
+        <main className="relative z-10 flash-deck">
+          <div className="flash-card-stage flash-card-stage-hero">
+            <div className="flash-card-shell flash-card-shell-hero">
+              <Hero />
+            </div>
+          </div>
+
+          <div className="flash-card-stage flash-card-stage-skills">
+            <div className="flash-card-shell flash-card-shell-skills">
+              <Skills />
+            </div>
+          </div>
+
+          <div className="flash-card-stage flash-card-stage-projects">
+            <div className="flash-card-shell flash-card-shell-projects">
+              <Projects />
+            </div>
+          </div>
+
+          <div className="flash-card-stage flash-card-stage-experience">
+            <div className="flash-card-shell flash-card-shell-experience">
+              <Experience />
+            </div>
+          </div>
+
+          <div className="flash-card-stage flash-card-stage-contact">
+            <div className="flash-card-shell flash-card-shell-contact">
+              <Contact />
+            </div>
+          </div>
         </main>
       </div>
     </>
