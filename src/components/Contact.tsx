@@ -7,119 +7,83 @@ const Contact = () => {
   const { isAuthorized } = useAuth();
 
   return (
-    <section id="contact" className="py-16 md:py-20 px-4">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-10"
-        >
-          <p className="text-emerald-500 text-sm font-medium mb-2">Contact</p>
-          <h2 className="text-2xl md:text-3xl font-semibold text-white">
-            Get in Touch
-          </h2>
+    <section id="contact" className="section-shell pb-24">
+      <div className="max-w-6xl mx-auto">
+        <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-8">
+          <p className="section-label">Contact</p>
+          <h2 className="section-title mt-3">Let’s build the next thing.</h2>
+          <p className="section-subtitle mt-4">
+            Reach out for mobile apps, backend systems, or clean technical help.
+          </p>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="glass-card rounded-xl p-5 md:p-8"
-        >
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Contact Info */}
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="panel-card p-5 md:p-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="space-y-4">
-              <div className="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
-                <div className="w-10 h-10 bg-emerald-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-5 h-5 text-emerald-500" />
+              <div className="rounded-2xl border border-white/8 bg-white/4 p-4 flex items-center gap-4">
+                <div className="w-11 h-11 rounded-2xl border border-white/10 bg-white/5 flex items-center justify-center shrink-0">
+                  <Mail className="w-5 h-5 text-lime-300" />
                 </div>
                 <div>
-                  <p className="text-gray-500 text-xs mb-0.5">Email</p>
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-white/40">Email</p>
                   {isAuthorized ? (
-                    <a href="mailto:hareeshworksofficial@gmail.com" className="text-white text-sm hover:text-emerald-500 transition-colors">
-                      hareeshworksofficial@gmail.com
-                    </a>
+                    <a href="mailto:hareeshworksofficial@gmail.com" className="text-white font-medium hover:text-lime-300 transition-colors">hareeshworksofficial@gmail.com</a>
                   ) : (
-                    <ProtectedData value="hareeshworksofficial@gmail.com" masked="h••••••••@gmail.com" className="text-white text-sm" />
+                    <ProtectedData value="hareeshworksofficial@gmail.com" masked="h••••••••@gmail.com" className="text-white font-medium" />
                   )}
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
-                <div className="w-10 h-10 bg-teal-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-5 h-5 text-teal-500" />
+              <div className="rounded-2xl border border-white/8 bg-white/4 p-4 flex items-center gap-4">
+                <div className="w-11 h-11 rounded-2xl border border-white/10 bg-white/5 flex items-center justify-center shrink-0">
+                  <Phone className="w-5 h-5 text-lime-300" />
                 </div>
                 <div>
-                  <p className="text-gray-500 text-xs mb-0.5">Phone</p>
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-white/40">Phone</p>
                   {isAuthorized ? (
-                    <a href="tel:+918072703652" className="text-white text-sm hover:text-teal-500 transition-colors">
-                      +91 80727 03652
-                    </a>
+                    <a href="tel:+918072703652" className="text-white font-medium hover:text-lime-300 transition-colors">+91 80727 03652</a>
                   ) : (
-                    <ProtectedData value="+91 80727 03652" masked="+91 •••••••••" className="text-white text-sm" />
+                    <ProtectedData value="+91 80727 03652" masked="+91 •••••••••" className="text-white font-medium" />
                   )}
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
-                <div className="w-10 h-10 bg-cyan-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-5 h-5 text-cyan-500" />
+              <div className="rounded-2xl border border-white/8 bg-white/4 p-4 flex items-center gap-4">
+                <div className="w-11 h-11 rounded-2xl border border-white/10 bg-white/5 flex items-center justify-center shrink-0">
+                  <MapPin className="w-5 h-5 text-lime-300" />
                 </div>
                 <div>
-                  <p className="text-gray-500 text-xs mb-0.5">Location</p>
-                  <ProtectedData value="Chennai, Tamil Nadu, India" masked="Location hidden" className="text-white text-sm" />
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-white/40">Location</p>
+                  <ProtectedData value="Chennai, Tamil Nadu, India" masked="Location hidden" className="text-white font-medium" />
                 </div>
               </div>
             </div>
 
-            {/* CTA */}
-            <div className="flex flex-col justify-center">
-              <p className="text-gray-400 mb-6">
-                Have a project in mind? Let's work together and build something great.
-              </p>
+            <div className="flex flex-col justify-between gap-6">
+              <div className="panel-card p-5 md:p-6 border border-white/8 bg-white/4">
+                <p className="text-white/65 leading-relaxed max-w-lg">
+                  Tell me what you’re building and I’ll respond with the shortest path to a solid implementation.
+                </p>
+              </div>
 
-              <a
-                href="mailto:hareeshworksofficial@gmail.com"
-                className="w-full px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-black font-medium rounded-xl transition-colors flex items-center justify-center gap-2 mb-4"
-              >
-                <Mail className="w-4 h-4" />
-                Send Email
-              </a>
-
-              <div className="flex items-center justify-center gap-3">
-                <a
-                  href="https://github.com/hareesh08"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 glass rounded-lg flex items-center justify-center text-gray-400 hover:text-white transition-colors"
-                >
-                  <Github className="w-5 h-5" />
+              <div className="flex flex-wrap gap-3">
+                <a href="mailto:hareeshworksofficial@gmail.com" className="sticker inline-flex items-center gap-3 px-5 py-3">
+                  <Mail className="w-4 h-4" />
+                  Send Email
                 </a>
-                <a
-                  href="https://www.linkedin.com/in/hareesh-d-50147727b"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 glass rounded-lg flex items-center justify-center text-gray-400 hover:text-white transition-colors"
-                >
-                  <Linkedin className="w-5 h-5" />
+                <a href="https://github.com/hareesh08" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-5 py-3 border-2 border-white/15 bg-white/5 text-white font-semibold uppercase tracking-[0.16em] hover:border-lime-300/40 hover:bg-white/10 transition-colors">
+                  GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/hareesh-d-50147727b" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-5 py-3 border-2 border-white/15 bg-white/5 text-white font-semibold uppercase tracking-[0.16em] hover:border-lime-300/40 hover:bg-white/10 transition-colors">
+                  LinkedIn
                 </a>
               </div>
             </div>
           </div>
         </motion.div>
 
-        {/* Footer */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center mt-12 pt-8 border-t border-white/5"
-        >
-          <p className="text-gray-500 text-sm">
-            © 2026 Hareesh Ragavendra
-          </p>
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center mt-10 text-white/35 text-sm uppercase tracking-[0.18em] font-mono">
+          © 2026 Hareesh Ragavendra
         </motion.div>
       </div>
     </section>

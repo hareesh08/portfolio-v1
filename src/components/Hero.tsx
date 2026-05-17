@@ -1,121 +1,103 @@
 import { Github, Linkedin, Mail, MapPin } from "lucide-react";
-import { motion } from "framer-motion";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import ProtectedData from "./ProtectedData";
 
 const Hero = () => {
+  const sectionRef = useScrollReveal<HTMLElement>();
+
   return (
-    <section className="min-h-screen flex items-center justify-center px-4 py-20">
-      <div className="max-w-4xl mx-auto w-full">
-        {/* Main Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="glass-card rounded-2xl p-6 md:p-10"
-        >
-          {/* Header */}
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mb-8">
-            {/* Avatar */}
-            <div className="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden flex-shrink-0 border border-white/10">
-              <img
-                src="./profile.png"
-                alt="Hareesh Ragavendra"
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            {/* Info */}
-            <div className="text-center md:text-left flex-1">
-              <h1 className="text-2xl md:text-3xl font-semibold text-white mb-1">
-                Hareesh Ragavendra
-              </h1>
-              <p className="text-emerald-500 font-medium mb-3">
-                Android Developer & Full-Stack Engineer
-              </p>
-              
-              {/* Location */}
-              <div className="flex items-center justify-center md:justify-start gap-2 text-gray-400 text-sm mb-4">
-                <MapPin className="w-4 h-4" />
-                <ProtectedData value="Chennai, Tamil Nadu, India" masked="Location hidden" />
-              </div>
-
-              {/* Status */}
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
-                <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-                <span className="text-emerald-400 text-sm">Available for work</span>
-              </div>
-            </div>
-
-            {/* Stats */}
-            <div className="flex md:flex-col gap-6 md:gap-4 text-center">
-              <div>
-                <p className="text-2xl font-bold text-emerald-500">6+</p>
-                <p className="text-xs text-gray-500">Projects</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-emerald-500">4+</p>
-                <p className="text-xs text-gray-500">Years</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-emerald-500">20+</p>
-                <p className="text-xs text-gray-500">Skills</p>
-              </div>
-            </div>
+    <section ref={sectionRef} className="min-h-screen flex items-center justify-center section-shell">
+      <div className="relative max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+        <div className="lg:col-span-8 panel-card brutal-panel p-6 md:p-10 lg:p-12 overflow-hidden">
+          <div className="reveal inline-flex items-center gap-3">
+            <span className="tag">Portfolio / 2026</span>
+            <span className="chip">Neumorphism x Brutalism</span>
           </div>
 
-          {/* Bio */}
-          <p className="text-gray-400 leading-relaxed mb-8 text-center md:text-left">
-            Results-driven Android & Backend Developer skilled in
-            <span className="text-emerald-500"> Kotlin</span>,
-            <span className="text-emerald-500"> Jetpack Compose</span>,
-            <span className="text-emerald-500"> Python</span>, and
-            <span className="text-emerald-500"> Django</span>.
-            Experienced with agentic development tools to improve productivity and code quality.
-          </p>
+          <div className="reveal mt-8" style={{ transitionDelay: "90ms" }}>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight uppercase leading-[0.9]">
+              <span className="reveal-line inline-block">Hareesh</span>
+            </h1>
+          </div>
 
-          {/* Actions */}
-          <div className="flex flex-col sm:flex-row items-center gap-4">
-            <a
-              href="mailto:hareeshworksofficial@gmail.com"
-              className="w-full sm:w-auto px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-black font-medium rounded-xl transition-colors flex items-center justify-center gap-2"
-            >
+          <div className="reveal mt-4" style={{ transitionDelay: "170ms" }}>
+            <p className="text-xl md:text-3xl font-bold text-lime-300 uppercase tracking-[0.16em]">
+              <span className="reveal-line inline-block">Android Developer</span>
+            </p>
+          </div>
+
+          <div className="reveal mt-6 max-w-2xl" style={{ transitionDelay: "240ms" }}>
+            <p className="text-white/68 text-base md:text-lg leading-relaxed">
+              <span className="block">I design sharp mobile experiences and practical backend systems.</span>
+              <span className="block">Scroll to reveal the work, the stack, and the proof.</span>
+            </p>
+          </div>
+
+          <div className="reveal mt-8 flex flex-wrap gap-4" style={{ transitionDelay: "320ms" }}>
+            <a href="mailto:hareeshworksofficial@gmail.com" className="sticker inline-flex items-center gap-3 px-5 py-3">
               <Mail className="w-4 h-4" />
               Contact Me
             </a>
-            <a
-              href="#projects"
-              className="w-full sm:w-auto px-6 py-3 glass hover:bg-white/10 text-white rounded-xl transition-colors text-center"
-            >
-              View Projects
+            <a href="#projects" className="inline-flex items-center px-5 py-3 border-2 border-white/15 bg-white/5 text-white font-semibold uppercase tracking-[0.16em] hover:border-lime-300/40 hover:bg-white/10 transition-colors">
+              See Projects
             </a>
           </div>
 
-          {/* Social Links */}
-          <div className="flex items-center justify-center md:justify-start gap-3 mt-8 pt-6 border-t border-white/5">
-            <a
-              href="https://github.com/hareesh08"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 glass rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:border-emerald-500/30 transition-all"
-            >
-              <Github className="w-5 h-5" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/hareesh-d-50147727b"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 glass rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:border-emerald-500/30 transition-all"
-            >
-              <Linkedin className="w-5 h-5" />
-            </a>
-            <a
-              href="mailto:hareeshworksofficial@gmail.com"
-              className="w-10 h-10 glass rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:border-emerald-500/30 transition-all"
-            >
-              <Mail className="w-5 h-5" />
-            </a>
+          <div className="reveal mt-10 flex flex-wrap gap-3" style={{ transitionDelay: "390ms" }}>
+            {[
+              "Kotlin",
+              "Jetpack Compose",
+              "Django REST",
+              "FastAPI",
+              "Security",
+            ].map((item) => (
+              <span key={item} className="chip">{item}</span>
+            ))}
           </div>
-        </motion.div>
+        </div>
+
+        <div className="lg:col-span-4 panel-card p-6 md:p-8 reveal" style={{ transitionDelay: "420ms" }}>
+          <div className="flex items-start gap-4">
+            <div className="w-24 h-24 rounded-[28px] overflow-hidden border-4 border-black shadow-[10px_10px_0_rgba(0,0,0,0.45)] shrink-0">
+              <img src="./profile.png" alt="Hareesh Ragavendra" className="w-full h-full object-cover" />
+            </div>
+            <div>
+              <p className="section-label">Location</p>
+              <div className="mt-2 text-white/90 flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-lime-300" />
+                <ProtectedData value="Chennai, Tamil Nadu, India" masked="Hidden" />
+              </div>
+              <p className="mt-3 text-sm text-white/60 max-w-xs">
+                Full-stack work with a bias toward usable interfaces and secure systems.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-8 grid grid-cols-3 gap-3 text-center">
+            {[
+              { value: "6+", label: "Projects" },
+              { value: "4+", label: "Years" },
+              { value: "20+", label: "Skills" },
+            ].map((stat) => (
+              <div key={stat.label} className="rounded-2xl border border-white/8 bg-white/5 p-4">
+                <div className="text-2xl font-black text-lime-300">{stat.value}</div>
+                <div className="text-[11px] uppercase tracking-[0.2em] text-white/45 mt-1">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 flex items-center justify-between border-t border-white/8 pt-5">
+            <div className="text-xs uppercase tracking-[0.22em] text-white/45">Available for work</div>
+            <div className="flex items-center gap-3">
+              <a href="https://github.com/hareesh08" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">
+                <Github className="w-5 h-5" />
+              </a>
+              <a href="https://www.linkedin.com/in/hareesh-d-50147727b" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">
+                <Linkedin className="w-5 h-5" />
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

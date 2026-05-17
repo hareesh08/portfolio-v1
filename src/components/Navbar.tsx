@@ -47,63 +47,52 @@ const Navbar = () => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? "glass-strong" : "bg-transparent"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "glass-strong" : "bg-transparent"}`}
       >
         <nav className="max-w-6xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <a href="#" className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-full overflow-hidden border border-white/10">
+          <div className="panel-card brutal-panel px-4 py-3 flex items-center justify-between gap-4">
+            <a href="#" className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-2xl overflow-hidden border-2 border-black shadow-[6px_6px_0_rgba(0,0,0,0.45)]">
                 <img src="./profile.png" alt="H" className="w-full h-full object-cover" />
               </div>
-              <span className="font-semibold text-white hidden sm:block">Hareesh</span>
+              <div>
+                <div className="text-white font-black leading-none">Hareesh</div>
+                <div className="text-[11px] uppercase tracking-[0.2em] text-white/45">Portfolio</div>
+              </div>
             </a>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-1">
+            <div className="hidden md:flex items-center gap-2">
               {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="px-4 py-2 text-white/70 hover:text-white rounded-full hover:bg-white/10 transition-all"
-                >
+                <a key={link.href} href={link.href} className="chip rounded-none border-white/8 bg-white/4 hover:border-lime-300/40 hover:text-white transition-colors">
                   {link.label}
                 </a>
               ))}
             </div>
 
-            {/* Resume Button */}
             <a
               href="./Hareesh_Ragavendra_Resume.pdf"
               download={isAuthorized}
               onClick={handleResumeClick}
-              className="hidden md:flex items-center gap-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 rounded-full text-black text-sm font-medium transition-all"
+              className="hidden md:inline-flex items-center gap-2 sticker px-4 py-2"
             >
               {isAuthorized ? <Download className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
               Resume
             </a>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 text-white"
-            >
+            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="md:hidden p-2 text-white/80">
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
 
-          {/* Mobile Menu */}
           {isMobileMenuOpen && (
-            <div className="md:hidden absolute top-full left-0 right-0 glass-strong border-t border-white/10">
-              <div className="p-4 space-y-2">
+            <div className="md:hidden absolute top-full left-0 right-0 px-4 pt-2">
+              <div className="panel-card brutal-panel p-4 space-y-2">
                 {navLinks.map((link) => (
                   <a
                     key={link.href}
                     href={link.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="block px-4 py-3 text-white/70 hover:text-white rounded-xl hover:bg-white/10 transition-all"
+                    className="block px-4 py-3 text-white/75 hover:text-white rounded-none border border-white/8 bg-white/4 transition-all"
                   >
                     {link.label}
                   </a>
@@ -112,7 +101,7 @@ const Navbar = () => {
                   href="./Hareesh_Ragavendra_Resume.pdf"
                   download={isAuthorized}
                   onClick={handleResumeClick}
-                  className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-emerald-500 rounded-xl text-black font-medium mt-4"
+                  className="flex items-center justify-center gap-2 w-full px-4 py-3 sticker mt-4"
                 >
                   {isAuthorized ? <Download className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
                   Resume
@@ -124,21 +113,21 @@ const Navbar = () => {
       </header>
 
       {/* Password Modal */}
-      {showPasswordModal && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm px-4"
+        {showPasswordModal && (
+          <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm px-4"
           onClick={() => setShowPasswordModal(false)}
         >
           <div
-            className="w-full max-w-sm glass-card rounded-3xl overflow-hidden"
+            className="w-full max-w-sm panel-card brutal-panel overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-6">
               <div className="text-center mb-6">
-                <div className="w-16 h-16 mx-auto rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center mb-4">
-                  <Lock className="w-8 h-8 text-emerald-500" />
+                <div className="w-16 h-16 mx-auto rounded-2xl bg-lime-300 border-4 border-black flex items-center justify-center mb-4 shadow-[8px_8px_0_rgba(0,0,0,0.45)]">
+                  <Lock className="w-8 h-8 text-black" />
                 </div>
-                <h3 className="text-xl font-semibold text-white">Download Resume</h3>
+                <h3 className="text-xl font-black text-white">Download Resume</h3>
                 <p className="text-sm text-white/50 mt-1">Enter password to access</p>
               </div>
 
@@ -150,9 +139,7 @@ const Navbar = () => {
                     onChange={(e) => { setPassword(e.target.value); setError(false); }}
                     placeholder="Enter password"
                     autoFocus
-                    className={`w-full px-4 py-3 glass rounded-xl text-white placeholder:text-white/30 outline-none ${
-                      error ? "ring-2 ring-red-500" : "focus:ring-2 focus:ring-emerald-500"
-                    }`}
+                    className={`w-full px-4 py-3 bg-white/5 border border-white/10 rounded-none text-white placeholder:text-white/30 outline-none ${error ? "ring-2 ring-red-500" : "focus:ring-2 focus:ring-lime-300"}`}
                   />
                   <button
                     type="button"
@@ -169,7 +156,7 @@ const Navbar = () => {
 
                 <button
                   type="submit"
-                  className="w-full py-3 bg-emerald-500 hover:bg-emerald-600 rounded-xl text-black font-medium transition-all"
+                  className="w-full py-3 sticker transition-all"
                 >
                   Unlock
                 </button>

@@ -34,90 +34,67 @@ const projects = [
 
 const Projects = () => {
   return (
-    <section id="projects" className="py-16 md:py-20 px-4">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-10"
-        >
-          <p className="text-emerald-500 text-sm font-medium mb-2">Projects</p>
-          <h2 className="text-2xl md:text-3xl font-semibold text-white">
-            Featured Work
-          </h2>
+    <section id="projects" className="section-shell">
+      <div className="max-w-6xl mx-auto">
+        <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-8">
+          <p className="section-label">Projects</p>
+          <h2 className="section-title mt-3">Featured work with real weight.</h2>
+          <p className="section-subtitle mt-4">
+            A mix of mobile, backend, and tooling work built to solve actual problems.
+          </p>
         </motion.div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {projects.map((project, idx) => (
-            <motion.div
+            <motion.article
               key={project.title}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 22 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className="bento-card glass-card rounded-xl p-5"
+              viewport={{ once: true, margin: "-12%" }}
+              transition={{ delay: idx * 0.08 }}
+              className="panel-card p-5 md:p-6 bento-card"
             >
-              {/* Header */}
-              <div className="flex items-start justify-between mb-3">
-                <h3 className="font-medium text-white">{project.title}</h3>
+              <div className="flex items-start justify-between gap-4 mb-4">
+                <h3 className="text-xl font-bold text-white leading-tight">{project.title}</h3>
                 {project.featured && (
-                  <div className="flex items-center gap-1 px-2 py-0.5 bg-emerald-500/10 rounded text-emerald-500 text-xs">
+                  <span className="tag shrink-0">
                     <Star className="w-3 h-3 fill-current" />
                     Featured
-                  </div>
+                  </span>
                 )}
               </div>
 
-              {/* Description */}
-              <p className="text-gray-400 text-sm mb-4 leading-relaxed">
-                {project.description}
-              </p>
+              <p className="text-white/65 leading-relaxed mb-5">{project.description}</p>
 
-              {/* Tech */}
-              <div className="flex flex-wrap gap-2 mb-4">
+              <div className="flex flex-wrap gap-2 mb-5">
                 {project.tech.map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-2 py-1 text-xs bg-white/5 text-gray-400 rounded"
-                  >
-                    {tech}
-                  </span>
+                  <span key={tech} className="chip rounded-none border-white/8 bg-white/4">{tech}</span>
                 ))}
               </div>
 
-              {/* Link */}
               <a
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-emerald-500 transition-colors"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-lime-300 hover:text-white transition-colors"
               >
                 <Github className="w-4 h-4" />
                 View Code
                 <ExternalLink className="w-3 h-3" />
               </a>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
 
-        {/* View all */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center mt-8"
-        >
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mt-8 flex justify-center">
           <a
             href="https://github.com/hareesh08"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 glass rounded-xl text-gray-400 hover:text-white transition-colors"
+            className="sticker inline-flex items-center gap-2 px-5 py-3"
           >
             <Github className="w-4 h-4" />
-            View all on GitHub
+            View All Work
           </a>
         </motion.div>
       </div>
