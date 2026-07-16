@@ -20,48 +20,48 @@ const Contact = () => {
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="panel-card p-5 md:p-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="space-y-4">
-              <div className="rounded-2xl border border-white/8 bg-white/4 p-4 flex items-center gap-4">
-                <div className="w-11 h-11 rounded-2xl border border-white/10 bg-white/5 flex items-center justify-center shrink-0">
-                  <Mail className="w-5 h-5 text-cyan-300" />
+              <div className="rounded-2xl border border-white/70 bg-white/55 backdrop-blur p-4 flex items-center gap-4">
+                <div className="w-11 h-11 rounded-2xl border border-white/80 bg-pink/20 backdrop-blur flex items-center justify-center shrink-0" aria-hidden="true">
+                  <Mail className="w-5 h-5 text-pink" />
                 </div>
                 <div>
-                  <p className="text-[11px] uppercase tracking-[0.18em] text-white/40">Email</p>
+                  <p className="text-[11px] uppercase tracking-[0.18em]" style={{ color: "rgba(20, 20, 20, 0.5)" }}>Email</p>
                   {isAuthorized ? (
-                    <a href="mailto:hareeshworksofficial@gmail.com" className="text-white font-medium hover:text-cyan-300 transition-colors">hareeshworksofficial@gmail.com</a>
+                    <a href="mailto:hareeshworksofficial@gmail.com" className="font-medium hover:text-pink transition-colors" style={{ color: "rgb(20, 20, 20)" }}>hareeshworksofficial@gmail.com</a>
                   ) : (
-                    <ProtectedData value="hareeshworksofficial@gmail.com" masked="h••••••••@gmail.com" className="text-white font-medium" />
+                    <ProtectedData value="hareeshworksofficial@gmail.com" masked="h••••••••@gmail.com" className="font-medium" />
                   )}
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-white/8 bg-white/4 p-4 flex items-center gap-4">
-                <div className="w-11 h-11 rounded-2xl border border-white/10 bg-white/5 flex items-center justify-center shrink-0">
-                  <Phone className="w-5 h-5 text-cyan-300" />
+              <div className="rounded-2xl border border-white/70 bg-white/55 backdrop-blur p-4 flex items-center gap-4">
+                <div className="w-11 h-11 rounded-2xl border border-white/80 bg-peach/25 backdrop-blur flex items-center justify-center shrink-0" aria-hidden="true">
+                  <Phone className="w-5 h-5 text-peach" />
                 </div>
                 <div>
-                  <p className="text-[11px] uppercase tracking-[0.18em] text-white/40">Phone</p>
+                  <p className="text-[11px] uppercase tracking-[0.18em]" style={{ color: "rgba(20, 20, 20, 0.5)" }}>Phone</p>
                   {isAuthorized ? (
-                    <a href="tel:+918072703652" className="text-white font-medium hover:text-cyan-300 transition-colors">+91 80727 03652</a>
+                    <a href="tel:+918072703652" className="font-medium hover:text-peach transition-colors" style={{ color: "rgb(20, 20, 20)" }}>+91 80727 03652</a>
                   ) : (
-                    <ProtectedData value="+91 80727 03652" masked="+91 •••••••••" className="text-white font-medium" />
+                    <ProtectedData value="+91 80727 03652" masked="+91 •••••••••" className="font-medium" />
                   )}
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-white/8 bg-white/4 p-4 flex items-center gap-4">
-                <div className="w-11 h-11 rounded-2xl border border-white/10 bg-white/5 flex items-center justify-center shrink-0">
-                  <MapPin className="w-5 h-5 text-cyan-300" />
+              <div className="rounded-2xl border border-white/70 bg-white/55 backdrop-blur p-4 flex items-center gap-4">
+                <div className="w-11 h-11 rounded-2xl border border-white/80 bg-mint/25 backdrop-blur flex items-center justify-center shrink-0" aria-hidden="true">
+                  <MapPin className="w-5 h-5 text-mint" />
                 </div>
                 <div>
-                  <p className="text-[11px] uppercase tracking-[0.18em] text-white/40">Location</p>
-                  <ProtectedData value="Chennai, Tamil Nadu, India" masked="Location hidden" className="text-white font-medium" />
+                  <p className="text-[11px] uppercase tracking-[0.18em]" style={{ color: "rgba(20, 20, 20, 0.5)" }}>Location</p>
+                  <ProtectedData value="Chennai, Tamil Nadu, India" masked="Location hidden" className="font-medium" />
                 </div>
               </div>
             </div>
 
             <div className="flex flex-col justify-between gap-6">
-              <div className="panel-card p-5 md:p-6 border border-white/8 bg-white/4">
-                <p className="text-white/65 leading-relaxed max-w-lg">
+              <div className="panel-card p-5 md:p-6 border border-white/70 bg-white/55">
+                <p className="leading-relaxed max-w-lg" style={{ color: "rgba(20, 20, 20, 0.7)" }}>
                   Tell me what you’re building and I’ll respond with the shortest path to a solid implementation.
                 </p>
               </div>
@@ -71,10 +71,10 @@ const Contact = () => {
                   <Mail className="w-4 h-4" />
                   Send Email
                 </a>
-                  <a href="https://github.com/hareesh08" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-5 py-3 rounded-full border border-white/10 bg-white/5 text-white font-semibold uppercase tracking-[0.16em] hover:border-cyan-300/40 hover:bg-white/10 transition-colors">
+                  <a href="https://github.com/hareesh08" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-5 py-3 rounded-full border border-white/80 bg-white/55 backdrop-blur text-black font-semibold uppercase tracking-[0.16em] hover:bg-white/85 transition-colors">
                   GitHub
                 </a>
-                <a href="https://www.linkedin.com/in/hareesh-d-50147727b" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-5 py-3 rounded-full border border-white/10 bg-white/5 text-white font-semibold uppercase tracking-[0.16em] hover:border-cyan-300/40 hover:bg-white/10 transition-colors">
+                <a href="https://www.linkedin.com/in/hareesh-d-50147727b" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-5 py-3 rounded-full border border-white/80 bg-white/55 backdrop-blur text-black font-semibold uppercase tracking-[0.16em] hover:bg-white/85 transition-colors">
                   LinkedIn
                 </a>
               </div>
@@ -82,7 +82,7 @@ const Contact = () => {
           </div>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center mt-10 text-white/35 text-sm uppercase tracking-[0.18em] font-mono">
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center mt-10 text-sm uppercase tracking-[0.18em] font-mono" style={{ color: "rgba(20, 20, 20, 0.45)" }}>
           © 2026 Hareesh Ragavendra
         </motion.div>
       </div>

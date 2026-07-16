@@ -73,6 +73,12 @@ const commands = {
   },
 };
 
+type CommandResult = ReturnType<(typeof commands)[keyof typeof commands]["execute"]>;
+
+const isCloseResult = (result: CommandResult): result is { close: true } => {
+  return typeof result === "object" && result !== null && "close" in result;
+};
+
 type OutputLine = {
   type: "input" | "output" | "highlight" | "list" | "project" | "error";
   text?: string;
@@ -118,7 +124,7 @@ const TerminalGame = ({ onClose }: TerminalGameProps) => {
         setHistory([]);
         return;
       }
-      if (Array.isArray(result) && result.length === 1 && (result[0] as any).close) {
+      if (isCloseResult(result)) {
         onClose();
         return;
       }
@@ -159,22 +165,29 @@ const TerminalGame = ({ onClose }: TerminalGameProps) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm px-4">
-      <div 
+    <div className="fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-md px-4"
+      style={{ background: "rgba(255, 230, 220, 0.45)" }}
+    >
+      <div
         className="w-full max-w-2xl glass-card rounded-2xl overflow-hidden"
+        role="dialog"
+        aria-label="Terminal"
+        aria-modal="true"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 bg-emerald-500/10 border-b border-white/10">
+        <div className="flex items-center justify-between px-4 py-3 bg-mint/25 border-b border-white/80">
           <div className="flex items-center gap-2">
-            <Terminal className="w-4 h-4 text-emerald-500" />
-            <span className="text-white/80 text-sm font-mono">HareeshOS</span>
+            <Terminal className="w-4 h-4 text-mint" aria-hidden="true" />
+            <span className="text-sm font-mono" style={{ color: "rgb(20, 20, 20)" }}>HareeshOS</span>
           </div>
           <button
             onClick={onClose}
-            className="text-white/50 hover:text-white transition-colors"
+            className="hover:text-pink transition-colors"
+            style={{ color: "rgba(20, 20, 20, 0.55)" }}
+            aria-label="Close terminal"
           >
-            <X className="w-4 h-4" />
+            <X className="w-4 h-4" aria-hidden="true" />
           </button>
         </div>
 
@@ -185,23 +198,23 @@ const TerminalGame = ({ onClose }: TerminalGameProps) => {
         >
           {history.map((line, i) => {
             if (line.type === "input") {
-              return <p key={i} className="text-emerald-400 mb-1">{line.text}</p>;
+              return <p key={i} className="text-mint mb-1">{line.text}</p>;
             }
             if (line.type === "output") {
-              return <p key={i} className="text-white/70 mb-1">{line.text}</p>;
+              return <p key={i} className="mb-1" style={{ color: "rgba(20, 20, 20, 0.7)" }}>{line.text}</p>;
             }
             if (line.type === "highlight") {
-              return <p key={i} className="text-emerald-400 mb-1">{line.text}</p>;
+              return <p key={i} className="text-peach mb-1 font-semibold">{line.text}</p>;
             }
             if (line.type === "error") {
-              return <p key={i} className="text-red-400 mb-1">{line.text}</p>;
+              return <p key={i} className="text-pink mb-1">{line.text}</p>;
             }
             if (line.type === "list" && line.items) {
               return (
                 <div key={i} className="mb-1 ml-4">
                   {line.items.map((item, j) => (
-                    <p key={j} className="text-white/50">
-                      <ChevronRight className="inline w-3 h-3 mr-2 text-emerald-500/50" />
+                    <p key={j} style={{ color: "rgba(20, 20, 20, 0.6)" }}>
+                      <ChevronRight className="inline w-3 h-3 mr-2 text-mint/70" />
                       {item}
                     </p>
                   ))}
@@ -210,10 +223,10 @@ const TerminalGame = ({ onClose }: TerminalGameProps) => {
             }
             if (line.type === "project") {
               return (
-                <div key={i} className="mb-3 ml-4 border-l-2 border-emerald-500/30 pl-3">
-                  <p className="text-emerald-400">{line.name}</p>
-                  <p className="text-white/50 text-xs">{line.desc}</p>
-                  <p className="text-white/30 text-xs">{line.tech}</p>
+                <div key={i} className="mb-3 ml-4 border-l-2 border-mint/40 pl-3">
+                  <p className="text-peach font-semibold">{line.name}</p>
+                  <p className="text-xs" style={{ color: "rgba(20, 20, 20, 0.6)" }}>{line.desc}</p>
+                  <p className="text-xs" style={{ color: "rgba(20, 20, 20, 0.45)" }}>{line.tech}</p>
                 </div>
               );
             }
@@ -222,8 +235,8 @@ const TerminalGame = ({ onClose }: TerminalGameProps) => {
         </div>
 
         {/* Input */}
-        <div className="flex items-center gap-2 px-4 py-3 bg-black/30 border-t border-white/10">
-          <span className="text-emerald-500 font-mono text-sm">{">"}</span>
+        <div className="flex items-center gap-2 px-4 py-3 bg-white/65 border-t border-white/80 backdrop-blur">
+          <span className="text-mint font-mono text-sm" aria-hidden="true">{">"}</span>
           <input
             ref={inputRef}
             type="text"
@@ -231,9 +244,11 @@ const TerminalGame = ({ onClose }: TerminalGameProps) => {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Type a command..."
-            className="flex-1 bg-transparent text-white/90 font-mono text-sm outline-none placeholder:text-white/30"
+            className="flex-1 bg-transparent font-mono text-sm outline-none placeholder:text-black/30"
+            style={{ color: "rgb(20, 20, 20)" }}
             autoComplete="off"
             autoCapitalize="off"
+            aria-label="Terminal command input"
           />
         </div>
       </div>
@@ -250,7 +265,7 @@ const TerminalGame = ({ onClose }: TerminalGameProps) => {
 
 export default TerminalGame;
 
-let keystrokeBuffer = "";
+const keystrokeBuffer = { current: "" };
 const secretSequence = "help";
 
 const TerminalGameLauncher = ({ children }: { children: React.ReactNode }) => {
@@ -262,14 +277,14 @@ const TerminalGameLauncher = ({ children }: { children: React.ReactNode }) => {
         return;
       }
 
-      keystrokeBuffer += e.key.toLowerCase();
-      if (keystrokeBuffer.length > secretSequence.length) {
-        keystrokeBuffer = keystrokeBuffer.slice(-secretSequence.length);
+      keystrokeBuffer.current += e.key.toLowerCase();
+      if (keystrokeBuffer.current.length > secretSequence.length) {
+        keystrokeBuffer.current = keystrokeBuffer.current.slice(-secretSequence.length);
       }
 
-      if (keystrokeBuffer === secretSequence) {
+      if (keystrokeBuffer.current === secretSequence) {
         setShowTerminal(true);
-        keystrokeBuffer = "";
+        keystrokeBuffer.current = "";
       }
     };
 

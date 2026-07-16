@@ -55,7 +55,7 @@ const Projects = () => {
               className="panel-card p-5 md:p-6 bento-card"
             >
               <div className="flex items-start justify-between gap-4 mb-4">
-                <h3 className="text-xl font-bold text-white leading-tight">{project.title}</h3>
+                <h3 className="text-xl font-bold leading-tight" style={{ color: "rgb(20, 20, 20)" }}>{project.title}</h3>
                 {project.featured && (
                   <span className="tag shrink-0">
                     <Star className="w-3 h-3 fill-current" />
@@ -64,7 +64,7 @@ const Projects = () => {
                 )}
               </div>
 
-              <p className="text-white/65 leading-relaxed mb-5">{project.description}</p>
+              <p className="leading-relaxed mb-5" style={{ color: "rgba(20, 20, 20, 0.7)" }}>{project.description}</p>
 
               <div className="flex flex-wrap gap-2 mb-5">
                 {project.tech.map((tech) => (
@@ -76,7 +76,7 @@ const Projects = () => {
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-cyan-300 hover:text-white transition-colors"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-pink hover:text-peach transition-colors"
               >
                 <Github className="w-4 h-4" />
                 View Code

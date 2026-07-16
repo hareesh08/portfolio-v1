@@ -1,53 +1,60 @@
-import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, RotateCcw, Sparkles } from "lucide-react";
+import { useEffect, useMemo, useState, useRef } from "react";
+import { ArrowRight, RotateCcw, Sparkles, Star } from "lucide-react";
 
 interface CardRevealScreenProps {
   onComplete: () => void;
   onSkipToLanding?: () => void;
 }
 
-const CARD_DURATION_MS = 2400;
+const CARD_DURATION_MS = 3000;
+
+const palette = [
+  { tone: "pink", bg: "#FF9D9D", darkBg: "#ffffff", text: "#1a0808", accent: "#FFC5AA" },
+  { tone: "peach", bg: "#FFC5AA", darkBg: "#ffffff", text: "#1a0d07", accent: "#FF9D9D" },
+  { tone: "cream", bg: "#EEF8CD", darkBg: "#ffffff", text: "#1a1a08", accent: "#BBF1D2" },
+  { tone: "mint", bg: "#BBF1D2", darkBg: "#ffffff", text: "#0a1310", accent: "#EEF8CD" },
+];
 
 const cards = [
   {
     label: "Hero",
-    tone: "cyan",
+    paletteIndex: 0,
     eyebrow: "Android Developer",
-    title: "Hareesh Ragavendra",
+    title: "Hareesh\nRagavendra",
     summary: "I build sharp Android experiences and practical backend systems with a strong focus on usability, speed, and secure implementation.",
-    points: ["Based in Chennai, Tamil Nadu, India", "6+ portfolio projects delivered", "4+ years building across mobile and backend"],
+    points: ["Based in Chennai, India", "6+ projects delivered", "4+ years experience"],
   },
   {
     label: "Skills",
-    tone: "lime",
+    paletteIndex: 1,
     eyebrow: "Technical Stack",
-    title: "Mobile-first, backend-aware, security-conscious",
+    title: "Mobile-first,\nBackend-aware",
     summary: "My work spans Android app architecture, backend APIs, databases, and secure application design with production-ready tooling.",
-    points: ["Kotlin, Java, Python, C#, SQL", "Jetpack Compose, MVVM, Retrofit, Room", "FastAPI, Django REST, JWT, WebSockets"],
+    points: ["Kotlin, Java, Python, C#", "Jetpack Compose, MVVM", "FastAPI, Django REST"],
   },
   {
     label: "Projects",
-    tone: "red",
+    paletteIndex: 2,
     eyebrow: "Featured Work",
-    title: "Real products with measurable outcomes",
+    title: "Real Products,\nReal Impact",
     summary: "The project set covers service operations, secure licensing, enterprise Android delivery, and automation systems designed to solve real workflow problems.",
-    points: ["Service Management App with JWT auth and WebSocket chat", "Offline License System with AES-256, HWID binding, and HMAC", "Report automation reduced processing time from 8 hours to 30 minutes"],
+    points: ["Service Management App", "Offline License System", "Report Automation"],
   },
   {
     label: "Experience",
-    tone: "violet",
-    eyebrow: "Work And Proof",
-    title: "Hands-on delivery backed by internships and freelance work",
+    paletteIndex: 3,
+    eyebrow: "Work & Proof",
+    title: "Hands-on\nDelivery",
     summary: "I have delivered across internships and freelance engagements, while building a strong engineering foundation through formal technical education.",
-    points: ["Android & Backend Developer Intern at Ky Technologies", "Freelance Python delivery for 8+ clients", "B.Tech Information Technology, SRM Easwari Engineering College"],
+    points: ["Ky Technologies Intern", "Freelance for 8+ clients", "B.Tech IT, SRM College"],
   },
   {
     label: "Contact",
-    tone: "amber",
+    paletteIndex: 0,
     eyebrow: "Next Step",
-    title: "Available for thoughtful engineering work",
+    title: "Let's Build\nTogether",
     summary: "I am open to building mobile apps, backend systems, and focused technical solutions with clean execution and direct communication.",
-    points: ["Email and phone available on the landing page", "GitHub: hareesh08", "LinkedIn profile ready for direct contact"],
+    points: ["hareeshworksofficial@gmail.com", "github.com/hareesh08", "Available for work"],
   },
 ];
 
@@ -56,8 +63,17 @@ const CardRevealScreen = ({ onComplete, onSkipToLanding }: CardRevealScreenProps
   const [cycleComplete, setCycleComplete] = useState(false);
   const [progress, setProgress] = useState(0);
   const [countdown, setCountdown] = useState(5);
+  const [isFlipping, setIsFlipping] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const prevIndexRef = useRef(activeIndex);
 
   const activeCard = useMemo(() => cards[activeIndex], [activeIndex]);
+  const activePalette = palette[activeCard.paletteIndex];
+  const prevPalette = palette[cards[prevIndexRef.current]?.paletteIndex || 0];
+
+  useEffect(() => {
+    prevIndexRef.current = activeIndex;
+  }, [activeIndex]);
 
   useEffect(() => {
     if (cycleComplete) return;
@@ -71,13 +87,18 @@ const CardRevealScreen = ({ onComplete, onSkipToLanding }: CardRevealScreenProps
 
     const timer = window.setTimeout(() => {
       setProgress(0);
+      setIsFlipping(true);
 
-      if (activeIndex === cards.length - 1) {
-        setCycleComplete(true);
-        return;
-      }
-
-      setActiveIndex((currentIndex) => currentIndex + 1);
+      setTimeout(() => {
+        if (activeIndex === cards.length - 1) {
+          setCycleComplete(true);
+          setShowConfetti(true);
+          setIsFlipping(false);
+          return;
+        }
+        setActiveIndex((currentIndex) => currentIndex + 1);
+        setTimeout(() => setIsFlipping(false), 50);
+      }, 300);
     }, CARD_DURATION_MS);
 
     return () => {
@@ -98,7 +119,6 @@ const CardRevealScreen = ({ onComplete, onSkipToLanding }: CardRevealScreenProps
           onComplete();
           return 0;
         }
-
         return current - 1;
       });
     }, 1000);
@@ -122,94 +142,282 @@ const CardRevealScreen = ({ onComplete, onSkipToLanding }: CardRevealScreenProps
     setCycleComplete(false);
     setProgress(0);
     setCountdown(5);
+    setShowConfetti(false);
+    setIsFlipping(false);
   };
 
+  const paletteColors = palette.map((p) => p.bg);
+
   return (
-    <div className={`fixed inset-0 z-[58] overflow-hidden bg-[#070b15] ${cycleComplete ? "uno-sequence-complete" : ""}`}>
-      <div className="absolute inset-0 uno-surface" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.12),transparent_24%),linear-gradient(180deg,transparent,rgba(0,0,0,0.45))]" />
-      <div className="uno-grid absolute inset-0 opacity-40" />
+    <div
+      className="fixed inset-0 z-[58] overflow-hidden transition-colors duration-700"
+      style={{
+        background: cycleComplete
+          ? "linear-gradient(135deg, #fff7f0 0%, #fff0f3 50%, #f1fae8 100%)"
+          : activePalette.bg,
+      }}
+    >
+      {/* Confetti */}
+      {showConfetti && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-[60]">
+          {Array.from({ length: 60 }).map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-2 h-2 rounded-full animate-confetti"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `-10px`,
+                backgroundColor: paletteColors[Math.floor(Math.random() * paletteColors.length)],
+                animationDelay: `${Math.random() * 2}s`,
+                animationDuration: `${2 + Math.random() * 3}s`,
+                width: `${4 + Math.random() * 8}px`,
+                height: `${4 + Math.random() * 8}px`,
+              }}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {Array.from({ length: 12 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full opacity-20"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              width: `${40 + Math.random() * 120}px`,
+              height: `${40 + Math.random() * 120}px`,
+              backgroundColor: paletteColors[i % paletteColors.length],
+              animation: `floatBlob ${8 + Math.random() * 6}s ease-in-out infinite`,
+              animationDelay: `${Math.random() * 5}s`,
+            }}
+          />
+        ))}
+      </div>
 
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 py-8">
+        {/* Skip button */}
         {!cycleComplete && (
           <button
             type="button"
             onClick={onSkipToLanding ?? onComplete}
-            className="absolute right-4 top-4 z-20 inline-flex rounded-full border border-white/12 bg-black/20 px-5 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/70 backdrop-blur-md transition-colors duration-300 hover:border-white/25 hover:text-white md:right-8 md:top-8"
+            className="absolute right-4 top-4 z-20 inline-flex rounded-full border-2 border-white/40 bg-white/30 px-5 py-2 text-xs font-bold uppercase tracking-[0.15em] text-black backdrop-blur-sm transition-all duration-300 hover:bg-white/50 hover:scale-105 md:right-8 md:top-8"
           >
-            Skip To Landing
+            Skip
           </button>
         )}
 
-        <div className="uno-sequence-shell w-full max-w-6xl">
-          <div className="uno-sequence-progress" aria-hidden="true">
-            <span className="uno-sequence-progress-track" />
-            <span className="uno-sequence-progress-fill" style={{ width: `${progress}%` }} />
+        {/* Progress bar */}
+        {!cycleComplete && (
+          <div className="uno-sequence-shell w-full max-w-2xl mb-8">
+            <div className="flex items-center gap-3">
+              {cards.map((_, i) => (
+                <div
+                  key={i}
+                  className="flex-1 h-3 rounded-full transition-all duration-500"
+                  style={{
+                    backgroundColor: i <= activeIndex ? palette[i % palette.length].bg : "rgba(255,255,255,0.2)",
+                    transform: i === activeIndex ? "scaleY(1.4)" : "scaleY(1)",
+                    boxShadow: i === activeIndex ? `0 0 12px ${palette[i % palette.length].bg}` : "none",
+                  }}
+                />
+              ))}
+            </div>
+            <div className="flex justify-between mt-2 text-xs font-bold uppercase tracking-[0.2em] text-black/60">
+              <span>{activeCard.label}</span>
+              <span>{activeIndex + 1} / {cards.length}</span>
+            </div>
           </div>
+        )}
 
-          <div className={`uno-spotlight-card uno-card-${activeCard.tone}`}>
-            <div className="uno-spotlight-card-inner">
-              <div className="uno-spotlight-topline">
-                <span className="uno-spotlight-index">0{activeIndex + 1}</span>
-                <span className="uno-spotlight-label">{activeCard.label}</span>
+        {/* Card */}
+        {!cycleComplete && (
+          <div
+            className={`relative w-full max-w-3xl transition-all duration-300 ${isFlipping ? "opacity-0 scale-95 rotate-3" : "opacity-100 scale-100 rotate-0"}`}
+            style={{
+              transform: isFlipping ? "translateX(100px) rotate(10deg) scale(0.8) opacity(0)" : undefined,
+            }}
+          >
+            <div
+              className="relative rounded-[2.5rem] p-8 md:p-12 shadow-2xl"
+              style={{
+                backgroundColor: activePalette.bg,
+                boxShadow: `0 24px 80px ${activePalette.darkBg}66, 0 0 0 8px rgba(255,255,255,0.15)`,
+              }}
+            >
+              {/* Card header */}
+              <div className="flex items-center gap-3 mb-8">
+                <div
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center"
+                  style={{ backgroundColor: activePalette.darkBg }}
+                >
+                  <Star className="w-7 h-7" style={{ color: activePalette.text }} fill={activePalette.text} />
+                </div>
+                <div>
+                  <p
+                    className="text-sm font-bold uppercase tracking-[0.25em]"
+                    style={{ color: activePalette.text }}
+                  >
+                    {activeCard.eyebrow}
+                  </p>
+                  <p
+                    className="text-xs uppercase tracking-[0.2em] mt-1"
+                    style={{ color: activePalette.text + "99" }}
+                  >
+                    Card {activeIndex + 1} of {cards.length}
+                  </p>
+                </div>
               </div>
 
-              <div className="uno-spotlight-copy">
-                <p className="uno-spotlight-eyebrow">{activeCard.eyebrow}</p>
-                <h2 className="uno-spotlight-title">{activeCard.title}</h2>
-                <p className="uno-spotlight-summary">{activeCard.summary}</p>
-              </div>
+              {/* Title */}
+              <h2
+                className="text-5xl md:text-7xl font-black leading-[0.95] tracking-tight mb-6"
+                style={{ color: activePalette.text }}
+              >
+                {activeCard.title.split("\n").map((line, i) => (
+                  <span key={i} className="block">{line}</span>
+                ))}
+              </h2>
 
-              <div className="uno-spotlight-points">
-                {activeCard.points.map((item) => (
-                  <div key={item} className="uno-spotlight-point">{item}</div>
+              {/* Summary */}
+              <p
+                className="text-lg md:text-xl font-medium leading-relaxed max-w-xl mb-8"
+                style={{ color: activePalette.text + "cc" }}
+              >
+                {activeCard.summary}
+              </p>
+
+              {/* Points */}
+              <div className="space-y-3">
+                {activeCard.points.map((point, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-3 rounded-2xl px-4 py-3"
+                    style={{ backgroundColor: activePalette.darkBg + "44" }}
+                  >
+                    <div
+                      className="w-3 h-3 rounded-full flex-shrink-0"
+                      style={{ backgroundColor: activePalette.accent }}
+                    />
+                    <span
+                      className="text-base md:text-lg font-semibold"
+                      style={{ color: activePalette.text }}
+                    >
+                      {point}
+                    </span>
+                  </div>
                 ))}
               </div>
+
+              {/* Decorative corner */}
+              <div
+                className="absolute top-0 right-0 w-32 h-32 rounded-bl-[4rem] opacity-30"
+                style={{ backgroundColor: activePalette.darkBg }}
+              />
             </div>
           </div>
+        )}
 
-          <div className="uno-sequence-footer">
-            <div className="uno-sequence-count">
-              <span>{activeIndex + 1}</span>
-              <span>/</span>
-              <span>{cards.length}</span>
+        {/* Completion screen */}
+        {cycleComplete && (
+          <div className="w-full max-w-lg animate-scale-in">
+            <div
+              className="relative rounded-[2.5rem] p-8 md:p-10 shadow-2xl text-center"
+              style={{
+                backgroundColor: palette[1].bg,
+                boxShadow: `0 24px 80px ${palette[1].darkBg}66, 0 0 0 8px rgba(255,255,255,0.15)`,
+              }}
+            >
+              <div className="flex justify-center gap-2 mb-6">
+                {palette.map((p, i) => (
+                  <div
+                    key={i}
+                    className="w-4 h-4 rounded-full animate-bounce"
+                    style={{
+                      backgroundColor: p.bg,
+                      animationDelay: `${i * 0.15}s`,
+                      boxShadow: `0 0 8px ${p.bg}`,
+                    }}
+                  />
+                ))}
+              </div>
+
+              <h3
+                className="text-3xl md:text-4xl font-black mb-3"
+                style={{ color: palette[1].text }}
+              >
+                All Done!
+              </h3>
+              <p
+                className="text-base md:text-lg font-medium mb-8"
+                style={{ color: palette[1].text + "cc" }}
+              >
+                You've seen the highlights. Ready for the full experience?
+              </p>
+
+              <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
+                <button
+                  type="button"
+                  onClick={onComplete}
+                  className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 font-bold uppercase tracking-[0.15em] transition-all duration-300 hover:scale-105"
+                  style={{
+                    backgroundColor: palette[0].bg,
+                    color: palette[0].text,
+                    boxShadow: `0 8px 24px ${palette[0].darkBg}66`,
+                  }}
+                >
+                  <Sparkles className="w-5 h-5" />
+                  Continue
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleReplay}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border-2 px-8 py-4 font-bold uppercase tracking-[0.15em] transition-all duration-300 hover:scale-105"
+                  style={{
+                    borderColor: palette[0].text + "44",
+                    color: palette[0].text,
+                    backgroundColor: "transparent",
+                  }}
+                >
+                  <RotateCcw className="w-5 h-5" />
+                  Replay
+                </button>
+              </div>
+
+              <p
+                className="mt-6 text-sm font-medium"
+                style={{ color: palette[0].text + "88" }}
+              >
+                Auto-continuing in {countdown}s...
+              </p>
             </div>
-
-            {!cycleComplete ? (
-              <p className="uno-sequence-status">Presenting the profile in sequence.</p>
-            ) : (
-              <p className="uno-sequence-status">Preparing landing page access.</p>
-            )}
           </div>
-        </div>
+        )}
       </div>
 
-      {cycleComplete && (
-        <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/55 px-4 backdrop-blur-md">
-          <div className="uno-completion-modal w-full max-w-lg rounded-[2rem] border border-white/12 bg-[#0c1220]/95 p-6 text-center shadow-[0_32px_90px_rgba(0,0,0,0.5)] md:p-8">
-            <p className="uno-completion-kicker">Ready</p>
-            <h3 className="uno-completion-title">Continue to the landing page?</h3>
-            <p className="uno-completion-text">Redirecting automatically in {countdown}s if there is no response.</p>
+      <style>{`
+        @keyframes confetti {
+          0% {
+            transform: translateY(0) rotate(0deg) scale(1);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(100vh) rotate(720deg) scale(0);
+            opacity: 0;
+          }
+        }
+        .animate-confetti {
+          animation: confetti linear forwards;
+        }
 
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
-              <button type="button" onClick={onComplete} className="uno-stage-action">
-                <Sparkles className="h-4 w-4" />
-                Continue
-              </button>
-
-              <button type="button" onClick={handleReplay} className="uno-secondary-action">
-                <RotateCcw className="h-4 w-4" />
-                Replay
-              </button>
-
-              <button type="button" onClick={onSkipToLanding ?? onComplete} className="uno-secondary-action">
-                <ArrowRight className="h-4 w-4" />
-                Skip
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+        @keyframes floatBlob {
+          0%, 100% { transform: translateY(0) scale(1); }
+          50% { transform: translateY(-20px) scale(1.1); }
+        }
+      `}</style>
     </div>
   );
 };

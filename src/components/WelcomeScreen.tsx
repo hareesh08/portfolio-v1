@@ -46,18 +46,22 @@ const WelcomeScreen = ({ onComplete, onSkipToLanding }: WelcomeScreenProps) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[59] overflow-hidden bg-black">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.12),transparent_22%),linear-gradient(180deg,#060912_0%,#020305_100%)]" />
-      <div className="absolute inset-0 page-grid opacity-30" />
-      <div className="absolute left-1/2 top-1/2 h-[28rem] w-[28rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-300/10 blur-3xl" />
+    <div className="fixed inset-0 z-[59] overflow-hidden"
+      style={{
+        background:
+          "radial-gradient(circle at 18% 16%, rgba(255, 157, 157, 0.55), transparent 38%), radial-gradient(circle at 82% 24%, rgba(255, 197, 170, 0.5), transparent 40%), radial-gradient(circle at 70% 86%, rgba(187, 241, 210, 0.5), transparent 42%), radial-gradient(circle at 18% 80%, rgba(238, 248, 205, 0.55), transparent 40%), linear-gradient(135deg, #fff7f0 0%, #fff0f3 50%, #f1fae8 100%)",
+      }}
+    >
+      <div className="absolute inset-0 page-grid opacity-40" />
+      <div className="absolute left-1/2 top-1/2 h-[28rem] w-[28rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-pink/30 blur-3xl" />
 
       <div className="relative z-10 flex min-h-screen items-center justify-center px-5 py-10">
-        <div className="welcome-shell w-full max-w-2xl rounded-[2rem] border border-white/12 bg-white/[0.05] p-6 text-center shadow-[0_30px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl md:p-10">
+        <div className="welcome-shell w-full max-w-2xl rounded-[2rem] border border-white/80 bg-white/55 p-6 text-center shadow-[0_30px_80px_rgba(255,157,157,0.25)] backdrop-blur-xl md:p-10">
           {step === "ask" && (
             <div className="space-y-7 animate-scale-in">
               <div>
-                <p className="mb-3 text-sm uppercase tracking-[0.28em] text-white/45">{greeting}</p>
-                <h2 className="text-3xl font-extralight tracking-[0.06em] text-white md:text-5xl">
+                <p className="mb-3 text-sm uppercase tracking-[0.28em]" style={{ color: "rgba(20, 20, 20, 0.55)" }}>{greeting}</p>
+                <h2 className="text-3xl font-extralight tracking-[0.06em] md:text-5xl" style={{ color: "rgb(20, 20, 20)" }}>
                   Let me personalize the experience.
                 </h2>
               </div>
@@ -70,18 +74,33 @@ const WelcomeScreen = ({ onComplete, onSkipToLanding }: WelcomeScreenProps) => {
                   onChange={(event) => setName(event.target.value)}
                   onKeyDown={(event) => event.key === "Enter" && handleContinue()}
                   placeholder="What should I call you?"
-                  className="mx-auto block w-full max-w-md border-b border-white/25 bg-transparent px-3 py-4 text-center text-xl font-extralight text-white outline-none transition-colors duration-300 placeholder:text-white/30 focus:border-white/60 md:text-2xl"
+                  className="mx-auto block w-full max-w-md border-b border-white/80 bg-transparent px-3 py-4 text-center text-xl font-extralight outline-none transition-colors duration-300 placeholder:text-black/40 focus:border-pink md:text-2xl"
+                  style={{ color: "rgb(20, 20, 20)" }}
                 />
 
-                <p className="text-sm uppercase tracking-[0.24em] text-white/38">Press Enter or continue below</p>
+                <p className="text-sm uppercase tracking-[0.24em]" style={{ color: "rgba(20, 20, 20, 0.5)" }}>Press Enter or continue below</p>
 
                 <button
                   type="button"
                   onClick={handleContinue}
                   disabled={!trimmedName}
-                  className={`inline-flex rounded-full px-8 py-3 text-sm uppercase tracking-[0.22em] transition-all duration-300 ${
-                    trimmedName ? "bg-white text-black hover:bg-white/90" : "cursor-not-allowed bg-white/10 text-white/30"
+                  className={`inline-flex rounded-full px-8 py-3 text-sm uppercase tracking-[0.22em] transition-all duration-300 border ${
+                    trimmedName ? "hover:scale-105" : "cursor-not-allowed opacity-50"
                   }`}
+                  style={
+                    trimmedName
+                      ? {
+                          background: "linear-gradient(135deg, #FF9D9D, #FFC5AA)",
+                          color: "#1a0808",
+                          borderColor: "rgba(255, 255, 255, 0.9)",
+                          boxShadow: "0 8px 24px rgba(255, 157, 157, 0.45)",
+                        }
+                      : {
+                          background: "rgba(255, 255, 255, 0.4)",
+                          color: "rgba(20, 20, 20, 0.5)",
+                          borderColor: "rgba(255, 255, 255, 0.7)",
+                        }
+                  }
                 >
                   Continue
                 </button>
@@ -89,7 +108,8 @@ const WelcomeScreen = ({ onComplete, onSkipToLanding }: WelcomeScreenProps) => {
                 <button
                   type="button"
                   onClick={onSkipToLanding}
-                  className="inline-flex rounded-full border border-white/12 bg-white/[0.03] px-8 py-3 text-sm uppercase tracking-[0.22em] text-white/70 transition-colors duration-300 hover:border-white/25 hover:text-white"
+                  className="inline-flex rounded-full border border-white/80 bg-white/55 backdrop-blur px-8 py-3 text-sm uppercase tracking-[0.22em] transition-colors duration-300 hover:bg-white/85"
+                  style={{ color: "rgba(20, 20, 20, 0.8)" }}
                 >
                   Skip To Landing
                 </button>
@@ -99,15 +119,15 @@ const WelcomeScreen = ({ onComplete, onSkipToLanding }: WelcomeScreenProps) => {
 
           {step === "greet" && (
             <div className="space-y-6 animate-scale-in">
-              <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-white/18 bg-white/10 text-3xl font-light text-white">
+              <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-white/90 bg-white/70 text-3xl font-light" style={{ color: "rgb(20, 20, 20)", boxShadow: "0 8px 24px rgba(255, 157, 157, 0.45)" }}>
                 {displayName.charAt(0).toUpperCase()}
               </div>
               <div>
-                <p className="mb-3 text-xs uppercase tracking-[0.38em] text-white/45">Welcome</p>
-                <h2 className="text-4xl font-extralight tracking-[0.08em] text-white md:text-6xl">{displayName}</h2>
+                <p className="mb-3 text-xs uppercase tracking-[0.38em]" style={{ color: "rgba(20, 20, 20, 0.55)" }}>Welcome</p>
+                <h2 className="text-4xl font-extralight tracking-[0.08em] md:text-6xl" style={{ color: "rgb(20, 20, 20)" }}>{displayName}</h2>
               </div>
 
-              <div className="mx-auto max-w-lg space-y-3 text-base font-extralight leading-relaxed text-white/65 md:text-lg">
+              <div className="mx-auto max-w-lg space-y-3 text-base font-extralight leading-relaxed md:text-lg" style={{ color: "rgba(20, 20, 20, 0.7)" }}>
                 {motivations.map((item) => (
                   <p key={item}>{item}</p>
                 ))}
@@ -116,7 +136,8 @@ const WelcomeScreen = ({ onComplete, onSkipToLanding }: WelcomeScreenProps) => {
               <button
                 type="button"
                 onClick={onSkipToLanding}
-                className="mx-auto inline-flex rounded-full border border-white/12 bg-white/[0.03] px-7 py-3 text-sm uppercase tracking-[0.22em] text-white/70 transition-colors duration-300 hover:border-white/25 hover:text-white"
+                className="mx-auto inline-flex rounded-full border border-white/80 bg-white/55 backdrop-blur px-7 py-3 text-sm uppercase tracking-[0.22em] transition-colors duration-300 hover:bg-white/85"
+                style={{ color: "rgba(20, 20, 20, 0.8)" }}
               >
                 Skip To Landing
               </button>

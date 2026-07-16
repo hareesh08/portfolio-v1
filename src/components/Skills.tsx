@@ -6,43 +6,43 @@ const skillCategories = [
     icon: Code2,
     title: "Programming",
     skills: ["Kotlin", "Java", "Python", "C#", "SQL"],
-    color: "text-emerald-500",
-    bg: "bg-emerald-500/10",
+    color: "text-pink",
+    bg: "bg-pink/20",
   },
   {
     icon: Smartphone,
     title: "Android",
     skills: ["Jetpack Compose", "MVVM", "Retrofit", "OkHttp", "Room", "Coroutines", "Android Architecture Components"],
-    color: "text-teal-500",
-    bg: "bg-teal-500/10",
+    color: "text-peach",
+    bg: "bg-peach/25",
   },
   {
     icon: Server,
     title: "Backend",
     skills: ["Django REST Framework", "FastAPI", "RESTful APIs", "JWT Auth", "WebSockets", "Microservices"],
-    color: "text-cyan-500",
-    bg: "bg-cyan-500/10",
+    color: "text-black",
+    bg: "bg-cream/30",
   },
   {
     icon: Database,
     title: "Databases",
     skills: ["PostgreSQL", "SQLite"],
-    color: "text-emerald-400",
-    bg: "bg-emerald-400/10",
+    color: "text-mint",
+    bg: "bg-mint/25",
   },
   {
     icon: Cloud,
     title: "Tools & Platforms",
     skills: ["Git", "GitHub", "Docker", "Postman", "Azure", "Android Studio", "Linux", "Claude Code"],
-    color: "text-teal-400",
-    bg: "bg-teal-400/10",
+    color: "text-peach",
+    bg: "bg-peach/25",
   },
   {
     icon: Shield,
     title: "Security",
     skills: ["JWT Authentication", "AES-256 Encryption", "HMAC", "Secure API Design", "API Security"],
-    color: "text-green-500",
-    bg: "bg-green-500/10",
+    color: "text-pink",
+    bg: "bg-pink/20",
   },
 ];
 
@@ -69,12 +69,12 @@ const Skills = () => {
               className="panel-card p-5 md:p-6 bento-card"
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-11 h-11 rounded-2xl border border-white/10 bg-white/5 flex items-center justify-center">
-                  <category.icon className="w-5 h-5 text-cyan-300" />
+                <div className={`w-11 h-11 rounded-2xl border border-white/80 flex items-center justify-center backdrop-blur ${category.bg}`}>
+                  <category.icon className={`w-5 h-5 ${category.color}`} />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-white">{category.title}</h3>
-                  <p className="text-xs uppercase tracking-[0.2em] text-white/40">Focused capability</p>
+                  <h3 className="text-lg font-bold" style={{ color: "rgb(20, 20, 20)" }}>{category.title}</h3>
+                  <p className="text-xs uppercase tracking-[0.2em]" style={{ color: "rgba(20, 20, 20, 0.5)" }}>Focused capability</p>
                 </div>
               </div>
 
@@ -102,8 +102,8 @@ const Skills = () => {
             { value: "4+", label: "Years" },
           ].map((stat) => (
             <div key={stat.label} className="panel-card p-4 text-center">
-                <p className="text-2xl font-bold text-cyan-300">{stat.value}</p>
-              <p className="text-[11px] uppercase tracking-[0.22em] text-white/45 mt-1">{stat.label}</p>
+                <p className="text-2xl font-bold text-pink">{stat.value}</p>
+              <p className="text-[11px] uppercase tracking-[0.22em] mt-1" style={{ color: "rgba(20, 20, 20, 0.55)" }}>{stat.label}</p>
             </div>
           ))}
         </motion.div>

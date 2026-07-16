@@ -9,25 +9,25 @@ const Hero = () => {
     <section ref={sectionRef} className="min-h-screen flex items-center justify-center section-shell">
       <div className="relative max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
         <div className="lg:col-span-8 panel-card p-6 md:p-10 lg:p-12 overflow-hidden">
-          <div className="reveal inline-flex items-center gap-3">
+          <div className="reveal inline-flex items-center gap-3 flex-wrap">
             <span className="tag">Portfolio / 2026</span>
-            <span className="chip">Tech-lux</span>
+            <span className="chip">Candy Tech-lux</span>
           </div>
 
           <div className="reveal mt-8" style={{ transitionDelay: "90ms" }}>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight uppercase leading-[0.9]">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight uppercase leading-[0.9]" style={{ color: "rgb(20, 20, 20)" }}>
               <span className="reveal-line inline-block">Hareesh</span>
             </h1>
           </div>
 
           <div className="reveal mt-4" style={{ transitionDelay: "170ms" }}>
-            <p className="text-xl md:text-3xl font-bold text-cyan-300 uppercase tracking-[0.16em]">
+            <p className="text-xl md:text-3xl font-bold text-pink uppercase tracking-[0.16em]">
               <span className="reveal-line inline-block">Android Developer</span>
             </p>
           </div>
 
           <div className="reveal mt-6 max-w-2xl" style={{ transitionDelay: "240ms" }}>
-            <p className="text-white/68 text-base md:text-lg leading-relaxed">
+            <p className="text-base md:text-lg leading-relaxed" style={{ color: "rgba(20, 20, 20, 0.7)" }}>
               <span className="block">I design sharp mobile experiences and practical backend systems.</span>
               <span className="block">Scroll to reveal the work, the stack, and the proof.</span>
             </p>
@@ -38,37 +38,37 @@ const Hero = () => {
               <Mail className="w-4 h-4" />
               Contact Me
             </a>
-            <a href="#projects" className="inline-flex items-center px-5 py-3 rounded-full border border-white/10 bg-white/5 text-white font-semibold uppercase tracking-[0.16em] hover:border-cyan-300/40 hover:bg-white/10 transition-colors">
+            <a href="#projects" className="inline-flex items-center px-5 py-3 rounded-full border border-white/80 bg-white/55 text-black font-semibold uppercase tracking-[0.16em] backdrop-blur hover:bg-white/85 transition-colors">
               See Projects
             </a>
           </div>
 
-          <div className="reveal mt-10 flex flex-wrap gap-3" style={{ transitionDelay: "390ms" }}>
-            {[
-              "Kotlin",
-              "Jetpack Compose",
-              "Django REST",
-              "FastAPI",
-              "Security",
-            ].map((item) => (
-              <span key={item} className="chip">{item}</span>
-            ))}
-          </div>
+            <div className="reveal mt-10 flex flex-wrap gap-3" style={{ transitionDelay: "390ms" }} role="list" aria-label="Technical skills">
+              {[
+                "Kotlin",
+                "Jetpack Compose",
+                "Django REST",
+                "FastAPI",
+                "Security",
+              ].map((item) => (
+                <span key={item} className="chip" role="listitem">{item}</span>
+              ))}
+            </div>
         </div>
 
         <div className="lg:col-span-4 panel-card reveal" style={{ transitionDelay: "420ms" }}>
           <div className="panel-card p-6 md:p-8 h-full">
             <div className="flex items-start gap-4">
-              <div className="w-24 h-24 rounded-[28px] overflow-hidden border border-white/10 shadow-[0_18px_40px_rgba(0,0,0,0.35)] shrink-0">
+              <div className="w-24 h-24 rounded-[28px] overflow-hidden border border-white/80 shadow-[0_18px_40px_rgba(255,157,157,0.45)] shrink-0">
                 <img src="./profile.png" alt="Hareesh Ragavendra" className="w-full h-full object-cover" />
               </div>
               <div>
                 <p className="section-label">Location</p>
-                <div className="mt-2 text-white/90 flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-cyan-300" />
+                <div className="mt-2 flex items-center gap-2" style={{ color: "rgb(20, 20, 20)" }}>
+                  <MapPin className="w-4 h-4 text-pink" />
                   <ProtectedData value="Chennai, Tamil Nadu, India" masked="Hidden" />
                 </div>
-                <p className="mt-3 text-sm text-white/60 max-w-xs">
+                <p className="mt-3 text-sm" style={{ color: "rgba(20, 20, 20, 0.65)" }}>
                   Full-stack work with a bias toward usable interfaces and secure systems.
                 </p>
               </div>
@@ -80,20 +80,20 @@ const Hero = () => {
                 { value: "4+", label: "Years" },
                 { value: "20+", label: "Skills" },
               ].map((stat) => (
-                <div key={stat.label} className="rounded-2xl border border-white/8 bg-white/5 p-4">
-                  <div className="text-2xl font-bold text-cyan-300">{stat.value}</div>
-                  <div className="text-[11px] uppercase tracking-[0.2em] text-white/45 mt-1">{stat.label}</div>
+                <div key={stat.label} className="rounded-2xl border border-white/70 bg-white/55 backdrop-blur p-4">
+                  <div className="text-2xl font-bold text-pink">{stat.value}</div>
+                  <div className="text-[11px] uppercase tracking-[0.2em] mt-1" style={{ color: "rgba(20, 20, 20, 0.55)" }}>{stat.label}</div>
                 </div>
               ))}
             </div>
 
-            <div className="mt-8 flex items-center justify-between border-t border-white/8 pt-5">
-              <div className="text-xs uppercase tracking-[0.22em] text-white/45">Available for work</div>
+            <div className="mt-8 flex items-center justify-between border-t border-white/70 pt-5">
+              <div className="text-xs uppercase tracking-[0.22em]" style={{ color: "rgba(20, 20, 20, 0.55)" }}>Available for work</div>
               <div className="flex items-center gap-3">
-                <a href="https://github.com/hareesh08" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">
+                <a href="https://github.com/hareesh08" target="_blank" rel="noopener noreferrer" className="hover:text-pink transition-colors" style={{ color: "rgba(20, 20, 20, 0.6)" }} aria-label="GitHub Profile">
                   <Github className="w-5 h-5" />
                 </a>
-                <a href="https://www.linkedin.com/in/hareesh-d-50147727b" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">
+                <a href="https://www.linkedin.com/in/hareesh-d-50147727b" target="_blank" rel="noopener noreferrer" className="hover:text-peach transition-colors" style={{ color: "rgba(20, 20, 20, 0.6)" }} aria-label="LinkedIn Profile">
                   <Linkedin className="w-5 h-5" />
                 </a>
               </div>
