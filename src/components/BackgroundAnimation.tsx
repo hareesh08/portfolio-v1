@@ -8,17 +8,19 @@ const BackgroundAnimation = () => {
       <div className="absolute inset-0 page-grid opacity-[0.12]" />
       <div className="absolute inset-0 noise-overlay" />
 
-      <div className={`absolute -top-20 -left-20 w-[320px] md:w-[560px] h-[320px] md:h-[560px] rounded-full bg-[#FF9D9D]/12 blur-3xl bg-orb`} />
-      <div className={`absolute top-1/3 -right-24 w-[260px] md:w-[420px] h-[260px] md:h-[420px] rounded-full bg-[#FFC5AA]/10 blur-3xl bg-orb`} style={{ animationDelay: '2s' }} />
-      <div className={`absolute -bottom-24 left-1/4 w-[340px] md:w-[540px] h-[340px] md:h-[540px] rounded-full bg-[#BBF1D2]/8 blur-3xl bg-orb`} style={{ animationDelay: '4s' }} />
-
       {!isMobile && (
-        <div className="absolute inset-0">
-          <div className="particle absolute top-[12%] left-[14%] w-1 h-1 bg-[#FF9D9D]/50 rounded-full" />
-          <div className="particle absolute top-[24%] right-[18%] w-1.5 h-1.5 bg-[#FFC5AA]/40 rounded-full" />
-          <div className="particle absolute top-[48%] left-[8%] w-1 h-1 bg-[#EEF8CD]/30 rounded-full" />
-          <div className="particle absolute top-[68%] right-[12%] w-1 h-1 bg-[#BBF1D2]/40 rounded-full" />
-        </div>
+        <>
+          <div className="absolute -top-20 -left-20 w-[560px] h-[560px] rounded-full bg-[#FF9D9D]/12 blur-3xl bg-orb" />
+          <div className="absolute top-1/3 -right-24 w-[420px] h-[420px] rounded-full bg-[#FFC5AA]/10 blur-3xl bg-orb" style={{ animationDelay: '2s' }} />
+          <div className="absolute -bottom-24 left-1/4 w-[540px] h-[540px] rounded-full bg-[#BBF1D2]/8 blur-3xl bg-orb" style={{ animationDelay: '4s' }} />
+
+          <div className="absolute inset-0">
+            <div className="particle absolute top-[12%] left-[14%] w-1 h-1 bg-[#FF9D9D]/50 rounded-full" />
+            <div className="particle absolute top-[24%] right-[18%] w-1.5 h-1.5 bg-[#FFC5AA]/40 rounded-full" />
+            <div className="particle absolute top-[48%] left-[8%] w-1 h-1 bg-[#EEF8CD]/30 rounded-full" />
+            <div className="particle absolute top-[68%] right-[12%] w-1 h-1 bg-[#BBF1D2]/40 rounded-full" />
+          </div>
+        </>
       )}
 
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/55" />

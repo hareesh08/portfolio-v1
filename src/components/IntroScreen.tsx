@@ -63,9 +63,9 @@ const IntroScreen = ({ onComplete, onSkipToLanding }: IntroScreenProps) => {
       <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.35))" }} />
 
       {showStartOverlay && (
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 text-center backdrop-blur-sm" style={{ background: "rgba(255, 255, 255, 0.45)" }}>
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 text-center md:backdrop-blur-sm" style={{ background: "rgba(255, 255, 255, 0.55)" }}>
           <div className="absolute inset-0 overflow-hidden">
-            {Array.from({ length: isMobile ? 16 : 32 }).map((_, index) => (
+            {Array.from({ length: isMobile ? 6 : 32 }).map((_, index) => (
               <div
                 key={index}
                 className="intro-particle absolute rounded-full"
@@ -81,7 +81,9 @@ const IntroScreen = ({ onComplete, onSkipToLanding }: IntroScreenProps) => {
             ))}
           </div>
 
-          <div className="absolute left-1/2 top-1/2 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/40 blur-2xl md:h-[520px] md:w-[520px]" />
+          {!isMobile && (
+            <div className="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/40 blur-2xl" />
+          )}
 
           <div className="relative z-10 max-w-3xl intro-fade-in">
             <p className="mb-4 text-xs font-medium uppercase tracking-[0.32em] md:text-sm" style={{ color: "rgba(20, 20, 20, 0.55)" }}>

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, useRef } from "react";
 import { ArrowRight, RotateCcw, Sparkles, Star } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface CardRevealScreenProps {
   onComplete: () => void;
@@ -59,6 +60,7 @@ const cards = [
 ];
 
 const CardRevealScreen = ({ onComplete, onSkipToLanding }: CardRevealScreenProps) => {
+  const isMobile = useIsMobile();
   const [activeIndex, setActiveIndex] = useState(0);
   const [cycleComplete, setCycleComplete] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -160,7 +162,7 @@ const CardRevealScreen = ({ onComplete, onSkipToLanding }: CardRevealScreenProps
       {/* Confetti */}
       {showConfetti && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-[60]">
-          {Array.from({ length: 60 }).map((_, i) => (
+          {Array.from({ length: isMobile ? 20 : 60 }).map((_, i) => (
             <div
               key={i}
               className="absolute w-2 h-2 rounded-full animate-confetti"
@@ -180,7 +182,7 @@ const CardRevealScreen = ({ onComplete, onSkipToLanding }: CardRevealScreenProps
 
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {Array.from({ length: 12 }).map((_, i) => (
+        {Array.from({ length: isMobile ? 4 : 12 }).map((_, i) => (
           <div
             key={i}
             className="absolute rounded-full opacity-20"
@@ -203,7 +205,7 @@ const CardRevealScreen = ({ onComplete, onSkipToLanding }: CardRevealScreenProps
           <button
             type="button"
             onClick={onSkipToLanding ?? onComplete}
-            className="absolute right-4 top-4 z-20 inline-flex rounded-full border-2 border-white/40 bg-white/30 px-5 py-2 text-xs font-bold uppercase tracking-[0.15em] text-black backdrop-blur-sm transition-all duration-300 hover:bg-white/50 hover:scale-105 md:right-8 md:top-8"
+            className="absolute right-4 top-4 z-20 inline-flex rounded-full border-2 border-white/40 bg-white/60 px-5 py-2 text-xs font-bold uppercase tracking-[0.15em] text-black transition-all duration-300 hover:bg-white/50 hover:scale-105 md:right-8 md:top-8 md:bg-white/30 md:backdrop-blur-sm"
           >
             Skip
           </button>

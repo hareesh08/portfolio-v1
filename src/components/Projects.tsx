@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
 import { Github, ExternalLink, Star } from "lucide-react";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
 const projects = [
   {
@@ -33,26 +33,25 @@ const projects = [
 ];
 
 const Projects = () => {
+  const sectionRef = useScrollReveal<HTMLElement>();
+
   return (
-    <section id="projects" className="section-shell">
+    <section ref={sectionRef} id="projects" className="section-shell">
       <div className="max-w-6xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-8">
+        <div className="reveal mb-8">
           <p className="section-label">Projects</p>
           <h2 className="section-title mt-3">Featured work with real weight.</h2>
           <p className="section-subtitle mt-4">
             A mix of mobile, backend, and tooling work built to solve actual problems.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {projects.map((project, idx) => (
-            <motion.article
+            <article
               key={project.title}
-              initial={{ opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-12%" }}
-              transition={{ delay: idx * 0.08 }}
-              className="panel-card p-5 md:p-6 bento-card"
+              className="reveal panel-card p-5 md:p-6 bento-card"
+              style={{ transitionDelay: `${idx * 80}ms` }}
             >
               <div className="flex items-start justify-between gap-4 mb-4">
                 <h3 className="text-xl font-bold leading-tight" style={{ color: "rgb(20, 20, 20)" }}>{project.title}</h3>
@@ -82,11 +81,11 @@ const Projects = () => {
                 View Code
                 <ExternalLink className="w-3 h-3" />
               </a>
-            </motion.article>
+            </article>
           ))}
         </div>
 
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mt-8 flex justify-center">
+        <div className="reveal mt-8 flex justify-center" style={{ transitionDelay: "100ms" }}>
           <a
             href="https://github.com/hareesh08"
             target="_blank"
@@ -96,7 +95,7 @@ const Projects = () => {
             <Github className="w-4 h-4" />
             View All Work
           </a>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -53,7 +53,7 @@ const Navbar = () => {
           <div className="panel-card px-4 py-3 flex items-center justify-between gap-4" role="navigation" aria-label="Main navigation">
             <a href="#" className="flex items-center gap-3" aria-label="Hareesh Ragavendra Portfolio Home">
               <div className="w-11 h-11 rounded-2xl overflow-hidden border border-white/80 shadow-[0_12px_24px_rgba(255,157,157,0.45)]">
-                <img src="./profile.png" alt="Hareesh Ragavendra" className="w-full h-full object-cover" />
+                <img src="./profile.png" alt="Hareesh Ragavendra" className="w-full h-full object-cover" decoding="async" />
               </div>
               <div>
                 <div className="font-black leading-none" style={{ color: "rgb(20, 20, 20)" }}>Hareesh</div>
@@ -100,7 +100,7 @@ const Navbar = () => {
                     key={link.href}
                     href={link.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="block px-4 py-3 rounded-2xl border border-white/70 bg-white/55 backdrop-blur transition-all"
+                    className="block px-4 py-3 rounded-2xl border border-white/70 bg-white/80 transition-all"
                     style={{ color: "rgb(20, 20, 20)" }}
                     role="menuitem"
                   >
@@ -127,7 +127,7 @@ const Navbar = () => {
       {/* Password Modal */}
         {showPasswordModal && (
           <div
-            className="fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-md px-4"
+            className="fixed inset-0 z-[100] flex items-center justify-center md:backdrop-blur-md px-4"
             style={{ background: "rgba(255, 230, 220, 0.45)" }}
             onClick={() => setShowPasswordModal(false)}
             onKeyDown={(e) => e.key === "Escape" && setShowPasswordModal(false)}

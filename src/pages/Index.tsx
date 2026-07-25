@@ -1,9 +1,10 @@
-import { useCallback, useState } from "react";
-import IntroScreen from "@/components/IntroScreen";
-import CardRevealScreen from "@/components/CardRevealScreen";
-import WelcomeScreen from "@/components/WelcomeScreen";
-import PortfolioLanding from "@/components/PortfolioLanding";
+import { lazy, Suspense, useCallback, useState } from "react";
 import { CARD_SHOWN_COOKIE, hasVisitCookie, INTRO_VISITED_COOKIE, markVisitCookie } from "@/lib/visit-flow";
+
+const IntroScreen = lazy(() => import("@/components/IntroScreen"));
+const CardRevealScreen = lazy(() => import("@/components/CardRevealScreen"));
+const WelcomeScreen = lazy(() => import("@/components/WelcomeScreen"));
+const PortfolioLanding = lazy(() => import("@/components/PortfolioLanding"));
 
 type Stage = "intro" | "welcome" | "game" | "portfolio";
 
@@ -39,12 +40,12 @@ const Index = () => {
   }, []);
 
   return (
-    <>
+    <Suspense fallback={null}>
       {stage === "intro" && <IntroScreen onComplete={handleIntroComplete} onSkipToLanding={skipToLanding} />}
       {stage === "welcome" && <WelcomeScreen onComplete={handleWelcomeComplete} onSkipToLanding={skipToLanding} />}
       {stage === "game" && <CardRevealScreen onComplete={handleCardRevealComplete} onSkipToLanding={skipToLanding} />}
       {stage === "portfolio" && <PortfolioLanding />}
-    </>
+    </Suspense>
   );
 };
 

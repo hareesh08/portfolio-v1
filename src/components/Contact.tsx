@@ -1,27 +1,28 @@
-import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Github, Linkedin } from "lucide-react";
 import ProtectedData from "./ProtectedData";
 import { useAuth } from "@/context/AuthContext";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
 const Contact = () => {
   const { isAuthorized } = useAuth();
+  const sectionRef = useScrollReveal<HTMLElement>();
 
   return (
-    <section id="contact" className="section-shell pb-24">
+    <section ref={sectionRef} id="contact" className="section-shell pb-24">
       <div className="max-w-6xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-8">
+        <div className="reveal mb-8">
           <p className="section-label">Contact</p>
-          <h2 className="section-title mt-3">Let’s build the next thing.</h2>
+          <h2 className="section-title mt-3">Let's build the next thing.</h2>
           <p className="section-subtitle mt-4">
             Reach out for mobile apps, backend systems, or clean technical help.
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="panel-card p-5 md:p-8">
+        <div className="reveal panel-card p-5 md:p-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="space-y-4">
-              <div className="rounded-2xl border border-white/70 bg-white/55 backdrop-blur p-4 flex items-center gap-4">
-                <div className="w-11 h-11 rounded-2xl border border-white/80 bg-pink/20 backdrop-blur flex items-center justify-center shrink-0" aria-hidden="true">
+              <div className="rounded-2xl border border-white/70 bg-white/80 p-4 flex items-center gap-4">
+                <div className="w-11 h-11 rounded-2xl border border-white/80 bg-pink/20 flex items-center justify-center shrink-0" aria-hidden="true">
                   <Mail className="w-5 h-5 text-pink" />
                 </div>
                 <div>
@@ -34,8 +35,8 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-white/70 bg-white/55 backdrop-blur p-4 flex items-center gap-4">
-                <div className="w-11 h-11 rounded-2xl border border-white/80 bg-peach/25 backdrop-blur flex items-center justify-center shrink-0" aria-hidden="true">
+              <div className="rounded-2xl border border-white/70 bg-white/80 p-4 flex items-center gap-4">
+                <div className="w-11 h-11 rounded-2xl border border-white/80 bg-peach/25 flex items-center justify-center shrink-0" aria-hidden="true">
                   <Phone className="w-5 h-5 text-peach" />
                 </div>
                 <div>
@@ -48,8 +49,8 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-white/70 bg-white/55 backdrop-blur p-4 flex items-center gap-4">
-                <div className="w-11 h-11 rounded-2xl border border-white/80 bg-mint/25 backdrop-blur flex items-center justify-center shrink-0" aria-hidden="true">
+              <div className="rounded-2xl border border-white/70 bg-white/80 p-4 flex items-center gap-4">
+                <div className="w-11 h-11 rounded-2xl border border-white/80 bg-mint/25 flex items-center justify-center shrink-0" aria-hidden="true">
                   <MapPin className="w-5 h-5 text-mint" />
                 </div>
                 <div>
@@ -62,7 +63,7 @@ const Contact = () => {
             <div className="flex flex-col justify-between gap-6">
               <div className="panel-card p-5 md:p-6 border border-white/70 bg-white/55">
                 <p className="leading-relaxed max-w-lg" style={{ color: "rgba(20, 20, 20, 0.7)" }}>
-                  Tell me what you’re building and I’ll respond with the shortest path to a solid implementation.
+                  Tell me what you're building and I'll respond with the shortest path to a solid implementation.
                 </p>
               </div>
 
@@ -71,20 +72,20 @@ const Contact = () => {
                   <Mail className="w-4 h-4" />
                   Send Email
                 </a>
-                  <a href="https://github.com/hareesh08" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-5 py-3 rounded-full border border-white/80 bg-white/55 backdrop-blur text-black font-semibold uppercase tracking-[0.16em] hover:bg-white/85 transition-colors">
+                  <a href="https://github.com/hareesh08" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-5 py-3 rounded-full border border-white/80 bg-white/80 text-black font-semibold uppercase tracking-[0.16em] hover:bg-white/85 transition-colors">
                   GitHub
                 </a>
-                <a href="https://www.linkedin.com/in/hareesh-d-50147727b" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-5 py-3 rounded-full border border-white/80 bg-white/55 backdrop-blur text-black font-semibold uppercase tracking-[0.16em] hover:bg-white/85 transition-colors">
+                <a href="https://www.linkedin.com/in/hareesh-d-50147727b" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-5 py-3 rounded-full border border-white/80 bg-white/80 text-black font-semibold uppercase tracking-[0.16em] hover:bg-white/85 transition-colors">
                   LinkedIn
                 </a>
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center mt-10 text-sm uppercase tracking-[0.18em] font-mono" style={{ color: "rgba(20, 20, 20, 0.45)" }}>
+        <div className="reveal text-center mt-10 text-sm uppercase tracking-[0.18em] font-mono" style={{ color: "rgba(20, 20, 20, 0.45)" }}>
           © 2026 Hareesh Ragavendra
-        </motion.div>
+        </div>
       </div>
     </section>
   );

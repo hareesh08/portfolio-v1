@@ -38,7 +38,7 @@ const Hero = () => {
               <Mail className="w-4 h-4" />
               Contact Me
             </a>
-            <a href="#projects" className="inline-flex items-center px-5 py-3 rounded-full border border-white/80 bg-white/55 text-black font-semibold uppercase tracking-[0.16em] backdrop-blur hover:bg-white/85 transition-colors">
+            <a href="#projects" className="inline-flex items-center px-5 py-3 rounded-full border border-white/80 bg-white/80 text-black font-semibold uppercase tracking-[0.16em] hover:bg-white/85 transition-colors">
               See Projects
             </a>
           </div>
@@ -60,7 +60,7 @@ const Hero = () => {
           <div className="panel-card p-6 md:p-8 h-full">
             <div className="flex items-start gap-4">
               <div className="w-24 h-24 rounded-[28px] overflow-hidden border border-white/80 shadow-[0_18px_40px_rgba(255,157,157,0.45)] shrink-0">
-                <img src="./profile.png" alt="Hareesh Ragavendra" className="w-full h-full object-cover" />
+                <img src="./profile.png" alt="Hareesh Ragavendra" className="w-full h-full object-cover" loading="lazy" decoding="async" />
               </div>
               <div>
                 <p className="section-label">Location</p>
@@ -80,7 +80,7 @@ const Hero = () => {
                 { value: "4+", label: "Years" },
                 { value: "20+", label: "Skills" },
               ].map((stat) => (
-                <div key={stat.label} className="rounded-2xl border border-white/70 bg-white/55 backdrop-blur p-4">
+                <div key={stat.label} className="rounded-2xl border border-white/70 bg-white/80 p-4">
                   <div className="text-2xl font-bold text-pink">{stat.value}</div>
                   <div className="text-[11px] uppercase tracking-[0.2em] mt-1" style={{ color: "rgba(20, 20, 20, 0.55)" }}>{stat.label}</div>
                 </div>
