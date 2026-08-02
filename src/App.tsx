@@ -7,6 +7,8 @@ import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AuthProvider } from "@/context/AuthContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import { TerminalGameLauncher } from "./components/TerminalGame";
 
 const queryClient = new QueryClient();
@@ -62,6 +64,8 @@ const App = () => (
                 <Route path="/projects" element={<Index />} />
                 <Route path="/experience" element={<Index />} />
                 <Route path="/contact" element={<Index />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/blog/:slug" element={<BlogPost />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </TerminalGameLauncher>
