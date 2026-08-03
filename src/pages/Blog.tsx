@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { getPostSections } from "@/lib/posts";
-import type { Post } from "@/lib/posts";
+import type { PostMeta } from "@/lib/posts";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 
 const sectionLabel = (section: string): string =>
@@ -10,7 +11,7 @@ const sectionLabel = (section: string): string =>
       ? "Articles"
       : section.charAt(0).toUpperCase() + section.slice(1);
 
-const PostCard = ({ post, section }: { post: Post; section: string }) => (
+const PostCard = ({ post, section }: { post: PostMeta; section: string }) => (
   <Link
     to={`/blog/${section}/${post.slug}`}
     className="block panel-card p-6 md:p-8 transition-all duration-300 hover:-translate-y-1 group"
@@ -36,7 +37,15 @@ const PostCard = ({ post, section }: { post: Post; section: string }) => (
 );
 
 const Blog = () => {
-  const sections = getPostSections();
+  const {
+    data: sections = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["posts", "sections"],
+    queryFn: getPostSections,
+    staleTime: 5 * 60 * 1000,
+  });
 
   return (
     <div className="min-h-screen">
@@ -55,9 +64,21 @@ const Blog = () => {
           Short write-ups on the tech, design, and decisions behind this site.
         </p>
 
-        {sections.length === 0 ? (
+        {isLoading ? (
+          <div className="space-y-3">
+            <div className="h-24 panel-card animate-pulse" />
+            <div className="h-24 panel-card animate-pulse" />
+            <div className="h-24 panel-card animate-pulse" />
+          </div>
+        ) : isError ? (
+          <p className="text-sm text-black/60">
+            Couldn't load posts from GitHub. If you've pushed new markdown, give it a minute and refresh —
+            the GitHub API rate limit may also be hit.
+          </p>
+        ) : sections.length === 0 ? (
           <p className="text-sm text-black/50">
-            No posts yet. Drop a markdown file into <code className="font-mono">src/posts/</code> to get started.
+            No posts found. This blog loads its content directly from the
+            <code className="font-mono"> src/posts/</code> folder in the GitHub repo.
           </p>
         ) : (
           <div className="space-y-12">

@@ -11,7 +11,7 @@ const Hero = () => {
         <div className="lg:col-span-8 panel-card p-6 md:p-10 lg:p-12 overflow-hidden">
           <div className="reveal inline-flex items-center gap-3 flex-wrap">
             <span className="tag">Portfolio / 2026</span>
-            <span className="chip">Candy Tech-lux</span>
+            <span className="chip">Tech-Lux</span>
           </div>
 
           <div className="reveal mt-8" style={{ transitionDelay: "90ms" }}>

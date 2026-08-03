@@ -1,8 +1,9 @@
 import { Link, useParams, Navigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getPostBySlug, getPostBySectionAndSlug } from "@/lib/posts";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 
 const components = {
   h1: ({ children }: { children?: React.ReactNode }) => (
@@ -60,11 +61,47 @@ const components = {
 
 const BlogPost = () => {
   const { slug, section } = useParams<{ slug: string; section?: string }>();
-  const post = section && slug
-    ? getPostBySectionAndSlug(section, slug)
-    : slug
-      ? getPostBySlug(slug)
-      : undefined;
+
+  const {
+    data: post,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["post", section ?? "", slug ?? ""],
+    queryFn: () =>
+      section && slug
+        ? getPostBySectionAndSlug(section, slug)
+        : slug
+          ? getPostBySlug(slug)
+          : Promise.resolve(undefined),
+    staleTime: 5 * 60 * 1000,
+  });
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-pink" />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="min-h-screen">
+        <main className="portfolio-shell px-4 md:px-6 pt-28 pb-20 max-w-3xl">
+          <Link to="/blog" className="inline-flex items-center gap-2 chip hover:!border-pink hover:!text-pink mb-10">
+            <ArrowLeft className="w-4 h-4" />
+            All posts
+          </Link>
+          <div className="panel-card p-6 md:p-10">
+            <p className="text-sm text-black/60">
+              Couldn't load this post from GitHub. Check the link or refresh shortly.
+            </p>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   if (!post) {
     return <Navigate to="/blog" replace />;
