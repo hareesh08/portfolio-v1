@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Menu, X, Download, Lock, Eye, EyeOff } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+
+const resumeUrl = `${import.meta.env.BASE_URL}Hareesh_Ragavendra_Resume.pdf`;
 
 const navLinks = [
   { href: "#skills", label: "Skills" },
@@ -17,6 +19,7 @@ const Navbar = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
+  const resumeTriggerRef = useRef<HTMLAnchorElement>(null);
   const { isAuthorized, checkPassword } = useAuth();
 
   useEffect(() => {
@@ -38,11 +41,16 @@ const Navbar = () => {
     e.preventDefault();
     if (checkPassword(password)) {
       setShowPasswordModal(false);
-      window.open("./Hareesh_Ragavendra_Resume.pdf", "_blank");
+      window.open(resumeUrl, "_blank", "noopener,noreferrer");
     } else {
       setError(true);
       setPassword("");
     }
+  };
+
+  const closePasswordModal = () => {
+    setShowPasswordModal(false);
+    window.setTimeout(() => resumeTriggerRef.current?.focus(), 0);
   };
 
   return (
@@ -71,7 +79,8 @@ const Navbar = () => {
             </div>
 
             <a
-              href="./Hareesh_Ragavendra_Resume.pdf"
+              ref={resumeTriggerRef}
+              href={resumeUrl}
               download={isAuthorized}
               onClick={handleResumeClick}
               className="hidden md:inline-flex items-center gap-2 sticker px-4 py-2"
@@ -109,7 +118,7 @@ const Navbar = () => {
                   </a>
                 ))}
                 <a
-                  href="./Hareesh_Ragavendra_Resume.pdf"
+                  href={resumeUrl}
                   download={isAuthorized}
                   onClick={handleResumeClick}
                   className="flex items-center justify-center gap-2 w-full px-4 py-3 sticker mt-4"
@@ -130,11 +139,12 @@ const Navbar = () => {
           <div
             className="fixed inset-0 z-[100] flex items-center justify-center md:backdrop-blur-md px-4"
             style={{ background: "rgba(255, 230, 220, 0.45)" }}
-            onClick={() => setShowPasswordModal(false)}
-            onKeyDown={(e) => e.key === "Escape" && setShowPasswordModal(false)}
+            onClick={closePasswordModal}
+            onKeyDown={(e) => e.key === "Escape" && closePasswordModal()}
             role="dialog"
             aria-modal="true"
             aria-labelledby="resume-modal-title"
+            tabIndex={-1}
           >
             <div
               className="w-full max-w-sm panel-card overflow-hidden"

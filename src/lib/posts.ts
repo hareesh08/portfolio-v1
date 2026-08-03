@@ -18,13 +18,12 @@ export type PostSection = {
   posts: PostMeta[];
 };
 
-const REPO_OWNER = "hareesh08";
-const REPO_NAME = "portfolio-v1";
-const REPO_BRANCH = "main";
 const POSTS_DIR = "src/posts";
-
-const rawBase = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${REPO_BRANCH}`;
-const treeUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/${REPO_BRANCH}?recursive=1`;
+const postModules = import.meta.glob("../posts/**/*.md", {
+  eager: true,
+  import: "default",
+  query: "?raw",
+}) as Record<string, string>;
 
 const slugify = (fileName: string): string =>
   fileName.replace(/\.md$/, "").replace(/\./g, "-").toLowerCase();
@@ -66,6 +65,17 @@ const parseFrontmatter = (raw: string) => {
   return { meta: metaRows, content: match[2].trim() };
 };
 
+const parseTags = (value: unknown): string[] => {
+  if (Array.isArray(value)) return value as string[];
+  if (typeof value !== "string") return [];
+  const inlineList = /^\[(.*)\]$/.exec(value.trim());
+  if (!inlineList) return [];
+  return inlineList[1]
+    .split(",")
+    .map((tag) => tag.trim().replace(/^["']|["']$/g, ""))
+    .filter(Boolean);
+};
+
 const buildMeta = (path: string, raw: string): PostMeta => {
   const { meta } = parseFrontmatter(raw);
   return {
@@ -75,43 +85,25 @@ const buildMeta = (path: string, raw: string): PostMeta => {
     title: (meta.title as string) || "Untitled",
     description: (meta.description as string) ?? "",
     date: (meta.date as string) ?? "",
-    tags: Array.isArray(meta.tags) ? (meta.tags as string[]) : [],
+    tags: parseTags(meta.tags),
     draft: meta.draft === true || meta.draft === "true",
   };
 };
 
-const listPostFiles = async (): Promise<string[]> => {
-  const res = await fetch(treeUrl);
-  if (!res.ok) throw new Error(`GitHub tree request failed (${res.status})`);
-  const data = (await res.json()) as { tree?: { path?: string }[] };
-  return (data.tree ?? [])
-    .map((node) => node.path ?? "")
-    .filter((path) => path.startsWith(`${POSTS_DIR}/`) && path.endsWith(".md"))
-    .sort();
-};
+const modulePathToPostPath = (path: string): string =>
+  path.replace(/^\.\.\/posts\//, `${POSTS_DIR}/`);
 
-const fetchRaw = async (path: string): Promise<string> => {
-  const res = await fetch(`${rawBase}/${path}`);
-  if (!res.ok) throw new Error(`Could not fetch ${path} (${res.status})`);
-  return res.text();
-};
+const rawByPostPath = new Map(
+  Object.entries(postModules).map(([path, raw]) => [modulePathToPostPath(path), raw]),
+);
 
 let metaCache: { posts: PostMeta[] } | null = null;
 
 const loadAllMeta = async (): Promise<PostMeta[]> => {
   if (metaCache) return metaCache.posts;
-  const files = await listPostFiles();
-  const posts = (
-    await Promise.all(
-      files.map(async (file) => {
-        try {
-          return buildMeta(file, await fetchRaw(file));
-        } catch {
-          return null;
-        }
-      }),
-    )
-  ).filter((post): post is PostMeta => post !== null);
+  const posts = [...rawByPostPath.entries()]
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([file, raw]) => buildMeta(file, raw));
   metaCache = { posts };
   return posts;
 };
@@ -134,9 +126,12 @@ export const getPostSections = async (): Promise<PostSection[]> => {
 };
 
 export const getPostBySlug = async (slug: string): Promise<Post | undefined> => {
-  const meta = (await loadAllMeta()).find((post) => post.slug === slug);
-  if (!meta) return undefined;
-  const { content } = parseFrontmatter(await fetchRaw(meta.file));
+  const matches = (await loadAllMeta()).filter((post) => !post.draft && post.slug === slug);
+  if (matches.length !== 1) return undefined;
+  const meta = matches[0];
+  const raw = rawByPostPath.get(meta.file);
+  if (!raw) return undefined;
+  const { content } = parseFrontmatter(raw);
   return { ...meta, content };
 };
 
@@ -145,9 +140,11 @@ export const getPostBySectionAndSlug = async (
   slug: string,
 ): Promise<Post | undefined> => {
   const meta = (await loadAllMeta()).find(
-    (post) => post.section === section && post.slug === slug,
+    (post) => !post.draft && post.section === section && post.slug === slug,
   );
   if (!meta) return undefined;
-  const { content } = parseFrontmatter(await fetchRaw(meta.file));
+  const raw = rawByPostPath.get(meta.file);
+  if (!raw) return undefined;
+  const { content } = parseFrontmatter(raw);
   return { ...meta, content };
 };

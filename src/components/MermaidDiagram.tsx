@@ -4,7 +4,7 @@ import mermaid from "mermaid";
 mermaid.initialize({
   startOnLoad: false,
   theme: "default",
-  securityLevel: "loose",
+  securityLevel: "strict",
   fontFamily: "inherit",
 });
 
@@ -16,6 +16,8 @@ const MermaidDiagram = ({ chart }: { chart: string }) => {
     let cancelled = false;
 
     const render = async () => {
+      setError(null);
+      if (ref.current) ref.current.replaceChildren();
       try {
         const { svg } = await mermaid.render(`mermaid-${Math.random().toString(36).slice(2)}`, chart);
         if (!cancelled && ref.current) {

@@ -30,7 +30,8 @@ const WelcomeScreen = ({ onComplete, onSkipToLanding }: WelcomeScreenProps) => {
 
   useEffect(() => {
     if (step !== "ask") return;
-    window.setTimeout(() => inputRef.current?.focus(), 120);
+    const timer = window.setTimeout(() => inputRef.current?.focus(), 120);
+    return () => window.clearTimeout(timer);
   }, [step]);
 
   useEffect(() => {

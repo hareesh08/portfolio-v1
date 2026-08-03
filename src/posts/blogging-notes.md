@@ -5,6 +5,7 @@ date: "2026-08-02"
 tags:
   - meta
   - markdown
+draft: true
 ---
 
 This portfolio is a static site on GitHub Pages, so there's no database or backend. The blog is backed by plain markdown files that get compiled into the bundle at build time and rendered client-side.

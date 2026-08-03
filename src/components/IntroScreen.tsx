@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { INTRO_VISITED_COOKIE, markVisitCookie } from "@/lib/visit-flow";
@@ -15,12 +15,28 @@ const IntroScreen = ({ onComplete, onSkipToLanding }: IntroScreenProps) => {
   const isMobile = useIsMobile();
   const [isExiting, setIsExiting] = useState(false);
   const [showStartOverlay, setShowStartOverlay] = useState(true);
+  const completionTimerRef = useRef<number | undefined>();
+
+  const particleData = useMemo(
+    () =>
+      Array.from({ length: isMobile ? 6 : 32 }).map((_, i) => ({
+        left: `${(i * 37) % 100}%`,
+        top: `${(i * 53) % 100}%`,
+        width: `${1 + (i * 0.7) % 3}px`,
+        height: `${1 + (i * 0.7) % 3}px`,
+        backgroundColor: ["#FF9D9D", "#FFC5AA", "#EEF8CD", "#BBF1D2"][i % 4],
+        animationDelay: `${(i * 1.1) % 3}s`,
+      })),
+    [isMobile],
+  );
+
+  useEffect(() => () => window.clearTimeout(completionTimerRef.current), []);
 
   const finishIntro = useCallback(() => {
     markIntroVisited();
     setShowStartOverlay(false);
     setIsExiting(true);
-    window.setTimeout(onComplete, 400);
+    completionTimerRef.current = window.setTimeout(onComplete, 400);
   }, [onComplete]);
 
   const handleStart = useCallback(async () => {
@@ -57,7 +73,7 @@ const IntroScreen = ({ onComplete, onSkipToLanding }: IntroScreenProps) => {
         autoPlay
         onEnded={finishIntro}
       >
-        <source src="/Intro-Desktop.mp4" type="video/mp4" />
+        <source src={`${import.meta.env.BASE_URL}Intro-Desktop.mp4`} type="video/mp4" />
       </video>
 
       <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.35))" }} />
@@ -65,17 +81,17 @@ const IntroScreen = ({ onComplete, onSkipToLanding }: IntroScreenProps) => {
       {showStartOverlay && (
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 text-center md:backdrop-blur-sm" style={{ background: "rgba(255, 255, 255, 0.55)" }}>
           <div className="absolute inset-0 overflow-hidden">
-            {Array.from({ length: isMobile ? 6 : 32 }).map((_, index) => (
+            {particleData.map((p, index) => (
               <div
                 key={index}
                 className="intro-particle absolute rounded-full"
                 style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  width: `${1 + Math.random() * 3}px`,
-                  height: `${1 + Math.random() * 3}px`,
-                  backgroundColor: ["#FF9D9D", "#FFC5AA", "#EEF8CD", "#BBF1D2"][index % 4],
-                  animationDelay: `${Math.random() * 3}s`,
+                  left: p.left,
+                  top: p.top,
+                  width: p.width,
+                  height: p.height,
+                  backgroundColor: p.backgroundColor,
+                  animationDelay: p.animationDelay,
                 }}
               />
             ))}

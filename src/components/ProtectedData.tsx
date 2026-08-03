@@ -61,7 +61,12 @@ const ProtectedData = ({ value, masked, className = "", inline = false }: Protec
       <span
         ref={triggerRef}
         onClick={handleClick}
-        onKeyDown={(e) => e.key === "Enter" && handleClick()}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleClick();
+          }
+        }}
         tabIndex={0}
         role="button"
         aria-label="Click to reveal protected information"
@@ -78,7 +83,10 @@ const ProtectedData = ({ value, masked, className = "", inline = false }: Protec
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-md"
           style={{ background: "rgba(255, 230, 220, 0.45)" }}
-          onClick={() => setShowModal(false)}
+          onClick={() => {
+            setShowModal(false);
+            triggerRef.current?.focus();
+          }}
           onKeyDown={handleKeyDown}
           role="dialog"
           aria-modal="true"
@@ -89,7 +97,10 @@ const ProtectedData = ({ value, masked, className = "", inline = false }: Protec
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              onClick={() => setShowModal(false)}
+              onClick={() => {
+                setShowModal(false);
+                triggerRef.current?.focus();
+              }}
               className="absolute top-4 right-4 p-1 rounded-lg hover:text-pink transition-colors"
               style={{ color: "rgba(20, 20, 20, 0.55)" }}
               aria-label="Close modal"

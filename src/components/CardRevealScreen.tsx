@@ -67,15 +67,38 @@ const CardRevealScreen = ({ onComplete, onSkipToLanding }: CardRevealScreenProps
   const [countdown, setCountdown] = useState(5);
   const [isFlipping, setIsFlipping] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
-  const prevIndexRef = useRef(activeIndex);
+  const flipTimerRef = useRef<number | undefined>();
+  const finishFlipTimerRef = useRef<number | undefined>();
 
   const activeCard = useMemo(() => cards[activeIndex], [activeIndex]);
   const activePalette = palette[activeCard.paletteIndex];
-  const prevPalette = palette[cards[prevIndexRef.current]?.paletteIndex || 0];
+  const paletteColors = useMemo(() => palette.map((p) => p.bg), []);
 
-  useEffect(() => {
-    prevIndexRef.current = activeIndex;
-  }, [activeIndex]);
+  const blobData = useMemo(
+    () =>
+      Array.from({ length: isMobile ? 4 : 12 }).map((_, i) => ({
+        left: `${5 + (i * 83) % 90}%`,
+        top: `${5 + (i * 67) % 90}%`,
+        width: `${60 + (i * 37) % 100}px`,
+        height: `${60 + (i * 53) % 100}px`,
+        animationDuration: `${8 + (i * 2.7) % 6}s`,
+        animationDelay: `${(i * 1.3) % 5}s`,
+      })),
+    [isMobile],
+  );
+
+  const confettiData = useMemo(
+    () =>
+      Array.from({ length: isMobile ? 20 : 60 }).map((_, i) => ({
+        left: `${(i * 1.7) % 100}%`,
+        animationDelay: `${(i * 0.37) % 2}s`,
+        animationDuration: `${2 + (i * 0.47) % 3}s`,
+        width: `${4 + (i * 1.1) % 8}px`,
+        height: `${4 + (i * 1.1) % 8}px`,
+        color: paletteColors[i % paletteColors.length],
+      })),
+    [isMobile, paletteColors],
+  );
 
   useEffect(() => {
     if (cycleComplete) return;
@@ -91,7 +114,7 @@ const CardRevealScreen = ({ onComplete, onSkipToLanding }: CardRevealScreenProps
       setProgress(0);
       setIsFlipping(true);
 
-      setTimeout(() => {
+      flipTimerRef.current = window.setTimeout(() => {
         if (activeIndex === cards.length - 1) {
           setCycleComplete(true);
           setShowConfetti(true);
@@ -99,13 +122,15 @@ const CardRevealScreen = ({ onComplete, onSkipToLanding }: CardRevealScreenProps
           return;
         }
         setActiveIndex((currentIndex) => currentIndex + 1);
-        setTimeout(() => setIsFlipping(false), 50);
+        finishFlipTimerRef.current = window.setTimeout(() => setIsFlipping(false), 50);
       }, 300);
     }, CARD_DURATION_MS);
 
     return () => {
       window.clearInterval(progressInterval);
       window.clearTimeout(timer);
+      window.clearTimeout(flipTimerRef.current);
+      window.clearTimeout(finishFlipTimerRef.current);
     };
   }, [activeIndex, cycleComplete]);
 
@@ -148,8 +173,6 @@ const CardRevealScreen = ({ onComplete, onSkipToLanding }: CardRevealScreenProps
     setIsFlipping(false);
   };
 
-  const paletteColors = palette.map((p) => p.bg);
-
   return (
     <div
       className="fixed inset-0 z-[58] overflow-hidden transition-colors duration-700"
@@ -162,18 +185,18 @@ const CardRevealScreen = ({ onComplete, onSkipToLanding }: CardRevealScreenProps
       {/* Confetti */}
       {showConfetti && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-[60]">
-          {Array.from({ length: isMobile ? 20 : 60 }).map((_, i) => (
+          {confettiData.map((c, i) => (
             <div
               key={i}
               className="absolute w-2 h-2 rounded-full animate-confetti"
               style={{
-                left: `${Math.random() * 100}%`,
+                left: c.left,
                 top: `-10px`,
-                backgroundColor: paletteColors[Math.floor(Math.random() * paletteColors.length)],
-                animationDelay: `${Math.random() * 2}s`,
-                animationDuration: `${2 + Math.random() * 3}s`,
-                width: `${4 + Math.random() * 8}px`,
-                height: `${4 + Math.random() * 8}px`,
+                backgroundColor: c.color,
+                animationDelay: c.animationDelay,
+                animationDuration: c.animationDuration,
+                width: c.width,
+                height: c.height,
               }}
             />
           ))}
@@ -182,18 +205,19 @@ const CardRevealScreen = ({ onComplete, onSkipToLanding }: CardRevealScreenProps
 
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {Array.from({ length: isMobile ? 4 : 12 }).map((_, i) => (
+        {blobData.map((blob, i) => (
           <div
             key={i}
             className="absolute rounded-full opacity-20"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              width: `${40 + Math.random() * 120}px`,
-              height: `${40 + Math.random() * 120}px`,
+              left: blob.left,
+              top: blob.top,
+              width: blob.width,
+              height: blob.height,
               backgroundColor: paletteColors[i % paletteColors.length],
-              animation: `floatBlob ${8 + Math.random() * 6}s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 5}s`,
+              animation: `floatBlob ${blob.animationDuration} ease-in-out infinite`,
+              animationDelay: blob.animationDelay,
+              willChange: "transform",
             }}
           />
         ))}

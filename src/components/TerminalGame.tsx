@@ -103,6 +103,7 @@ const TerminalGame = ({ onClose }: TerminalGameProps) => {
   const [historyIndex, setHistoryIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const outputRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -164,16 +165,35 @@ const TerminalGame = ({ onClose }: TerminalGameProps) => {
     }
   };
 
+  const handleDialogKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key !== "Tab" || !dialogRef.current) return;
+    const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), input:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
+    );
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-md px-4"
       style={{ background: "rgba(255, 230, 220, 0.45)" }}
     >
       <div
+        ref={dialogRef}
         className="w-full max-w-2xl glass-card rounded-2xl overflow-hidden"
         role="dialog"
         aria-label="Terminal"
         aria-modal="true"
         onClick={(e) => e.stopPropagation()}
+        onKeyDown={handleDialogKeyDown}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 bg-mint/25 border-b border-white/80">

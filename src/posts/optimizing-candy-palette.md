@@ -6,6 +6,7 @@ tags:
   - performance
   - css
   - mobile
+draft: true
 ---
 
 The hero background is built from layered radial gradients that slowly animate between candy tones. It looks great, but on low-end phones it can cost real frames.
