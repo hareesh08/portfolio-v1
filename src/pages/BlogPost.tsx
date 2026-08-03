@@ -1,7 +1,7 @@
 import { Link, useParams, Navigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { getPostBySlug } from "@/lib/posts";
+import { getPostBySlug, getPostBySectionAndSlug } from "@/lib/posts";
 import { ArrowLeft } from "lucide-react";
 
 const components = {
@@ -59,8 +59,12 @@ const components = {
 };
 
 const BlogPost = () => {
-  const { slug } = useParams<{ slug: string }>();
-  const post = slug ? getPostBySlug(slug) : undefined;
+  const { slug, section } = useParams<{ slug: string; section?: string }>();
+  const post = section && slug
+    ? getPostBySectionAndSlug(section, slug)
+    : slug
+      ? getPostBySlug(slug)
+      : undefined;
 
   if (!post) {
     return <Navigate to="/blog" replace />;
