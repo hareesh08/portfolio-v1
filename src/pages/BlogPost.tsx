@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getPostBySlug, getPostBySectionAndSlug } from "@/lib/posts";
 import { ArrowLeft, Loader2 } from "lucide-react";
+import MermaidDiagram from "@/components/MermaidDiagram";
 
 const components = {
   h1: ({ children }: { children?: React.ReactNode }) => (
@@ -33,6 +34,12 @@ const components = {
     <blockquote className="my-4 border-l-4 border-pink pl-4 italic text-black/70">{children}</blockquote>
   ),
   code: ({ inline, className, children }: { inline?: boolean; className?: string; children?: React.ReactNode }) => {
+    const isMermaid = className?.includes("language-mermaid");
+
+    if (isMermaid) {
+      return <MermaidDiagram chart={String(children).replace(/\n$/, "")} />;
+    }
+
     if (inline) {
       return <code className="font-mono text-[0.9em] bg-white/70 border border-white px-1.5 py-0.5 rounded-md text-black/80">{children}</code>;
     }
