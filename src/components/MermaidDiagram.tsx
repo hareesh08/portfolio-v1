@@ -39,7 +39,7 @@ const MermaidDiagram = ({ chart }: { chart: string }) => {
 
   if (error) {
     return (
-      <pre className="my-4 overflow-x-auto rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+      <pre className="my-4 overflow-x-auto rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300">
         <code>{error}</code>
       </pre>
     );
@@ -48,7 +48,7 @@ const MermaidDiagram = ({ chart }: { chart: string }) => {
   return (
     <div
       ref={ref}
-      className="my-6 flex justify-center overflow-x-auto rounded-2xl border border-white/80 bg-white/60 p-4"
+      className="my-6 flex justify-center overflow-x-auto rounded-2xl border border-black/10 bg-white p-4 dark:border-white/25 dark:bg-white"
     />
   );
 };

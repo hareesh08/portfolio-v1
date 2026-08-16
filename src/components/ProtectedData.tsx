@@ -73,7 +73,7 @@ const ProtectedData = ({ value, masked, className = "", inline = false }: Protec
         className={`relative cursor-pointer group ${inline ? "inline-flex items-center gap-1" : ""} ${className}`}
       >
         <span className="blur-[3px] select-none">{maskedValue}</span>
-        <span className="absolute inset-0 flex items-center justify-center bg-white/70 backdrop-blur-sm rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+        <span className="absolute inset-0 flex items-center justify-center bg-white/70 dark:bg-[#16161e]/85 backdrop-blur-sm rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
           <Lock className="w-3 h-3 text-pink mr-1" aria-hidden="true" />
           <span className="text-xs text-pink font-medium">Click to reveal</span>
         </span>
@@ -81,8 +81,7 @@ const ProtectedData = ({ value, masked, className = "", inline = false }: Protec
 
       {showModal && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-md"
-          style={{ background: "rgba(255, 230, 220, 0.45)" }}
+          className="fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-md bg-[rgba(255,230,220,0.45)] dark:bg-black/60"
           onClick={() => {
             setShowModal(false);
             triggerRef.current?.focus();
@@ -93,7 +92,7 @@ const ProtectedData = ({ value, masked, className = "", inline = false }: Protec
           aria-labelledby="protected-modal-title"
         >
           <div
-            className="relative w-full max-w-sm mx-4 p-6 rounded-2xl panel-card border border-white/80 shadow-2xl animate-scale-in"
+            className="relative w-full max-w-sm mx-4 p-6 rounded-2xl panel-card border border-white/80 dark:border-white/10 shadow-2xl animate-scale-in"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -102,7 +101,7 @@ const ProtectedData = ({ value, masked, className = "", inline = false }: Protec
                 triggerRef.current?.focus();
               }}
               className="absolute top-4 right-4 p-1 rounded-lg hover:text-pink transition-colors"
-              style={{ color: "rgba(20, 20, 20, 0.55)" }}
+              style={{ color: "rgba(var(--ink-rgb), 0.55)" }}
               aria-label="Close modal"
             >
               <X className="w-4 h-4" aria-hidden="true" />
@@ -112,8 +111,8 @@ const ProtectedData = ({ value, masked, className = "", inline = false }: Protec
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-pink/20 border border-pink/40 mb-4" aria-hidden="true">
                 <Lock className="w-5 h-5 text-pink" />
               </div>
-              <h3 id="protected-modal-title" className="text-lg font-semibold" style={{ color: "rgb(20, 20, 20)" }}>Protected Information</h3>
-              <p className="text-sm mt-1" style={{ color: "rgba(20, 20, 20, 0.6)" }}>
+              <h3 id="protected-modal-title" className="text-lg font-semibold" style={{ color: "rgb(var(--ink))" }}>Protected Information</h3>
+              <p className="text-sm mt-1" style={{ color: "rgba(var(--ink-rgb), 0.6)" }}>
                 Enter password to view sensitive data
               </p>
             </div>
@@ -129,17 +128,17 @@ const ProtectedData = ({ value, masked, className = "", inline = false }: Protec
                     setError(false);
                   }}
                   placeholder="Enter password"
-                  className={`w-full px-4 py-3 pr-10 rounded-xl bg-white/65 border backdrop-blur ${
-                    error ? "border-pink" : "border-white/80"
-                  } placeholder:text-black/40 focus:outline-none focus:border-pink transition-colors`}
-                  style={{ color: "rgb(20, 20, 20)" }}
+                  className={`w-full px-4 py-3 pr-10 rounded-xl bg-white/65 border backdrop-blur dark:bg-white/10 dark:text-white/90 ${
+                    error ? "border-pink" : "border-white/80 dark:border-white/15"
+                  } placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:border-pink transition-colors`}
+                  style={{ color: "rgb(var(--ink))" }}
                   aria-label="Password input"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 hover:text-pink transition-colors"
-                  style={{ color: "rgba(20, 20, 20, 0.55)" }}
+                  style={{ color: "rgba(var(--ink-rgb), 0.55)" }}
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" aria-hidden="true" /> : <Eye className="w-4 h-4" aria-hidden="true" />}
@@ -160,7 +159,7 @@ const ProtectedData = ({ value, masked, className = "", inline = false }: Protec
               </button>
             </form>
 
-            <p className="text-xs text-center mt-4" style={{ color: "rgba(20, 20, 20, 0.45)" }}>
+            <p className="text-xs text-center mt-4" style={{ color: "rgba(var(--ink-rgb), 0.45)" }}>
               Contact me for access credentials
             </p>
           </div>

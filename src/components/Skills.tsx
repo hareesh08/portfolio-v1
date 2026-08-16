@@ -20,7 +20,7 @@ const skillCategories = [
     icon: Server,
     title: "Backend",
     skills: ["Django REST Framework", "FastAPI", "RESTful APIs", "JWT Auth", "WebSockets", "Microservices"],
-    color: "text-black",
+    color: "text-ink",
     bg: "bg-cream/30",
   },
   {
@@ -68,12 +68,12 @@ const Skills = () => {
               style={{ transitionDelay: `${idx * 80}ms` }}
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className={`w-11 h-11 rounded-2xl border border-white/80 flex items-center justify-center backdrop-blur ${category.bg}`}>
+                <div className={`w-11 h-11 rounded-2xl border border-white/80 dark:border-white/10 flex items-center justify-center backdrop-blur ${category.bg}`}>
                   <category.icon className={`w-5 h-5 ${category.color}`} />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold" style={{ color: "rgb(20, 20, 20)" }}>{category.title}</h3>
-                  <p className="text-xs uppercase tracking-[0.2em]" style={{ color: "rgba(20, 20, 20, 0.5)" }}>Focused capability</p>
+                  <h3 className="text-lg font-bold" style={{ color: "rgb(var(--ink))" }}>{category.title}</h3>
+                  <p className="text-xs uppercase tracking-[0.2em]" style={{ color: "rgba(var(--ink-rgb), 0.5)" }}>Focused capability</p>
                 </div>
               </div>
 
@@ -100,7 +100,7 @@ const Skills = () => {
           ].map((stat) => (
             <div key={stat.label} className="panel-card p-4 text-center">
                 <p className="text-2xl font-bold text-pink">{stat.value}</p>
-              <p className="text-[11px] uppercase tracking-[0.22em] mt-1" style={{ color: "rgba(20, 20, 20, 0.55)" }}>{stat.label}</p>
+                <p className="text-[11px] uppercase tracking-[0.22em] mt-1" style={{ color: "rgba(var(--ink-rgb), 0.55)" }}>{stat.label}</p>
             </div>
           ))}
         </div>

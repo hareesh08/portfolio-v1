@@ -50,22 +50,22 @@ const Experience = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="reveal panel-card p-5 md:p-6">
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-11 h-11 rounded-2xl border border-white/80 bg-pink/20 flex items-center justify-center">
+              <div className="w-11 h-11 rounded-2xl border border-white/80 dark:border-white/10 bg-pink/20 flex items-center justify-center">
                 <Briefcase className="w-5 h-5 text-pink" />
               </div>
               <div>
-                <h3 className="text-lg font-bold" style={{ color: "rgb(20, 20, 20)" }}>Work</h3>
-                <p className="text-xs uppercase tracking-[0.2em]" style={{ color: "rgba(20, 20, 20, 0.5)" }}>Recent roles</p>
+                <h3 className="text-lg font-bold" style={{ color: "rgb(var(--ink))" }}>Work</h3>
+                <p className="text-xs uppercase tracking-[0.2em]" style={{ color: "rgba(var(--ink-rgb), 0.5)" }}>Recent roles</p>
               </div>
             </div>
 
             <div className="space-y-3">
               {experiences.map((exp) => (
-                <div key={exp.title} className="rounded-2xl border border-white/70 bg-white/80 p-4">
-                  <h4 className="font-semibold" style={{ color: "rgb(20, 20, 20)" }}>{exp.title}</h4>
+                <div key={exp.title} className="rounded-2xl border border-white/70 bg-white/80 p-4 dark:border-white/10 dark:bg-white/5">
+                  <h4 className="font-semibold" style={{ color: "rgb(var(--ink))" }}>{exp.title}</h4>
                   <p className="text-pink text-sm mt-1">{exp.company}</p>
-                  <p className="text-[11px] uppercase tracking-[0.18em] mt-1" style={{ color: "rgba(20, 20, 20, 0.5)" }}>{exp.period}</p>
-                  <p className="text-sm leading-relaxed mt-3" style={{ color: "rgba(20, 20, 20, 0.7)" }}>{exp.description}</p>
+                  <p className="text-[11px] uppercase tracking-[0.18em] mt-1" style={{ color: "rgba(var(--ink-rgb), 0.5)" }}>{exp.period}</p>
+                  <p className="text-sm leading-relaxed mt-3" style={{ color: "rgba(var(--ink-rgb), 0.7)" }}>{exp.description}</p>
                 </div>
               ))}
             </div>
@@ -73,21 +73,21 @@ const Experience = () => {
 
           <div className="reveal panel-card p-5 md:p-6" style={{ transitionDelay: "100ms" }}>
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-11 h-11 rounded-2xl border border-white/80 bg-peach/25 flex items-center justify-center">
+              <div className="w-11 h-11 rounded-2xl border border-white/80 dark:border-white/10 bg-peach/25 flex items-center justify-center">
                 <GraduationCap className="w-5 h-5 text-peach" />
               </div>
               <div>
-                <h3 className="text-lg font-bold" style={{ color: "rgb(20, 20, 20)" }}>Education</h3>
-                <p className="text-xs uppercase tracking-[0.2em]" style={{ color: "rgba(20, 20, 20, 0.5)" }}>Formal training</p>
+                <h3 className="text-lg font-bold" style={{ color: "rgb(var(--ink))" }}>Education</h3>
+                <p className="text-xs uppercase tracking-[0.2em]" style={{ color: "rgba(var(--ink-rgb), 0.5)" }}>Formal training</p>
               </div>
             </div>
 
-            <div className="rounded-2xl border border-white/70 bg-white/80 p-4 mb-4">
-              <h4 className="font-semibold" style={{ color: "rgb(20, 20, 20)" }}>{education.degree}</h4>
+            <div className="rounded-2xl border border-white/70 bg-white/80 p-4 mb-4 dark:border-white/10 dark:bg-white/5">
+              <h4 className="font-semibold" style={{ color: "rgb(var(--ink))" }}>{education.degree}</h4>
               <p className="text-peach text-sm mt-1">{education.institution}</p>
-              <p className="text-[11px] uppercase tracking-[0.18em] mt-1" style={{ color: "rgba(20, 20, 20, 0.5)" }}>{education.period}</p>
+              <p className="text-[11px] uppercase tracking-[0.18em] mt-1" style={{ color: "rgba(var(--ink-rgb), 0.5)" }}>{education.period}</p>
               <div className="mt-4 flex items-center gap-2">
-                <span className="text-sm" style={{ color: "rgba(20, 20, 20, 0.6)" }}>CGPA</span>
+                <span className="text-sm" style={{ color: "rgba(var(--ink-rgb), 0.6)" }}>CGPA</span>
                 <span className="chip">
                   <ProtectedData value={education.cgpa} masked="•.••" />
                 </span>
@@ -95,10 +95,10 @@ const Experience = () => {
             </div>
 
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-2xl border border-white/80 bg-cream/30 flex items-center justify-center">
-                <Award className="w-4 h-4 text-black" />
+              <div className="w-10 h-10 rounded-2xl border border-white/80 dark:border-white/10 bg-cream/30 flex items-center justify-center">
+                <Award className="w-4 h-4 text-ink" />
               </div>
-              <h4 className="font-semibold" style={{ color: "rgb(20, 20, 20)" }}>Certifications</h4>
+              <h4 className="font-semibold" style={{ color: "rgb(var(--ink))" }}>Certifications</h4>
             </div>
 
             <div className="flex flex-wrap gap-2">

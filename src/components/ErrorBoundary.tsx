@@ -33,8 +33,8 @@ export class ErrorBoundary extends Component<Props, State> {
       return (
         <div className="min-h-screen flex items-center justify-center bg-background px-4">
           <div className="max-w-md w-full panel-card p-8 text-center">
-            <h1 className="text-2xl font-bold mb-4" style={{ color: "rgb(20, 20, 20)" }}>Something went wrong</h1>
-            <p className="mb-6" style={{ color: "rgba(20, 20, 20, 0.7)" }}>
+            <h1 className="text-2xl font-bold mb-4" style={{ color: "rgb(var(--ink))" }}>Something went wrong</h1>
+            <p className="mb-6" style={{ color: "rgba(var(--ink-rgb), 0.7)" }}>
               {this.state.error?.message || "An unexpected error occurred."}
             </p>
             <button

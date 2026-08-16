@@ -54,7 +54,7 @@ const Projects = () => {
               style={{ transitionDelay: `${idx * 80}ms` }}
             >
               <div className="flex items-start justify-between gap-4 mb-4">
-                <h3 className="text-xl font-bold leading-tight" style={{ color: "rgb(20, 20, 20)" }}>{project.title}</h3>
+                <h3 className="text-xl font-bold leading-tight" style={{ color: "rgb(var(--ink))" }}>{project.title}</h3>
                 {project.featured && (
                   <span className="tag shrink-0">
                     <Star className="w-3 h-3 fill-current" />
@@ -63,7 +63,7 @@ const Projects = () => {
                 )}
               </div>
 
-              <p className="leading-relaxed mb-5" style={{ color: "rgba(20, 20, 20, 0.7)" }}>{project.description}</p>
+              <p className="leading-relaxed mb-5" style={{ color: "rgba(var(--ink-rgb), 0.7)" }}>{project.description}</p>
 
               <div className="flex flex-wrap gap-2 mb-5">
                 {project.tech.map((tech) => (
