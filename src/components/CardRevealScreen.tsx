@@ -68,7 +68,6 @@ const CardRevealScreen = ({ onComplete, onSkipToLanding }: CardRevealScreenProps
   const [isFlipping, setIsFlipping] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const flipTimerRef = useRef<number | undefined>();
-  const finishFlipTimerRef = useRef<number | undefined>();
 
   const activeCard = useMemo(() => cards[activeIndex], [activeIndex]);
   const activePalette = palette[activeCard.paletteIndex];
@@ -121,8 +120,11 @@ const CardRevealScreen = ({ onComplete, onSkipToLanding }: CardRevealScreenProps
           setIsFlipping(false);
           return;
         }
+        // Reset in the same batch as the index change: a separate unflip timer
+        // scheduled here would be cleared by this effect's cleanup on re-render,
+        // leaving isFlipping stuck true and every later card invisible.
         setActiveIndex((currentIndex) => currentIndex + 1);
-        finishFlipTimerRef.current = window.setTimeout(() => setIsFlipping(false), 50);
+        setIsFlipping(false);
       }, 300);
     }, CARD_DURATION_MS);
 
@@ -130,7 +132,6 @@ const CardRevealScreen = ({ onComplete, onSkipToLanding }: CardRevealScreenProps
       window.clearInterval(progressInterval);
       window.clearTimeout(timer);
       window.clearTimeout(flipTimerRef.current);
-      window.clearTimeout(finishFlipTimerRef.current);
     };
   }, [activeIndex, cycleComplete]);
 
@@ -263,7 +264,7 @@ const CardRevealScreen = ({ onComplete, onSkipToLanding }: CardRevealScreenProps
           <div
             className={`relative w-full max-w-3xl transition-all duration-300 ${isFlipping ? "opacity-0 scale-95 rotate-3" : "opacity-100 scale-100 rotate-0"}`}
             style={{
-              transform: isFlipping ? "translateX(100px) rotate(10deg) scale(0.8) opacity(0)" : undefined,
+              transform: isFlipping ? "translateX(100px) rotate(10deg) scale(0.8)" : undefined,
             }}
           >
             <div

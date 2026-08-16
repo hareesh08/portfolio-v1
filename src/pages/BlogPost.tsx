@@ -1,3 +1,4 @@
+import { isValidElement } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import ReactMarkdown from "react-markdown";
@@ -67,21 +68,32 @@ const components = {
   blockquote: ({ children }: { children?: React.ReactNode }) => (
     <blockquote className="my-4 border-l-4 border-pink pl-4 italic text-black/70 dark:text-white/70">{children}</blockquote>
   ),
-  code: ({ inline, className, children }: { inline?: boolean; className?: string; children?: React.ReactNode }) => {
+  // react-markdown v9+ removed the `inline` prop from code components.
+  // Inline code is a `code` element with no language class; fenced blocks are
+  // always wrapped in the `pre` below, so styling is split between the two.
+  pre: ({ children }: { children?: React.ReactNode }) => {
+    const child = Array.isArray(children) ? children[0] : children;
+    if (isValidElement(child) && child.type === MermaidDiagram) {
+      return <>{children}</>;
+    }
+    return (
+      <pre className="my-4 overflow-x-auto rounded-2xl border border-white/80 dark:border-white/8 bg-white/60 dark:bg-white/6 p-4 text-sm">
+        {children}
+      </pre>
+    );
+  },
+  code: ({ className, children }: { className?: string; children?: React.ReactNode }) => {
     const isMermaid = className?.includes("language-mermaid");
 
     if (isMermaid) {
       return <MermaidDiagram chart={String(children).replace(/\n$/, "")} />;
     }
 
-    if (inline) {
-      return <code className="font-mono text-[0.9em] bg-white/70 dark:bg-white/8 border border-white dark:border-white/10 px-1.5 py-0.5 rounded-md text-black/80 dark:text-white/80">{children}</code>;
+    if (className?.includes("language-")) {
+      return <code className={`font-mono text-[0.9em] ${className ?? ""}`}>{children}</code>;
     }
-    return (
-      <pre className={`my-4 overflow-x-auto rounded-2xl border border-white/80 dark:border-white/8 bg-white/60 dark:bg-white/6 p-4 text-sm ${className ?? ""}`}>
-        <code>{children}</code>
-      </pre>
-    );
+
+    return <code className="font-mono text-[0.9em] bg-white/70 dark:bg-white/8 border border-white dark:border-white/10 px-1.5 py-0.5 rounded-md text-black/80 dark:text-white/80">{children}</code>;
   },
   table: ({ children }: { children?: React.ReactNode }) => (
     <div className="my-6 overflow-x-auto rounded-2xl border border-white/80 dark:border-white/8 bg-white/50 dark:bg-white/5">
