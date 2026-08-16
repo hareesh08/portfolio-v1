@@ -15,6 +15,13 @@
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <link rel="alternate icon" href="./favicon-32x32.png" />
+    <script>
+      // Apply the saved theme before first paint to avoid a flash of the default palette.
+      try {
+        var t = localStorage.getItem("portfolio-theme");
+        if (t) document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

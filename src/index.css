@@ -47,6 +47,11 @@
     --cream: #EEF8CD;
     --mint: #BBF1D2;
 
+    --page-1: #fff7f0;
+    --page-2: #fff0f3;
+    --page-3: #f1fae8;
+    --page-tint: rgba(255, 240, 235, 0.55);
+
     --font-display: 'Manrope', system-ui, sans-serif;
     --font-mono: 'IBM Plex Mono', monospace;
   }
@@ -90,6 +95,291 @@
     --peach: #d49070;
     --cream: #8a9e50;
     --mint: #60b088;
+
+    --page-1: #0f0f14;
+    --page-2: #121218;
+    --page-3: #0e1210;
+    --page-tint: rgba(18, 18, 24, 0.55);
+  }
+
+  /* ---- Portfolio themes (accent palette + page wash per theme) ----
+     :root / .dark above are the default "candy" theme. Each additional
+     theme overrides the accent variables; its `.dark` combo block
+     (higher specificity) supplies the dark variant. */
+
+  [data-theme="aurora"] {
+    --candy-1: #67e8f9;
+    --candy-2: #a78bfa;
+    --candy-3: #f0abfc;
+    --candy-4: #7dd3fc;
+
+    --candy-1-rgb: 103, 232, 249;
+    --candy-2-rgb: 167, 139, 250;
+    --candy-3-rgb: 240, 171, 252;
+    --candy-4-rgb: 125, 211, 252;
+
+    --pink: #67e8f9;
+    --peach: #a78bfa;
+    --cream: #f0abfc;
+    --mint: #7dd3fc;
+
+    --page-1: #f1f9ff;
+    --page-2: #f4f2fe;
+    --page-3: #eefafc;
+    --page-tint: rgba(238, 246, 255, 0.55);
+
+    --primary: 190 84% 34%;
+    --ring: 190 84% 40%;
+    --accent: 262 83% 58%;
+    --accent-foreground: 0 0% 8%;
+  }
+
+  [data-theme="aurora"].dark {
+    --candy-1: #22d3ee;
+    --candy-2: #a78bfa;
+    --candy-3: #e879f9;
+    --candy-4: #38bdf8;
+
+    --candy-1-rgb: 34, 211, 238;
+    --candy-2-rgb: 167, 139, 250;
+    --candy-3-rgb: 232, 121, 249;
+    --candy-4-rgb: 56, 189, 248;
+
+    --pink: #22d3ee;
+    --peach: #a78bfa;
+    --cream: #e879f9;
+    --mint: #38bdf8;
+
+    --page-1: #060918;
+    --page-2: #0a0e24;
+    --page-3: #071018;
+    --page-tint: rgba(10, 14, 36, 0.55);
+
+    --primary: 187 85% 58%;
+    --primary-foreground: 0 0% 8%;
+    --ring: 187 85% 58%;
+    --accent: 262 83% 66%;
+    --accent-foreground: 0 0% 8%;
+  }
+
+  [data-theme="ember"] {
+    --candy-1: #f87171;
+    --candy-2: #fbbf24;
+    --candy-3: #fb923c;
+    --candy-4: #f472b6;
+
+    --candy-1-rgb: 248, 113, 113;
+    --candy-2-rgb: 251, 191, 36;
+    --candy-3-rgb: 251, 146, 60;
+    --candy-4-rgb: 244, 114, 182;
+
+    --pink: #f87171;
+    --peach: #fbbf24;
+    --cream: #fb923c;
+    --mint: #f472b6;
+
+    --page-1: #fff7ed;
+    --page-2: #ffedd5;
+    --page-3: #fef2f2;
+    --page-tint: rgba(255, 237, 213, 0.55);
+
+    --primary: 14 86% 46%;
+    --ring: 14 86% 52%;
+    --accent: 36 95% 54%;
+    --accent-foreground: 0 0% 8%;
+  }
+
+  [data-theme="ember"].dark {
+    --candy-1: #fb7185;
+    --candy-2: #f59e0b;
+    --candy-3: #e879f9;
+    --candy-4: #fb923c;
+
+    --candy-1-rgb: 251, 113, 133;
+    --candy-2-rgb: 245, 158, 11;
+    --candy-3-rgb: 232, 121, 249;
+    --candy-4-rgb: 251, 146, 60;
+
+    --pink: #fb7185;
+    --peach: #f59e0b;
+    --cream: #e879f9;
+    --mint: #fb923c;
+
+    --page-1: #1c0d1e;
+    --page-2: #2b1030;
+    --page-3: #170a14;
+    --page-tint: rgba(43, 16, 48, 0.55);
+
+    --primary: 14 90% 58%;
+    --primary-foreground: 0 0% 8%;
+    --ring: 14 90% 58%;
+    --accent: 40 95% 60%;
+    --accent-foreground: 0 0% 8%;
+  }
+
+  [data-theme="terminal"] {
+    --candy-1: #4ade80;
+    --candy-2: #a3e635;
+    --candy-3: #34d399;
+    --candy-4: #84cc16;
+
+    --candy-1-rgb: 74, 222, 128;
+    --candy-2-rgb: 163, 230, 53;
+    --candy-3-rgb: 52, 211, 153;
+    --candy-4-rgb: 132, 204, 22;
+
+    --pink: #4ade80;
+    --peach: #a3e635;
+    --cream: #34d399;
+    --mint: #84cc16;
+
+    --page-1: #f4fbe8;
+    --page-2: #eef9e0;
+    --page-3: #e8f8ec;
+    --page-tint: rgba(238, 249, 224, 0.55);
+
+    --primary: 135 62% 30%;
+    --ring: 135 62% 38%;
+    --accent: 84 74% 42%;
+    --accent-foreground: 0 0% 8%;
+  }
+
+  [data-theme="terminal"].dark {
+    --candy-1: #4ade80;
+    --candy-2: #a3e635;
+    --candy-3: #2dd4bf;
+    --candy-4: #86efac;
+
+    --candy-1-rgb: 74, 222, 128;
+    --candy-2-rgb: 163, 230, 53;
+    --candy-3-rgb: 45, 212, 191;
+    --candy-4-rgb: 134, 239, 172;
+
+    --pink: #4ade80;
+    --peach: #a3e635;
+    --cream: #2dd4bf;
+    --mint: #86efac;
+
+    --page-1: #050a06;
+    --page-2: #071009;
+    --page-3: #04080a;
+    --page-tint: rgba(7, 16, 9, 0.55);
+
+    --primary: 142 70% 45%;
+    --primary-foreground: 0 0% 4%;
+    --ring: 142 70% 45%;
+    --accent: 84 74% 52%;
+    --accent-foreground: 0 0% 4%;
+  }
+
+  [data-theme="paper"] {
+    --candy-1: #d97706;
+    --candy-2: #ca8a04;
+    --candy-3: #9a3412;
+    --candy-4: #0f766e;
+
+    --candy-1-rgb: 217, 119, 6;
+    --candy-2-rgb: 202, 138, 4;
+    --candy-3-rgb: 154, 52, 18;
+    --candy-4-rgb: 15, 118, 110;
+
+    --pink: #d97706;
+    --peach: #ca8a04;
+    --cream: #9a3412;
+    --mint: #0f766e;
+
+    --page-1: #faf6ef;
+    --page-2: #f5efe3;
+    --page-3: #f7f2e8;
+    --page-tint: rgba(245, 239, 227, 0.55);
+
+    --primary: 24 95% 36%;
+    --ring: 24 95% 42%;
+    --accent: 173 80% 26%;
+    --accent-foreground: 0 0% 98%;
+  }
+
+  [data-theme="paper"].dark {
+    --candy-1: #f59e0b;
+    --candy-2: #fbbf24;
+    --candy-3: #fb923c;
+    --candy-4: #5eead4;
+
+    --candy-1-rgb: 245, 158, 11;
+    --candy-2-rgb: 251, 191, 36;
+    --candy-3-rgb: 251, 146, 60;
+    --candy-4-rgb: 94, 234, 212;
+
+    --pink: #f59e0b;
+    --peach: #fbbf24;
+    --cream: #fb923c;
+    --mint: #5eead4;
+
+    --page-1: #17140f;
+    --page-2: #1c1812;
+    --page-3: #12100c;
+    --page-tint: rgba(28, 24, 18, 0.55);
+
+    --primary: 28 92% 56%;
+    --primary-foreground: 0 0% 8%;
+    --ring: 28 92% 56%;
+    --accent: 173 70% 55%;
+    --accent-foreground: 0 0% 8%;
+  }
+
+  [data-theme="ocean"] {
+    --candy-1: #38bdf8;
+    --candy-2: #60a5fa;
+    --candy-3: #5eead4;
+    --candy-4: #93c5fd;
+
+    --candy-1-rgb: 56, 189, 248;
+    --candy-2-rgb: 96, 165, 250;
+    --candy-3-rgb: 94, 234, 212;
+    --candy-4-rgb: 147, 197, 253;
+
+    --pink: #38bdf8;
+    --peach: #60a5fa;
+    --cream: #5eead4;
+    --mint: #93c5fd;
+
+    --page-1: #eff9ff;
+    --page-2: #eef7fb;
+    --page-3: #f0fbfa;
+    --page-tint: rgba(235, 248, 255, 0.55);
+
+    --primary: 199 89% 38%;
+    --ring: 199 89% 44%;
+    --accent: 172 66% 42%;
+    --accent-foreground: 0 0% 98%;
+  }
+
+  [data-theme="ocean"].dark {
+    --candy-1: #38bdf8;
+    --candy-2: #0ea5e9;
+    --candy-3: #2dd4bf;
+    --candy-4: #818cf8;
+
+    --candy-1-rgb: 56, 189, 248;
+    --candy-2-rgb: 14, 165, 233;
+    --candy-3-rgb: 45, 212, 191;
+    --candy-4-rgb: 129, 140, 248;
+
+    --pink: #38bdf8;
+    --peach: #0ea5e9;
+    --cream: #2dd4bf;
+    --mint: #818cf8;
+
+    --page-1: #04121f;
+    --page-2: #061a2c;
+    --page-3: #030e1a;
+    --page-tint: rgba(6, 26, 44, 0.55);
+
+    --primary: 199 89% 48%;
+    --primary-foreground: 0 0% 4%;
+    --ring: 199 89% 48%;
+    --accent: 172 66% 50%;
+    --accent-foreground: 0 0% 4%;
   }
 
   * {
@@ -109,7 +399,7 @@
       radial-gradient(circle at 88% 12%, rgba(var(--candy-2-rgb), 0.55), transparent 38%),
       radial-gradient(circle at 78% 86%, rgba(var(--candy-4-rgb), 0.55), transparent 40%),
       radial-gradient(circle at 18% 82%, rgba(var(--candy-3-rgb), 0.55), transparent 42%),
-      linear-gradient(135deg, #fff7f0 0%, #fff0f3 50%, #f1fae8 100%);
+      linear-gradient(135deg, var(--page-1) 0%, var(--page-2) 50%, var(--page-3) 100%);
     min-height: 100vh;
     background-attachment: fixed;
     animation: candyShift 28s ease-in-out infinite alternate;
@@ -123,7 +413,7 @@
       radial-gradient(circle at 88% 12%, rgba(var(--candy-2-rgb), 0.12), transparent 38%),
       radial-gradient(circle at 78% 86%, rgba(var(--candy-4-rgb), 0.12), transparent 40%),
       radial-gradient(circle at 18% 82%, rgba(var(--candy-3-rgb), 0.12), transparent 42%),
-      linear-gradient(135deg, #0f0f14 0%, #121218 50%, #0e1210 100%);
+      linear-gradient(135deg, var(--page-1) 0%, var(--page-2) 50%, var(--page-3) 100%);
     animation: none;
   }
 
@@ -151,7 +441,7 @@
   }
 
   .bg-gradient-hero {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 240, 235, 0.6));
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.6), var(--page-tint));
   }
 
   .glass {
@@ -208,6 +498,18 @@
   .animate-pulse-slow { animation: pulse-slow 5s ease-in-out infinite; }
   .animate-slide-up { animation: slide-up 0.7s ease-out forwards; }
   .animate-fade-in { animation: fade-in 0.7s ease-out forwards; }
+  .animate-palette-in { animation: palette-in 260ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+
+  @keyframes palette-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
 
   .section-shell {
     @apply px-4 md:px-6 py-20 md:py-28;
@@ -227,7 +529,7 @@
     border-radius: 2.25rem;
     border: 1px solid rgba(255, 255, 255, 0.8);
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 240, 235, 0.55)),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.55), var(--page-tint)),
       radial-gradient(circle at top right, rgba(var(--candy-1-rgb), 0.25), transparent 32%),
       radial-gradient(circle at bottom left, rgba(var(--candy-4-rgb), 0.22), transparent 28%);
     box-shadow:
@@ -279,7 +581,7 @@
       radial-gradient(circle at 80% 20%, rgba(var(--candy-2-rgb), 0.35), transparent 18%),
       radial-gradient(circle at 50% 100%, rgba(var(--candy-3-rgb), 0.3), transparent 28%),
       radial-gradient(circle at 30% 70%, rgba(var(--candy-4-rgb), 0.3), transparent 24%),
-      linear-gradient(180deg, #fff7f0 0%, #f1fae8 100%);
+      linear-gradient(180deg, var(--page-1) 0%, var(--page-3) 100%);
   }
 
   .uno-grid {
@@ -709,7 +1011,10 @@
   }
 
   .tag {
-    @apply inline-flex items-center rounded-full border border-[#FF9D9D]/70 bg-[#FF9D9D]/25 px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-black;
+    @apply inline-flex items-center rounded-full px-3 py-1 text-[11px] uppercase tracking-[0.18em];
+    border: 1px solid rgba(var(--candy-1-rgb), 0.7);
+    background: rgba(var(--candy-1-rgb), 0.25);
+    color: rgb(var(--ink));
   }
 
   .dark .neo-panel {
@@ -1030,7 +1335,7 @@
 
   .portfolio-stage .section-shell {
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 240, 235, 0.85)),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.88), var(--page-tint)),
       radial-gradient(circle at top right, rgba(var(--candy-1-rgb), 0.15), transparent 32%),
       radial-gradient(circle at bottom left, rgba(var(--candy-4-rgb), 0.12), transparent 28%);
     backdrop-filter: none;
